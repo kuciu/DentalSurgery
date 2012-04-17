@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="pl.poznan.put.dentalsurgery.model">
+
+	<class name="SimpleEntity" table="SIMPLE_ENTITIES">
+		<id name="id" column="ENTITY_ID">
+			<generator class="native" />
+		</id>
+		<property name="someText" column="SOME_TEXT" />
+		<property name="someDate" column="SOME_DATE" type="timestamp" />
+		<property name="someNumber" column="SOME_NUMBER" />
+	</class>
+
+</hibernate-mapping>

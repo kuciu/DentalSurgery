@@ -5,7 +5,7 @@
 
 <hibernate-mapping package="pl.poznan.put.dentalsurgery.model">
 
-	<class name="Patients" table="PATIENTS">
+	<class name="Patient" table="PATIENTS">
 		<id name="patientId" column="PATIENT_ID">
 			<generator class="native" />
 		</id>
@@ -14,14 +14,27 @@
 		<property name="bornDate" column="BORN_DATE" type="timestamp" />
 		<property name="city" column="CITY" />
 		<property name="street" column="STREET" />
-		<list name="phoneNumbers" table="PHONE_NUMBERS" inverse="true"
-			lazy="true" fetch="select">
+		<set name="phoneNumbers" table="phone_numbers" inverse="true"
+			lazy="false" fetch="select" cascade="delete, save-update">
 			<key>
-				<column name="patient_id" not-null="true"/>
+				<column name="patient_id" not-null="true" />
 			</key>
-			<index column="phone_id"/>
-			<one-to-many class="pl.poznan.put.dentalsurgery.model.PhoneNumber"/>
-		</list>
+			<one-to-many class="pl.poznan.put.dentalsurgery.model.PhoneNumber" />
+		</set>
+		<set name="illnesses" table="illnesses" inverse="true" lazy="false"
+			fetch="select" cascade="delete, save-update">
+			<key>
+				<column name="patient_id" not-null="true" />
+			</key>
+			<one-to-many class="pl.poznan.put.dentalsurgery.model.Illness"/>
+		</set>
+		<set name="medications" table="medications" inverse="true" lazy="false"
+			fetch="select" cascade="delete, save-update">
+			<key>
+				<column name="patient_id" not-null="true" />
+			</key>
+			<one-to-many class="pl.poznan.put.dentalsurgery.model.Medication"/>
+		</set>
 
 	</class>
 

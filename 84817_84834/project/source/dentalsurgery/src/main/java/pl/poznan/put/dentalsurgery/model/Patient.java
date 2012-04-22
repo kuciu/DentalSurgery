@@ -2,7 +2,8 @@ package pl.poznan.put.dentalsurgery.model;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 
@@ -16,10 +17,10 @@ public class Patient {
 	private Date bornDate;
 	private String city;
 	private String street;
-	private List<PhoneNumber> phoneNumbers;
-	private List<String> medicalHistory;
-	private List<String> medications;
-	private List<Visit> visits;
+	private Set<PhoneNumber> phoneNumbers = new HashSet<PhoneNumber>();
+	private Set<Illness> illnesses = new HashSet<Illness>();
+	private Set<Medication> medications = new HashSet<Medication>();
+	private Set<Visit> visits = new HashSet<Visit>();
 
 	public Long getPatientId() {
 		return patientId;
@@ -41,7 +42,7 @@ public class Patient {
 		return visits;
 	}
 
-	public void setVisits(final List<Visit> visits) {
+	public void setVisits(final Set<Visit> visits) {
 		this.visits = visits;
 	}
 
@@ -77,27 +78,27 @@ public class Patient {
 		this.street = street;
 	}
 
-	public List<PhoneNumber> getPhoneNumbers() {
+	public Set<PhoneNumber> getPhoneNumbers() {
 		return phoneNumbers;
 	}
 
-	public void setPhoneNumbers(final List<PhoneNumber> phoneNumbers) {
+	public void setPhoneNumbers(final Set<PhoneNumber> phoneNumbers) {
 		this.phoneNumbers = phoneNumbers;
 	}
 
-	public List<String> getMedicalHistory() {
-		return medicalHistory;
+	public Set<Illness> getIllnesses() {
+		return illnesses;
 	}
 
-	public void setMedicalHistory(final List<String> medicalHistory) {
-		this.medicalHistory = medicalHistory;
+	public void setIllnesses(final Set<Illness> illnesses) {
+		this.illnesses = illnesses;
 	}
 
-	public List<String> getMedications() {
+	public Set<Medication> getMedications() {
 		return medications;
 	}
 
-	public void setMedications(final List<String> medications) {
+	public void setMedications(final Set<Medication> medications) {
 		this.medications = medications;
 	}
 

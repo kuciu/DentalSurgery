@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="pl.poznan.put.dentalsurgery.model">
+
+	<class name="Patients" table="PATIENTS">
+		<id name="patientId" column="PATIENT_ID">
+			<generator class="native" />
+		</id>
+		<property name="name" column="NAME" />
+		<property name="surname" column="SURNAME" />
+		<property name="bornDate" column="BORN_DATE" type="timestamp" />
+		<property name="city" column="CITY" />
+		<property name="street" column="STREET" />
+		<list name="phoneNumbers" table="PHONE_NUMBERS" inverse="true"
+			lazy="true" fetch="select">
+			<key>
+				<column name="patient_id" not-null="true"/>
+			</key>
+			<index column="phone_id"/>
+			<one-to-many class="pl.poznan.put.dentalsurgery.model.PhoneNumber"/>
+		</list>
+
+	</class>
+
+</hibernate-mapping>

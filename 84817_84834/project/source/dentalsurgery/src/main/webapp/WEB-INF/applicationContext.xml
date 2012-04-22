@@ -3,15 +3,23 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
-           http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
            http://www.springframework.org/schema/aop 
-           http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
            http://www.springframework.org/schema/tx 
-           http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+           http://www.springframework.org/schema/context 
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<!-- definicja kontekstu aplikacji dla aplikacji dentalsurgery -->
+	<!-- definicja kontekstu dla aplikacji dentalsurgery -->
 
+	<context:component-scan base-package="pl.poznan.put.dentalsurgery.repository pl.poznan.put.dentalsurgery.service" />
+	
+  	<tx:annotation-driven/>
+  	
+  	<!-- Ustawienia bazy danych -->
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location">
@@ -46,35 +54,11 @@
 		</property>
 	</bean>
 
-	<!-- Obsługa transakcji w warstwie biznesowej -->
+	<!-- Manager transakcji w warstwie biznesowej --> 
 
-	<bean id="txManager"
+	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-
-	<aop:config>
-		<aop:pointcut id="serviceLayerMethods"
-			expression="execution(* pl.poznan.put.dentalsurgery.service..*(..))" />
-		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceLayerMethods" />
-	</aop:config>
-
-	<tx:advice id="txAdvice" transaction-manager="txManager">
-		<tx:attributes>
-			<tx:method name="load*" propagation="SUPPORTS" read-only="true" />
-		</tx:attributes>
-	</tx:advice>
-
-	<!-- Obiekty warstwy DAO -->
-	<bean id="simpleEntityDao"
-		class="pl.poznan.put.dentalsurgery.repository.SimpleEntityDaoImpl">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-
-	<!-- Obiekty warstwy biznesowej -->
-	<bean id="simpleEntityService"
-		class="pl.poznan.put.dentalsurgery.service.SimpleEntityServiceImpl">
-		<property name="simpleEntityDao" ref="simpleEntityDao" />
 	</bean>
 
 

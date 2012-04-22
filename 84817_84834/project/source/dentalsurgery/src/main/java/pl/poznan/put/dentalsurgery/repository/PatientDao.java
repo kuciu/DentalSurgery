@@ -5,7 +5,6 @@ import java.util.Collection;
 import pl.poznan.put.dentalsurgery.model.Patient;
 
 public interface PatientDao {
-	Collection<Patient> loadAllPatients();
 
 	void deletePatient(Patient patient);
 
@@ -14,4 +13,6 @@ public interface PatientDao {
 	Patient getPatientById(Long id);
 
 	void updateUser(Patient patientFromDb);
+
+	Collection<Patient> getAllPatients();
 }

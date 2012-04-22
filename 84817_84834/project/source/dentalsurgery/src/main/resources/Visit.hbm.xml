@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="pl.poznan.put.dentalsurgery.model">
+
+	<class name="Visit" table="VISITS">
+		<id name="visitId" column="visit_ID">
+			<generator class="native" />
+		</id>
+		<property name="visitDate" column="visit_date" />
+		<set name="activities" table="visit_activities" cascade="all">
+			<key column="visit_ID" />
+			<many-to-many column="va_dict_ID"
+				class="pl.poznan.put.dentalsurgery.model.VisitActivity" />
+		</set>
+
+
+	</class>
+
+</hibernate-mapping>

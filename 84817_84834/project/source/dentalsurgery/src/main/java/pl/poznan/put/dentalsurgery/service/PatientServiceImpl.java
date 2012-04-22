@@ -30,7 +30,7 @@ public class PatientServiceImpl implements PatientService {
 	@Override
 	@Transactional(readOnly = true)
 	public Collection<Patient> getAllPatients() {
-		return patientDao.loadAllPatients();
+		return patientDao.getAllPatients();
 	}
 
 	@Override

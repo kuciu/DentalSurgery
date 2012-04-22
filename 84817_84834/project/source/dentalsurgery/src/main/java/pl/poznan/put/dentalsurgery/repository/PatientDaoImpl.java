@@ -1,30 +1,14 @@
 package pl.poznan.put.dentalsurgery.repository;
 
 import java.util.Collection;
+import java.util.List;
 
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import pl.poznan.put.dentalsurgery.model.Patient;
 
 @Repository
-public class PatientDaoImpl implements PatientDao {
-
-	private SessionFactory sessionFactory;
-
-	@Autowired
-	public void setSessionFactory(final SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public Collection<Patient> loadAllPatients() {
-
-		return this.sessionFactory.getCurrentSession()
-				.createQuery("from Patient").list();
-	}
+public class PatientDaoImpl extends AbstractDao<Patient> implements PatientDao {
 
 	@Override
 	public void deletePatient(final Patient patient) {
@@ -46,6 +30,18 @@ public class PatientDaoImpl implements PatientDao {
 	@Override
 	public void updateUser(final Patient patient) {
 		sessionFactory.getCurrentSession().update(patient);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Patient> getAll() {
+		return this.sessionFactory.getCurrentSession()
+				.createQuery("from Patient").list();
+	}
+
+	@Override
+	public Collection<Patient> getAllPatients() {
+		return getAll();
 	}
 
 }

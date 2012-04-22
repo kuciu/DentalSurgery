@@ -34,7 +34,7 @@ public class PatientDaoImplTest extends
 		AbstractTransactionalJUnit4SpringContextTests {
 	protected final Log logger = LogFactory.getLog(getClass());
 	@Autowired
-	private PatientDao patientDao;
+	private PatientDaoImpl patientDao;
 
 	@Test
 	public void addUserSuccess() {

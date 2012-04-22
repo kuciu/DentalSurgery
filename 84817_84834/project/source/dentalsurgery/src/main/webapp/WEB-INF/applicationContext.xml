@@ -54,6 +54,8 @@
 				<value>PhoneNumber.hbm.xml</value>
 				<value>Illness.hbm.xml</value>
 				<value>Medication.hbm.xml</value>
+				<value>VisitActivity.hbm.xml</value>
+				<value>Visit.hbm.xml</value>
 			</list>
 		</property>
 	</bean>

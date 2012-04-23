@@ -5,9 +5,30 @@ import java.util.Set;
 
 public class Visit {
 	private Long visitId;
-
+	private Patient patient;
 	private Date visitDate;
 	private Set<VisitActivity> activities;
+	private String comments;
+
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(final String comments) {
+		this.comments = comments;
+	}
+
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(final Patient patient) {
+		this.patient = patient;
+	}
+
+	public Visit(final Patient patient) {
+		this.patient = patient;
+	}
 
 	public Long getVisitId() {
 		return visitId;

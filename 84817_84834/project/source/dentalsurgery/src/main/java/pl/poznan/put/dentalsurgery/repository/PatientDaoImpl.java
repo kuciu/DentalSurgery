@@ -22,9 +22,9 @@ public class PatientDaoImpl extends AbstractDao<Patient> implements PatientDao {
 	}
 
 	@Override
-	public Patient getPatientById(final Long id) {
+	public Patient getPatientById(final Long patientId) {
 		return (Patient) sessionFactory.getCurrentSession().get(Patient.class,
-				id);
+				patientId);
 	}
 
 	@Override

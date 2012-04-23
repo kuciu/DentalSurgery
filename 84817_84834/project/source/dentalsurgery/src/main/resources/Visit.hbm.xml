@@ -9,13 +9,16 @@
 		<id name="visitId" column="visit_ID">
 			<generator class="native" />
 		</id>
-		<property name="visitDate" column="visit_date" />
+		<property name="visitDate" column="date" />
 		<set name="activities" table="visit_activities" cascade="all">
 			<key column="visit_ID" />
 			<many-to-many column="va_dict_ID"
 				class="pl.poznan.put.dentalsurgery.model.VisitActivity" />
 		</set>
-
+		<many-to-one name="patient" class="pl.poznan.put.dentalsurgery.model.Patient" fetch="select">
+            <column name="PATIENT_ID" not-null="true" />
+        </many-to-one>
+		<property name="comments" column="comments"></property>
 
 	</class>
 

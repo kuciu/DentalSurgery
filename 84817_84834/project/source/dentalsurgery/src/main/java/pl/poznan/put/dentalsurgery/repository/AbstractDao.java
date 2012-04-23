@@ -13,5 +13,9 @@ public abstract class AbstractDao<T> {
 		this.sessionFactory = sessionFactory;
 	}
 
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
 	public abstract List<T> getAll();
 }

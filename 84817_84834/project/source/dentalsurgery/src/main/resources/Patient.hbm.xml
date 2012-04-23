@@ -26,16 +26,22 @@
 			<key>
 				<column name="patient_id" not-null="true" />
 			</key>
-			<one-to-many class="pl.poznan.put.dentalsurgery.model.Illness"/>
+			<one-to-many class="pl.poznan.put.dentalsurgery.model.Illness" />
 		</set>
 		<set name="medications" table="medications" inverse="true" lazy="false"
 			fetch="select" cascade="delete, save-update">
 			<key>
 				<column name="patient_id" not-null="true" />
 			</key>
-			<one-to-many class="pl.poznan.put.dentalsurgery.model.Medication"/>
+			<one-to-many class="pl.poznan.put.dentalsurgery.model.Medication" />
 		</set>
-
+		<set name="visits" table="visits" inverse="true" lazy="false"
+			fetch="select" cascade="delete, save-update">
+			<key>
+				<column name="patient_id" not-null="true" />
+			</key>
+			<one-to-many class="pl.poznan.put.dentalsurgery.model.Visit"/>
+		</set>
 	</class>
 
 </hibernate-mapping>

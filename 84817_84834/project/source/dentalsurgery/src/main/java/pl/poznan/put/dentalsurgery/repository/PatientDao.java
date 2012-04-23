@@ -10,7 +10,7 @@ public interface PatientDao {
 
 	long addPatient(Patient patient);
 
-	Patient getPatientById(Long id);
+	Patient getPatientById(Long patientId);
 
 	void updateUser(Patient patientFromDb);
 

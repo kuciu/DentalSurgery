@@ -20,6 +20,8 @@ import pl.poznan.put.dentalsurgery.model.Illness;
 import pl.poznan.put.dentalsurgery.model.Medication;
 import pl.poznan.put.dentalsurgery.model.Patient;
 import pl.poznan.put.dentalsurgery.model.PhoneNumber;
+import pl.poznan.put.dentalsurgery.model.Visit;
+import pl.poznan.put.dentalsurgery.model.VisitActivity;
 
 /**
  * Testy dao do pacjentow
@@ -35,6 +37,9 @@ public class PatientDaoImplTest extends
 	protected final Log logger = LogFactory.getLog(getClass());
 	@Autowired
 	private PatientDaoImpl patientDao;
+
+	@Autowired
+	private VisitActivityDictDaoImpl visitActivityDictDao;
 
 	@Test
 	public void addUserSuccess() {
@@ -124,6 +129,24 @@ public class PatientDaoImplTest extends
 		phoneNumbers.add(phoneNumber1);
 		phoneNumbers.add(phoneNumber2);
 		patient.setPhoneNumbers(phoneNumbers);
+
+		final Set<Visit> visits = new HashSet<Visit>();
+
+		final Visit visit1 = new Visit(patient);
+		visit1.setVisitDate(new Date());
+		visits.add(visit1);
+
+		final Set<VisitActivity> activities = new HashSet<VisitActivity>();
+		final VisitActivity va = new VisitActivity();
+		va.setDescription("aaa");
+		va.setPrice(100);
+		va.setVat(0);
+		visitActivityDictDao.addVisitActivity(va);
+		activities.add(va);
+		visit1.setActivities(activities);
+
+		patient.setVisits(visits);
+
 		return patient;
 	}
 }

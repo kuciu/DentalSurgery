@@ -44,3 +44,24 @@ create table visit_activities (
     visit_id int not null,
     va_dict_id int not null
 );
+
+create table tooth_state_dict (
+    ts_dict_id int not null auto_increment primary key,
+    description varchar(100),
+    all_tooth boolean
+);
+
+create table tooths (
+    tooth_id int not null auto_increment primary key,
+    visit_id int not null,
+    toot_number int not null,
+    all_tooth_state int,
+    area_1_state int,
+    area_2_state int,
+    area_3_state int,
+    area_4_state int,
+    area_5_state int,
+    area_6_state int,
+    area_7_state int,
+    area_8_state int
+);

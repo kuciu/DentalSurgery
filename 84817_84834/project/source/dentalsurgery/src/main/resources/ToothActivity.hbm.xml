@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="pl.poznan.put.dentalsurgery.model">
+
+	<class name="ToothActivity" table="tooth_activity_dict">
+		<id name="activityId" column="ta_dict_ID">
+			<generator class="native" />
+		</id>
+		<property name="description" column="description" />
+		<property name="price" column="price" />
+		<property name="vat" column="vat" />
+		<property name="allTooth" column="all_tooth"/>
+	</class>
+
+</hibernate-mapping>

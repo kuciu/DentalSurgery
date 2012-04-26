@@ -15,11 +15,18 @@
 			<many-to-many column="va_dict_ID"
 				class="pl.poznan.put.dentalsurgery.model.VisitActivity" />
 		</set>
-		<many-to-one name="patient" class="pl.poznan.put.dentalsurgery.model.Patient" fetch="select">
-            <column name="PATIENT_ID" not-null="true" />
-        </many-to-one>
+		<many-to-one name="patient"
+			class="pl.poznan.put.dentalsurgery.model.Patient" fetch="select">
+			<column name="PATIENT_ID" not-null="true" />
+		</many-to-one>
 		<property name="comments" column="comments"></property>
-
+		<set name="teeth" table="tooths" inverse="true" lazy="false"
+			fetch="select" cascade="delete, save-update">
+			<key>
+				<column name="tooth_id" not-null="true" />
+			</key>
+			<one-to-many class="pl.poznan.put.dentalsurgery.model.Tooth" />
+		</set>
 	</class>
 
 </hibernate-mapping>

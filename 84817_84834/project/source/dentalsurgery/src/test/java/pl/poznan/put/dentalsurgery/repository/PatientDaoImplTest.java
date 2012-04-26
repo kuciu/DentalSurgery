@@ -44,6 +44,10 @@ public class PatientDaoImplTest extends
 	@Test
 	public void addUserSuccess() {
 		final Patient patient = createPatient();
+		final VisitActivity va = VisitActivityDictDaoImplTest
+				.createVisitActivity();
+		visitActivityDictDao.addVisitActivity(va);
+		patient.getVisits().iterator().next().getActivities().add(va);
 
 		final long id = patientDao.addPatient(patient);
 		final Patient patientFromDb = patientDao.getPatientById(id);
@@ -76,6 +80,10 @@ public class PatientDaoImplTest extends
 	@Test
 	public void updateUserSuccess() {
 		Patient patient = createPatient();
+		final VisitActivity va = VisitActivityDictDaoImplTest
+				.createVisitActivity();
+		visitActivityDictDao.addVisitActivity(va);
+		patient.getVisits().iterator().next().getActivities().add(va);
 		final long id = patientDao.addPatient(patient);
 		patient = patientDao.getPatientById(id);
 		patient.getPhoneNumbers().clear();
@@ -99,8 +107,7 @@ public class PatientDaoImplTest extends
 
 	}
 
-	private Patient createPatient() {
-		// TODO Zmienic na builder
+	protected static Patient createPatient() {
 		final Patient patient = new Patient();
 		patient.setName("TestName");
 		patient.setSurname("TestSurname");
@@ -137,12 +144,7 @@ public class PatientDaoImplTest extends
 		visits.add(visit1);
 
 		final Set<VisitActivity> activities = new HashSet<VisitActivity>();
-		final VisitActivity va = new VisitActivity();
-		va.setDescription("aaa");
-		va.setPrice(100);
-		va.setVat(0);
-		visitActivityDictDao.addVisitActivity(va);
-		activities.add(va);
+
 		visit1.setActivities(activities);
 
 		patient.setVisits(visits);

@@ -1,8 +1,15 @@
 package pl.poznan.put.dentalsurgery.model;
 
+import java.util.Set;
+
 public class Tooth {
 	private long toothId;
 	private int number;
+
+	private Visit visit;
+
+	private Set<ToothActivity> activities;
+
 	private ToothState allToothState;
 
 	private ToothState area1State;
@@ -16,6 +23,10 @@ public class Tooth {
 	private ToothState area7State;
 
 	private ToothState area8State;
+
+	public Tooth(final Visit visit) {
+		this.visit = visit;
+	}
 
 	public long getToothId() {
 		return toothId;
@@ -103,6 +114,22 @@ public class Tooth {
 
 	public void setArea8State(final ToothState area8State) {
 		this.area8State = area8State;
+	}
+
+	public Visit getVisit() {
+		return visit;
+	}
+
+	public void setVisit(final Visit visit) {
+		this.visit = visit;
+	}
+
+	public Set<ToothActivity> getActivities() {
+		return activities;
+	}
+
+	public void setActivities(final Set<ToothActivity> toothActivities) {
+		this.activities = toothActivities;
 	}
 
 }

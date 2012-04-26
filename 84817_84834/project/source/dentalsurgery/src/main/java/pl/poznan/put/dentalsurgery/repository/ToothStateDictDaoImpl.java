@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import pl.poznan.put.dentalsurgery.model.ToothState;
 
 @Repository
-public class TootStateDictDaoImpl extends AbstractDao<ToothState> implements
+public class ToothStateDictDaoImpl extends AbstractDao<ToothState> implements
 		ToothStateDictDao {
 
 	@SuppressWarnings("unchecked")

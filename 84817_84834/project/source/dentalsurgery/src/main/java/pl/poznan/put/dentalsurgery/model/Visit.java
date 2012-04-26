@@ -9,6 +9,15 @@ public class Visit {
 	private Date visitDate;
 	private Set<VisitActivity> activities;
 	private String comments;
+	private Set<Tooth> teeth;
+
+	public Set<Tooth> getTeeth() {
+		return teeth;
+	}
+
+	public void setTeeth(final Set<Tooth> teeth) {
+		this.teeth = teeth;
+	}
 
 	public String getComments() {
 		return comments;

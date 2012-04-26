@@ -57,6 +57,8 @@
 				<value>VisitActivity.hbm.xml</value>
 				<value>Visit.hbm.xml</value>
 				<value>ToothState.hbm.xml</value>
+				<value>Tooth.hbm.xml</value>
+				<value>ToothActivity.hbm.xml</value>
 			</list>
 		</property>
 	</bean>

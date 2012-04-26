@@ -27,7 +27,7 @@ public class ToothStateDictDaoImplTest extends
 		AbstractTransactionalJUnit4SpringContextTests {
 	protected final Log logger = LogFactory.getLog(getClass());
 	@Autowired
-	private TootStateDictDaoImpl toothStateDictDao;
+	private ToothStateDictDaoImpl toothStateDictDao;
 
 	/**
 	 * Test sprawdzaj¹cy czy nie ma podstawowych b³êdow w mapowaniu hibernate
@@ -39,9 +39,7 @@ public class ToothStateDictDaoImplTest extends
 
 	@Test
 	public void addToothStateSuccess() {
-		final ToothState toothState = new ToothState();
-		toothState.setDescription("TestDesc");
-		toothState.setAllTooth(false);
+		final ToothState toothState = createToothState();
 
 		final long id = toothStateDictDao.addToothState(toothState);
 		final ToothState toothStateFromDb = toothStateDictDao
@@ -55,9 +53,7 @@ public class ToothStateDictDaoImplTest extends
 
 	@Test
 	public void deleteUserSuccess() {
-		final ToothState toothState = new ToothState();
-		toothState.setDescription("TestDesc");
-		toothState.setAllTooth(false);
+		final ToothState toothState = createToothState();
 
 		final long id = toothStateDictDao.addToothState(toothState);
 		final ToothState toothStateFromDb = toothStateDictDao
@@ -68,9 +64,7 @@ public class ToothStateDictDaoImplTest extends
 
 	@Test
 	public void updateUserSuccess() {
-		ToothState toothState = new ToothState();
-		toothState.setDescription("TestDesc");
-		toothState.setAllTooth(false);
+		ToothState toothState = createToothState();
 
 		final long id = toothStateDictDao.addToothState(toothState);
 		toothState = toothStateDictDao.getToothStateById(id);
@@ -90,4 +84,10 @@ public class ToothStateDictDaoImplTest extends
 
 	}
 
+	protected static ToothState createToothState() {
+		final ToothState toothState = new ToothState();
+		toothState.setDescription("TestDesc");
+		toothState.setAllTooth(false);
+		return toothState;
+	}
 }

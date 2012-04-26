@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="pl.poznan.put.dentalsurgery.model">
+
+	<class name="Tooth" table="tooths">
+		<id name="toothId" column="tooth_ID">
+			<generator class="native" />
+		</id>
+		<property name="number" column="tooth_number" />
+		<many-to-one name="visit" class="pl.poznan.put.dentalsurgery.model.Visit" fetch="select">
+            <column name="visit_id" />
+        </many-to-one>
+		<many-to-one name="allToothState" class="pl.poznan.put.dentalsurgery.model.ToothState" fetch="select">
+            <column name="all_tooth_state" />
+        </many-to-one>
+		<many-to-one name="area1State" class="pl.poznan.put.dentalsurgery.model.ToothState" fetch="select">
+            <column name="area_1_state" />
+        </many-to-one>
+        <many-to-one name="area2State" class="pl.poznan.put.dentalsurgery.model.ToothState" fetch="select">
+            <column name="area_2_state" />
+        </many-to-one>
+        <many-to-one name="area3State" class="pl.poznan.put.dentalsurgery.model.ToothState" fetch="select">
+            <column name="area_3_state" />
+        </many-to-one>
+        <many-to-one name="area4State" class="pl.poznan.put.dentalsurgery.model.ToothState" fetch="select">
+            <column name="area_4_state" />
+        </many-to-one>
+        <many-to-one name="area5State" class="pl.poznan.put.dentalsurgery.model.ToothState" fetch="select">
+            <column name="area_5_state" />
+        </many-to-one>
+        <many-to-one name="area6State" class="pl.poznan.put.dentalsurgery.model.ToothState" fetch="select">
+            <column name="area_6_state" />
+        </many-to-one>
+        <many-to-one name="area7State" class="pl.poznan.put.dentalsurgery.model.ToothState" fetch="select">
+            <column name="area_7_state" />
+        </many-to-one>
+        <many-to-one name="area8State" class="pl.poznan.put.dentalsurgery.model.ToothState" fetch="select">
+            <column name="area_8_state" />
+        </many-to-one>
+        <set name="activities" table="tooth_activities" cascade="all">
+			<key column="tooth_ID" />
+			<many-to-many column="ta_dict_ID"
+				class="pl.poznan.put.dentalsurgery.model.ToothActivity" />
+		</set>
+	</class>
+
+</hibernate-mapping>

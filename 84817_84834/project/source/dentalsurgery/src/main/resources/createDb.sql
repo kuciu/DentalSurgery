@@ -54,7 +54,7 @@ create table tooth_state_dict (
 create table tooths (
     tooth_id int not null auto_increment primary key,
     visit_id int not null,
-    toot_number int not null,
+    tooth_number int not null,
     all_tooth_state int,
     area_1_state int,
     area_2_state int,
@@ -64,4 +64,17 @@ create table tooths (
     area_6_state int,
     area_7_state int,
     area_8_state int
+);
+
+create table tooth_activity_dict (
+    ta_dict_id int not null auto_increment primary key,
+    description varchar(100),
+    all_tooth boolean not null,
+    price decimal(7,2),
+    vat decimal(2,2)
+);
+
+create table tooth_activities (
+    tooth_id int not null,
+    ta_dict_id int not null
 );

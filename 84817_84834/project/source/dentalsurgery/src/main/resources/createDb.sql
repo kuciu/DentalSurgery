@@ -1,3 +1,16 @@
+
+drop table if exists phone_numbers;
+drop table if exists patients;
+drop table if exists illnesses;
+drop table if exists medications;
+drop table if exists visits;
+drop table if exists visit_activity_dict;
+drop table if exists visit_activities;
+drop table if exists tooth_state_dict;
+drop table if exists tooths;
+drop table if exists tooth_activity_dict;
+drop table if exists tooth_activities;
+
 create table phone_numbers(
     phone_id int not null auto_increment primary key,
     patient_id int not null,
@@ -35,7 +48,7 @@ create table visits (
 
 create table visit_activity_dict (
     va_dict_id int not null auto_increment primary key,
-    descriptionvisit_activity_dictvisit_activity_dict varchar(100) not null,
+    description varchar(100) not null,
     price decimal(7,2),
     vat decimal(2,2)
 );

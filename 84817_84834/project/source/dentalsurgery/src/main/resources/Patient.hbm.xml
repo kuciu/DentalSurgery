@@ -5,15 +5,15 @@
 
 <hibernate-mapping package="pl.poznan.put.dentalsurgery.model">
 
-	<class name="Patient" table="PATIENTS">
-		<id name="patientId" column="PATIENT_ID">
+	<class name="Patient" table="patients">
+		<id name="patientId" column="patient_id">
 			<generator class="native" />
 		</id>
-		<property name="name" column="NAME" />
-		<property name="surname" column="SURNAME" />
-		<property name="bornDate" column="BORN_DATE" type="timestamp" />
-		<property name="city" column="CITY" />
-		<property name="street" column="STREET" />
+		<property name="name" column="name" />
+		<property name="surname" column="surname" />
+		<property name="bornDate" column="born_date" type="timestamp" />
+		<property name="city" column="city" />
+		<property name="street" column="street" />
 		<set name="phoneNumbers" table="phone_numbers" inverse="true"
 			lazy="false" fetch="select" cascade="delete, save-update">
 			<key>

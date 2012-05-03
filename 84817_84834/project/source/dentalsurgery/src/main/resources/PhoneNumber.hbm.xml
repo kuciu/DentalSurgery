@@ -5,12 +5,12 @@
 
 <hibernate-mapping package="pl.poznan.put.dentalsurgery.model">
 
-	<class name="PhoneNumber" table="PHONE_NUMBERS">
-		<id name="phoneId" column="phone_ID">
+	<class name="PhoneNumber" table="phone_numbers">
+		<id name="phoneId" column="phone_id">
 			<generator class="native" />
 		</id>
 		<many-to-one name="patient" class="pl.poznan.put.dentalsurgery.model.Patient" fetch="select">
-            <column name="PATIENT_ID" not-null="true" />
+            <column name="patient_id" not-null="true" />
         </many-to-one>
 		<property name="number" column="phone_number" />
 

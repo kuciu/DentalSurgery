@@ -6,7 +6,7 @@
 <hibernate-mapping package="pl.poznan.put.dentalsurgery.model">
 
 	<class name="VisitActivity" table="visit_activity_dict">
-		<id name="activityId" column="va_dict_ID">
+		<id name="activityId" column="va_dict_id">
 			<generator class="native" />
 		</id>
 		<property name="description" column="description" />

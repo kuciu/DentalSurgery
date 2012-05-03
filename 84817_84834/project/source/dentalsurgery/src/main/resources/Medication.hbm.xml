@@ -4,15 +4,15 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="pl.poznan.put.dentalsurgery.model">
-	<class name="Medication" table="Medications">
-		<id name="medicationId" column="Medication_ID">
+	<class name="Medication" table="medications">
+		<id name="medicationId" column="medication_id">
 			<generator class="native" />
 		</id>
 		<many-to-one name="patient"
 			class="pl.poznan.put.dentalsurgery.model.Patient" fetch="select">
-			<column name="PATIENT_ID" not-null="true" />
+			<column name="patient_id" not-null="true" />
 		</many-to-one>
-		<property name="name" column="NAME" />
+		<property name="name" column="name" />
 	</class>
 
 </hibernate-mapping>

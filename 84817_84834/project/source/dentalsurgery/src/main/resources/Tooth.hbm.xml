@@ -6,7 +6,7 @@
 <hibernate-mapping package="pl.poznan.put.dentalsurgery.model">
 
 	<class name="Tooth" table="tooths">
-		<id name="toothId" column="tooth_ID">
+		<id name="toothId" column="tooth_id">
 			<generator class="native" />
 		</id>
 		<property name="number" column="tooth_number" />
@@ -41,8 +41,8 @@
             <column name="area_8_state" />
         </many-to-one>
         <set name="activities" table="tooth_activities" cascade="all">
-			<key column="tooth_ID" />
-			<many-to-many column="ta_dict_ID"
+			<key column="tooth_id" />
+			<many-to-many column="ta_dict_id"
 				class="pl.poznan.put.dentalsurgery.model.ToothActivity" />
 		</set>
 	</class>

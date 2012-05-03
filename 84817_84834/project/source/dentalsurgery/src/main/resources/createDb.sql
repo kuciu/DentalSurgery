@@ -35,7 +35,7 @@ create table visits (
 
 create table visit_activity_dict (
     va_dict_id int not null auto_increment primary key,
-    descriptionvisit_activity_dictvisit_activity_dict varchar(100) not null,
+    description varchar(100) not null,
     price decimal(7,2),
     vat decimal(2,2)
 );

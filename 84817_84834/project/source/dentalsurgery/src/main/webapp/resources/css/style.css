@@ -1,0 +1,106 @@
+@CHARSET "UTF-8";
+
+/*
+HTML colors
+
+#80C2FF
+#6CA4D9
+#5987B3
+#FFE880
+#D9B36C
+#B39359
+#000000
+#FFFFFF
+#000000
+
+*/
+
+
+body {
+	margin: 0px 20px 0px 20px;
+	font: 76.5% "Trebuchet MS", sans-serif;
+	color: #5987B3;
+	
+	/*
+	background-image: url('/dentalsurgery/resources/img/stripe.png');
+	background-repeat: repeat;
+	*/
+	background-color: #FFFDEA;
+}
+
+#body-top {
+	margin: 10px auto -1px auto;
+	
+	background-color: #80C2FF;
+	color: #5987B3;
+	
+	/*font-size: 3em;*/
+	 
+	border: solid;
+	border-width: 1px;
+	
+	height: 70px;
+	width: 1000px;
+}
+
+#body-top h1 {
+	padding-left: 20px;
+}
+
+#body-container {
+	margin: 0px auto -1px auto;
+	background-color: #FFFFFF;
+	width: 1000px;
+	overflow: auto;
+	min-height: 500px;
+	
+	border: solid;
+	border-width: 1px;
+	border-color: #B39359;
+}
+
+#body-container a {
+	color: #80C2FF;
+	text-decoration: none;
+}
+
+#body-container a:HOVER {
+	color: #D9B36C;
+}
+
+
+
+#body-nav {
+	margin-top: 10px; 
+	margin-left: 10px;
+	float : left;
+	width: 150px;
+	
+/*border: solid;
+	border-width: 1px;*/
+}
+
+
+#body-content {
+	margin: 10px 10px 10px 10px;
+	width: 810px;
+	float: right; 
+
+	/*border: solid;
+	border-width: 1px;*/
+}
+
+#body-footer {
+	
+	color: #B39359;
+	text-align: center; 
+	width : 1000px;
+	margin: 0px auto 10px auto;
+	padding: 10px 0px 10px 0px; 
+	
+	border : solid;
+	border-width: 1px;
+	
+	
+	
+}

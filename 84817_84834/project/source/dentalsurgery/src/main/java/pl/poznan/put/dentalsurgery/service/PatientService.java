@@ -7,6 +7,8 @@ import pl.poznan.put.dentalsurgery.model.Patient;
 public interface PatientService {
 	Collection<Patient> getAllPatients();
 
-	Collection<Patient> getPatientById(long id);
+	Patient getPatientById(long id);
+
+	long addPatient(Patient patient);
 
 }

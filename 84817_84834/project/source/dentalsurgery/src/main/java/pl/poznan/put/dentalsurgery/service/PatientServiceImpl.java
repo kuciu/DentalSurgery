@@ -34,9 +34,15 @@ public class PatientServiceImpl implements PatientService {
 	}
 
 	@Override
-	public Collection<Patient> getPatientById(final long id) {
-		// TODO Auto-generated method stub
-		return null;
+	@Transactional(readOnly = true)
+	public Patient getPatientById(final long id) {
+		return patientDao.getPatientById(id);
+	}
+
+	@Override
+	@Transactional
+	public long addPatient(Patient patient) {
+		return patientDao.addPatient(patient);
 	}
 
 }

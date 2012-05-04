@@ -16,13 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import pl.poznan.put.dentalsurgery.model.Patient;
+import pl.poznan.put.dentalsurgery.repository.PatientDaoImpl;
 import pl.poznan.put.dentalsurgery.service.PatientService;
 
 @Controller
 public class PatientController {
 	private static final Log LOG = LogFactory.getLog(PatientController.class);
 	private PatientService patientService;
-
+	
 	@Autowired
 	public void setPatientServiceService(final PatientService patientService) {
 		this.patientService = patientService;
@@ -48,8 +49,12 @@ public class PatientController {
 	@RequestMapping( value = "/patients/new", method=RequestMethod.POST )
 	public String newPatientSubmit (@Valid @ModelAttribute Patient patient, BindingResult result) {
 		if (result.hasErrors()) {
+			// jeśli są błędy w formularzu - wyświetlamy go ponownie
 			return "patientForm";
 		}
+		// nie ma błędów, dodajemy pacjenta
+		patientService.addPatient(patient);
+		// przekierowanie na listę pacjentów
 		return "redirect:/patients";
 	}
 	

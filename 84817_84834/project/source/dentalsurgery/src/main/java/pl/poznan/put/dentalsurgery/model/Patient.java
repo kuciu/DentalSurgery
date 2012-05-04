@@ -5,7 +5,12 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.NotNull;
+
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * 
@@ -14,15 +19,24 @@ import org.hibernate.validator.constraints.Length;
  */
 public class Patient {
 	private Long patientId;
-	
-	 
-	@Length(min=2)
+ 
+	@NotBlank
 	private String name;
 	
+	@NotBlank
 	private String surname;
+
+	@NotNull
+	@DateTimeFormat(pattern="dd-MM-yyyy")
+	@Past
 	private Date bornDate;
+	
+	@NotBlank
 	private String city;
+	
+	@NotBlank
 	private String street;
+	
 	private Set<PhoneNumber> phoneNumbers = new HashSet<PhoneNumber>();
 	private Set<Illness> illnesses = new HashSet<Illness>();
 	private Set<Medication> medications = new HashSet<Medication>();

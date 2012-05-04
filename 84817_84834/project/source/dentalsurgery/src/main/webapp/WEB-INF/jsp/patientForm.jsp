@@ -17,11 +17,10 @@
 <script type="text/javascript"
 	src="<c:url value="/resources/jquery/js/jquery-ui-1.8.20.custom.min.js" />"></script>
 <script type="text/javascript">
-
+ 
 $(document).ready(function() {
-	
-	$('.datepicker').datepicker();
-	$('button').button();
+	$('.datepicker').datepicker({ dateFormat: "dd-mm-yy" });
+	$('button').button(); 
 });
 
 </script>	
@@ -56,23 +55,27 @@ $(document).ready(function() {
 						<tr>
 							<td>Nazwisko:</td>
 							<td><form:input path="surname" /></td>
+							<td><form:errors path="surname" cssClass="error" /></td>
+							
 						</tr>
 						
 						<tr>
 							<td>Ulica:</td>
 							<td><form:input path="street" /></td>
+							<td><form:errors path="street" cssClass="error" /></td>
 						</tr>
 						
 						<tr>
 							<td>Miasto:</td>
 							<td><form:input path="city" /></td>
+							<td><form:errors path="city" cssClass="error" /></td>
 						</tr>
 						
-						
-<!-- 						<tr> -->
-<!-- 							<td>Data urodzenia:</td> -->
-<%-- 							<td><form:input path="bornDate" cssClass="datepicker" /></td> --%>
-<!-- 						</tr> -->
+						<tr>
+							<td>Data urodzenia:</td>
+							<td><form:input path="bornDate" cssClass="datepicker" /></td>
+							<td><form:errors path="bornDate" cssClass="error" /></td>
+						</tr>
 						
 						<tr>
 							<td colspan="2">

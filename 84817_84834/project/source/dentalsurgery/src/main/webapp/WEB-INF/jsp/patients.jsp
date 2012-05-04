@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Dental Surgery | Dodaj pacjenta</title>
+<title>Dental Surgery | Lista pacjentów</title>
 <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet"
 	type="text/css" />
 <link
@@ -17,10 +17,20 @@
 <script type="text/javascript"
 	src="<c:url value="/resources/jquery/js/jquery-ui-1.8.20.custom.min.js" />"></script>
 <script type="text/javascript">
-
-	// jquery code here
-
+	
+	// custom js here
+	
 </script>
+
+<style type="text/css">
+	
+	/* custom css here */
+	#patient-list {
+		text-align: right;
+		width: 300px;
+	}
+	
+</style>
 
 </head>
 <body>
@@ -37,20 +47,27 @@
 		</div>
 
 		<div id="body-content">
-			<h1>Kartoteka pacjentów</h1>
+			<h1>Lista pacjentów</h1>
 
-			<c:forEach items="${patientList}" var="patient">
-				<c:out value="${patient.patientId}" />: <c:out
-					value="${patient.name}" />
-				<c:out value="${patient.surname}" />
-				<c:out value="${patient.street}" />
-				<c:out value="${patient.city}" />
-				<c:forEach items="${patient.phoneNumbers}" var="phoneNumber">
-					<c:out value="${phoneNumber.number }" />
-				</c:forEach>
-				<br/>
-			</c:forEach>
-
+						
+				<table id="patient-list" border="0">
+					
+					<thead>
+						<tr> <th>Imię i nazwisko</th><th>Operacje</th></tr>
+					</thead>
+				
+					<c:forEach items="${patientList}" var="patient">
+						<tr> 
+							<td> <c:out value="${patient.name}" /> <c:out value="${patient.surname}" /> </td>
+							<td>
+								<a href="<s:url value="/patients/${patient.patientId}/delete" />">Usuń</a>
+							</td>
+						</tr>
+					</c:forEach>
+					
+					
+				
+				</table>
 
 		</div>
 	</div>

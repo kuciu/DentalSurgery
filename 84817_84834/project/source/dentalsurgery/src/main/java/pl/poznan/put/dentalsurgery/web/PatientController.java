@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -55,6 +56,15 @@ public class PatientController {
 		// nie ma błędów, dodajemy pacjenta
 		patientService.addPatient(patient);
 		// przekierowanie na listę pacjentów
+		return "redirect:/patients";
+	}
+	
+	@RequestMapping( value = "/patients/{patientId}/delete", method=RequestMethod.GET )
+	public String deletePatient ( @PathVariable Long patientId) {
+		Patient patient = patientService.getPatientById(patientId);
+		if (patient != null) {
+			patientService.deletePatient(patient);
+		}
 		return "redirect:/patients";
 	}
 	

@@ -45,4 +45,10 @@ public class PatientServiceImpl implements PatientService {
 		return patientDao.addPatient(patient);
 	}
 
+	@Override
+	@Transactional
+	public void deletePatient(Patient patient) {
+		this.patientDao.deletePatient(patient);
+	}
+
 }

@@ -5,6 +5,9 @@ public class ToothState {
 	private String description;
 	private boolean allTooth;
 
+	public ToothState() {
+	}
+
 	public long getToothStateId() {
 		return toothStateId;
 	}

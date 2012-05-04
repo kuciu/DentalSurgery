@@ -11,6 +11,9 @@ public class Visit {
 	private String comments;
 	private Set<Tooth> teeth;
 
+	public Visit() {
+	}
+
 	public Set<Tooth> getTeeth() {
 		return teeth;
 	}

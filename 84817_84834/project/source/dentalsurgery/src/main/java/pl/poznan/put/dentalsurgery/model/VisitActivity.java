@@ -6,6 +6,9 @@ public class VisitActivity {
 	private double price;
 	private double vat;
 
+	public VisitActivity() {
+	}
+
 	public long getActivityId() {
 		return activityId;
 	}

@@ -5,6 +5,9 @@ public class Illness {
 	private Patient patient;
 	private String name;
 
+	public Illness() {
+	}
+
 	public Illness(final Patient patient) {
 		this.patient = patient;
 	}

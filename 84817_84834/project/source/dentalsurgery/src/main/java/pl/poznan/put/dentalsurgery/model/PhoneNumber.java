@@ -5,6 +5,9 @@ public class PhoneNumber {
 	private Patient patient;
 	private String number;
 
+	public PhoneNumber() {
+	}
+
 	public PhoneNumber(final Patient patient) {
 		this.patient = patient;
 	}

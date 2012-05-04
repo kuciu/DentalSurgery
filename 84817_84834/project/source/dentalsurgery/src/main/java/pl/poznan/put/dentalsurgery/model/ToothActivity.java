@@ -7,6 +7,9 @@ public class ToothActivity {
 	private double vat;
 	private boolean allTooth;
 
+	public ToothActivity() {
+	}
+
 	public long getActivityId() {
 		return activityId;
 	}

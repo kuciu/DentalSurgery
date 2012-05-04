@@ -24,6 +24,9 @@ public class Tooth {
 
 	private ToothState area8State;
 
+	public Tooth() {
+	}
+
 	public Tooth(final Visit visit) {
 		this.visit = visit;
 	}

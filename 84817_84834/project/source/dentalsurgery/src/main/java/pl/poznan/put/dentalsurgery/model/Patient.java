@@ -22,6 +22,9 @@ public class Patient {
 	private Set<Medication> medications = new HashSet<Medication>();
 	private Set<Visit> visits = new HashSet<Visit>();
 
+	public Patient() {
+	}
+
 	public Long getPatientId() {
 		return patientId;
 	}

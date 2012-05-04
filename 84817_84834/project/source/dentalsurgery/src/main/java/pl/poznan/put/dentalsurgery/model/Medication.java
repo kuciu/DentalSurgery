@@ -5,6 +5,9 @@ public class Medication {
 	private Patient patient;
 	private String name;
 
+	public Medication() {
+	}
+
 	public Medication(final Patient patient) {
 		super();
 		this.patient = patient;

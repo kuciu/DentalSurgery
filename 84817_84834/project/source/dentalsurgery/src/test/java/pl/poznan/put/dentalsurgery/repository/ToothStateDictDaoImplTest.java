@@ -30,7 +30,7 @@ public class ToothStateDictDaoImplTest extends
 	private ToothStateDictDaoImpl toothStateDictDao;
 
 	/**
-	 * Test sprawdzaj¹cy czy nie ma podstawowych b³êdow w mapowaniu hibernate
+	 * Test sprawdzajacy czy nie ma podstawowych bledow w mapowaniu hibernate
 	 */
 	@Test
 	public void getAllSuccess() {

@@ -17,23 +17,131 @@
 <script type="text/javascript"
 	src="<c:url value="/resources/jquery/js/jquery-ui-1.8.20.custom.min.js" />"></script>
 <script type="text/javascript">
+			
+	/**
+	 * Powiadomienie o sukcesie i wykonanie akcji
+	 */
+	function successMessage(title, text, callback) {
+		$("#success-message-text").html(text);
+		$("#success-message").dialog({
+			title: title,
+			resizable: false,
+			width:500,
+			modal: true,
+			buttons: {
+				Ok: function() { 
+					$( this ).dialog( "close" );
+					if (callback != null) {callback();}
+				}
+			}
+		});
+	}
 	
-	// custom js here
+	/**
+	 * Powiadomienie o błędzie
+	 */
+	function errorMessage(title, text) {
+		$("#error-message-text").html(text);
+		$("#error-message").dialog({
+			title: title,
+			resizable: false,
+			width:500,
+			modal: true,
+			buttons: {
+				Ok: function() { 
+					$( this ).dialog( "close" );
+				}
+			}
+		});
+	}
+	
+	/**
+	 * Usuwa pacjenta; przed usunięciem wyświetla okno dialogowe z pytaniem
+	 */
+	function deletePatient(deleteUrl) {
+		 $("#dialog-confirm-question").html(
+				 "Czy na pewno chcesz usunąć wskazanego pacjenta? Usuniesz całą historię wizyt i inne powiązane dane."
+		 );
+		 $("#dialog-confirm").dialog({
+			 	title: "Usunąć pacjenta?",
+				resizable: false,
+				width:500,
+				modal: true,
+				buttons: {
+					"Usuń mimo to": function() {
+						$( this ).dialog( "close" );
+						
+						$.post(deleteUrl)
+						    .success(function() { 
+						    	successMessage(
+						    			"Pacjent usunięty", 
+						    			"Udało się z powodzeniem usunąć pacjenta wraz ze wszystkimi danymi.", 
+						    			function(){
+						    				window.location.reload();						    			
+						    			}); 
+						    	})
+							.error(function() { 
+								errorMessage(
+										"Błąd podczas usuwania", 
+										"<strong>Pacjent nie został usunięty!</strong> Proszę spróbować później.");
+							});
+					},
+					"Anuluj": function() {
+						$( this ).dialog( "close" );
+					}
+				}
+		});
+	}
+	 
+	 /**
+	  * Wyświetla szczegółowe informacje na temat wybranego pacjenta
+	  */
+	function loadPatientInfo(url) {
+		 
+	}	 
 	
 </script>
 
 <style type="text/css">
 	
-	/* custom css here */
 	#patient-list {
 		text-align: right;
 		width: 300px;
+	}
+	
+	.icon-operation {
+	float: right; margin: 0px;
 	}
 	
 </style>
 
 </head>
 <body>
+
+	<!-- Okno dialogowe z pytaniem o potwierdzenie wykonania operacji -->
+	<div id="dialog-confirm" style="display: none">
+		<p>
+			<span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>
+			<span id="dialog-confirm-question"></span>
+		</p>
+	</div>
+	
+	<!-- Okno dialogowe w przypadku sukcesu -->
+	<div id="success-message" style="display: none">
+		<p>
+			<span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 20px 0;"></span>
+			<span id="success-message-text"></span>
+		</p>
+	</div>
+	
+	<!-- Okno dialogowe w przypadku błędu -->
+	<div id="error-message" style="display: none">
+		<p>
+			<span class="ui-icon ui-icon-circle-close" style="float: left; margin: 0 7px 20px 0;"></span>
+			<span id="error-message-text"></span>
+		</p>
+	</div>
+
 
 
 	<div id="body-top" class="ui-corner-top">
@@ -59,20 +167,24 @@
 					<c:forEach items="${patientList}" var="patient">
 						<tr> 
 							<td> <c:out value="${patient.name}" /> <c:out value="${patient.surname}" /> </td>
-							<td>
-								<a href="<s:url value="/patients/${patient.patientId}/delete" />">Usuń</a>
+							<td> 
+								<s:url value="/patients/${patient.patientId}/delete" var="deleteUrl"/>
+								<s:url value="/patients/${patient.patientId}" var="patientInfoUrl"/>
+								
+								
+								<a href="#" onclick="loadPatientInfo('${patientInfoUrl}')">
+									<span class="ui-icon ui-icon-info icon-operation" ></span>
+								</a>
+								<a href="#" onclick="deletePatient('${deleteUrl}')" >
+									<span class="ui-icon ui-icon-trash icon-operation" ></span>
+								</a>
 							</td>
 						</tr>
 					</c:forEach>
-					
-					
-				
 				</table>
-
 		</div>
 	</div>
-	<div id="body-footer" class="ui-corner-bottom">(C) 2012 by
-		Kamiński &amp; Kuć</div>
+	<div id="body-footer" class="ui-corner-bottom">(C) 2012 by Kamiński &amp; Kuć</div>
 
 </body>
 </html>

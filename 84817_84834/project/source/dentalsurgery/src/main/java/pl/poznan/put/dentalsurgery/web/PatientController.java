@@ -3,6 +3,7 @@ package pl.poznan.put.dentalsurgery.web;
 import java.util.Collection;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.apache.commons.logging.Log;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import pl.poznan.put.dentalsurgery.model.Patient;
 import pl.poznan.put.dentalsurgery.repository.PatientDaoImpl;
@@ -59,13 +61,22 @@ public class PatientController {
 		return "redirect:/patients";
 	}
 	
-	@RequestMapping( value = "/patients/{patientId}/delete", method=RequestMethod.GET )
-	public String deletePatient ( @PathVariable Long patientId) {
+	/**
+	 * Usunięcie pacjenta o podanym identyfikatorze
+	 * @param patientId
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping( value = "/patients/{patientId}/delete", method=RequestMethod.POST )
+	public @ResponseBody String deletePatient ( @PathVariable Long patientId, HttpServletResponse response) {
 		Patient patient = patientService.getPatientById(patientId);
 		if (patient != null) {
 			patientService.deletePatient(patient);
+			return "OK";
+		} else {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return "ERROR";
 		}
-		return "redirect:/patients";
 	}
 	
 }

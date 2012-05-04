@@ -25,7 +25,7 @@ $(document).ready(function() {
 });
 
 </script>	
-	
+
 </head>
 <body>
 
@@ -35,10 +35,9 @@ $(document).ready(function() {
 
 	<div id="body-container">
 
-
 		<div id="body-nav">
-			<a href="#">Kartoteka</a> <br /> <a href="#">Nowy pacjent</a> <br />
-			<a href="#">Ustawienia</a> <br /> <a href="#">O aplikacji</a> <br />
+			<a href="<c:url value="/patients/new" />">Nowy pacjent</a> <br /> 
+			<a href="<c:url value="/patients" />">Kartoteka</a> <br />
 		</div>
 
 		<div id="body-content">
@@ -52,6 +51,7 @@ $(document).ready(function() {
 						<tr>
 							<td>Imię:</td>
 							<td><form:input path="name" /></td>
+							<td><form:errors path="name" cssClass="error" /></td>
 						</tr>
 						<tr>
 							<td>Nazwisko:</td>

@@ -3,6 +3,8 @@ package pl.poznan.put.dentalsurgery.web;
 import java.util.Collection;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +46,7 @@ public class PatientController {
 	}
 	
 	@RequestMapping( value = "/patients/new", method=RequestMethod.POST )
-	public String newPatientSubmit (@ModelAttribute Patient patient, BindingResult result) {
+	public String newPatientSubmit (@Valid @ModelAttribute Patient patient, BindingResult result) {
 		if (result.hasErrors()) {
 			return "patientForm";
 		}

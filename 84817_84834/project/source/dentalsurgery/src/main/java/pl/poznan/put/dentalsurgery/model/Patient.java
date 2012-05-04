@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.hibernate.validator.constraints.Length;
+
 /**
  * 
  * @author Kuciu
@@ -12,7 +14,11 @@ import java.util.Set;
  */
 public class Patient {
 	private Long patientId;
+	
+	 
+	@Length(min=2)
 	private String name;
+	
 	private String surname;
 	private Date bornDate;
 	private String city;

@@ -1,7 +1,9 @@
 package pl.poznan.put.dentalsurgery.repository;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import junit.framework.Assert;
@@ -132,7 +134,7 @@ public class PatientDaoImplTest extends
 		medications.add(medication);
 		patient.setMedications(medications);
 
-		final Set<PhoneNumber> phoneNumbers = new HashSet<PhoneNumber>();
+		final List<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
 		phoneNumbers.add(phoneNumber1);
 		phoneNumbers.add(phoneNumber2);
 		patient.setPhoneNumbers(phoneNumbers);

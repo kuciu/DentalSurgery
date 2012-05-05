@@ -3,14 +3,15 @@ package pl.poznan.put.dentalsurgery.model;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-import javax.validation.constraints.Past;
 import javax.validation.constraints.NotNull;
-
+import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.util.AutoPopulatingList;
 
 /**
  * 
@@ -19,25 +20,26 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 public class Patient {
 	private Long patientId;
- 
+
 	@NotBlank
 	private String name;
-	
+
 	@NotBlank
 	private String surname;
 
 	@NotNull
-	@DateTimeFormat(pattern="dd-MM-yyyy")
+	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	@Past
 	private Date bornDate;
-	
+
 	@NotBlank
 	private String city;
-	
+
 	@NotBlank
 	private String street;
-	
-	private Set<PhoneNumber> phoneNumbers = new HashSet<PhoneNumber>();
+
+	private List<PhoneNumber> phoneNumbers = new AutoPopulatingList<PhoneNumber>(
+			PhoneNumber.class);
 	private Set<Illness> illnesses = new HashSet<Illness>();
 	private Set<Medication> medications = new HashSet<Medication>();
 	private Set<Visit> visits = new HashSet<Visit>();
@@ -101,11 +103,11 @@ public class Patient {
 		this.street = street;
 	}
 
-	public Set<PhoneNumber> getPhoneNumbers() {
+	public List<PhoneNumber> getPhoneNumbers() {
 		return phoneNumbers;
 	}
 
-	public void setPhoneNumbers(final Set<PhoneNumber> phoneNumbers) {
+	public void setPhoneNumbers(final List<PhoneNumber> phoneNumbers) {
 		this.phoneNumbers = phoneNumbers;
 	}
 

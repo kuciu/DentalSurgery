@@ -14,13 +14,14 @@
 		<property name="bornDate" column="born_date" type="timestamp" />
 		<property name="city" column="city" />
 		<property name="street" column="street" />
-		<set name="phoneNumbers" table="phone_numbers" inverse="true"
+		<list name="phoneNumbers" table="phone_numbers" inverse="true"
 			lazy="false" fetch="select" cascade="delete, save-update">
 			<key>
 				<column name="patient_id" not-null="true" />
 			</key>
+			<index column="phone_id"></index>
 			<one-to-many class="pl.poznan.put.dentalsurgery.model.PhoneNumber" />
-		</set>
+		</list>
 		<set name="illnesses" table="illnesses" inverse="true" lazy="false"
 			fetch="select" cascade="delete, save-update">
 			<key>

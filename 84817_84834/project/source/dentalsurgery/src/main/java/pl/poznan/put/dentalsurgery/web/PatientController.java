@@ -1,8 +1,11 @@
 package pl.poznan.put.dentalsurgery.web;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -19,57 +22,73 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import pl.poznan.put.dentalsurgery.model.Patient;
-import pl.poznan.put.dentalsurgery.repository.PatientDaoImpl;
+import pl.poznan.put.dentalsurgery.model.PhoneNumber;
 import pl.poznan.put.dentalsurgery.service.PatientService;
 
 @Controller
 public class PatientController {
 	private static final Log LOG = LogFactory.getLog(PatientController.class);
 	private PatientService patientService;
-	
+
 	@Autowired
 	public void setPatientServiceService(final PatientService patientService) {
 		this.patientService = patientService;
 	}
 
-	@RequestMapping( value="/patients",  method=RequestMethod.GET )
+	@RequestMapping(value = "/patients", method = RequestMethod.GET)
 	public String listOfPatientsView(final Map<String, Object> model) {
-		
+
 		final Collection<Patient> patientList = patientService.getAllPatients();
 		model.put("patientList", patientList);
 
 		return "patients";
 	}
-	
+
 	/* Dodawanie nowego pacjenta */
-	
-	@RequestMapping( value = "/patients/new", method=RequestMethod.GET )
-	public String newPatientForm (Model model) {
+
+	@RequestMapping(value = "/patients/new", method = RequestMethod.GET)
+	public String newPatientForm(final Model model) {
 		model.addAttribute("patient", new Patient());
+		model.addAttribute("phones", new ArrayList<String>());
 		return "patientForm";
 	}
-	
-	@RequestMapping( value = "/patients/new", method=RequestMethod.POST )
-	public String newPatientSubmit (@Valid @ModelAttribute Patient patient, BindingResult result) {
+
+	@RequestMapping(value = "/patients/new", method = RequestMethod.POST)
+	public String newPatientSubmit(
+			@Valid @ModelAttribute final Patient patient,
+			final HttpServletRequest request, final BindingResult result) {
 		if (result.hasErrors()) {
 			// jeśli są błędy w formularzu - wyświetlamy go ponownie
 			return "patientForm";
 		}
+		// SPAW Ni jak nie mogłem rozkminić jak w formularzu JSP, gdzie dane są
+		// tylko stringami można utworzyć listę obiektów. Alternatywną pewnie by
+		// było puszczanie wszystkiego JSONem.
+		// Analogicznie będą robione pozostałe listy :(
+		final String[] phones = request.getParameterValues("phones");
+		final List<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
+		for (final String phone : phones) {
+			phoneNumbers.add(new PhoneNumber(patient, phone));
+		}
+		patient.setPhoneNumbers(phoneNumbers);
 		// nie ma błędów, dodajemy pacjenta
 		patientService.addPatient(patient);
 		// przekierowanie na listę pacjentów
 		return "redirect:/patients";
 	}
-	
+
 	/**
 	 * Usunięcie pacjenta o podanym identyfikatorze
+	 * 
 	 * @param patientId
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping( value = "/patients/{patientId}/delete", method=RequestMethod.POST )
-	public @ResponseBody String deletePatient ( @PathVariable Long patientId, HttpServletResponse response) {
-		Patient patient = patientService.getPatientById(patientId);
+	@RequestMapping(value = "/patients/{patientId}/delete", method = RequestMethod.POST)
+	public @ResponseBody
+	String deletePatient(@PathVariable final Long patientId,
+			final HttpServletResponse response) {
+		final Patient patient = patientService.getPatientById(patientId);
 		if (patient != null) {
 			patientService.deletePatient(patient);
 			return "OK";
@@ -78,5 +97,5 @@ public class PatientController {
 			return "ERROR";
 		}
 	}
-	
+
 }

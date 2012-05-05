@@ -24,7 +24,8 @@ create table patients (
     born_date timestamp not null,
     city varchar(20),
     street varchar(20),
-    blood_group varchar(2)
+    blood_group varchar(2),
+	pesel varchar(11) not null
 );
 
 create table illnesses(

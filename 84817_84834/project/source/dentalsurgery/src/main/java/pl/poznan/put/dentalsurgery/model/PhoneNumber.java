@@ -9,7 +9,12 @@ public class PhoneNumber {
 	}
 
 	public PhoneNumber(final Patient patient) {
+		this(patient, null);
+	}
+
+	public PhoneNumber(final Patient patient, String number) {
 		this.patient = patient;
+		this.number = number;
 	}
 
 	public long getPhoneId() {

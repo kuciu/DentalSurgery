@@ -2,6 +2,7 @@ package pl.poznan.put.dentalsurgery.web;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -51,7 +52,6 @@ public class PatientController {
 	@RequestMapping(value = "/patients/new", method = RequestMethod.GET)
 	public String newPatientForm(final Model model) {
 		model.addAttribute("patient", new Patient());
-		model.addAttribute("phones", new ArrayList<String>());
 		return "patientForm";
 	}
 
@@ -126,4 +126,31 @@ public class PatientController {
 		}
 	}
 
+	/**
+	 * Usunięcie pacjenta o podanym identyfikatorze
+	 * 
+	 * @param patientId
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/patients/{patientId}/edit", method = RequestMethod.GET)
+	public String editPatient(@PathVariable final Long patientId,
+			final Model model, final HttpServletResponse response) {
+		final Patient patient = patientService.getPatientById(patientId);
+		if (patient != null) {
+			/**
+			 * Czyszczenie listy z nulli - przyleglość hibernate z
+			 * wykorzystaniem list!
+			 */
+			patient.getPhoneNumbers().removeAll(Collections.singleton(null));
+			patient.getIllnesses().removeAll(Collections.singleton(null));
+			patient.getMedications().removeAll(Collections.singleton(null));
+
+			model.addAttribute("patient", patient);
+			return "patientForm";
+		} else {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return "redirect:/patients";
+		}
+	}
 }

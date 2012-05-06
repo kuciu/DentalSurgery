@@ -14,7 +14,8 @@ import pl.poznan.put.dentalsurgery.repository.PatientDao;
 @Service
 public class PatientServiceImpl implements PatientService {
 
-	protected final Log logger = LogFactory.getLog(getClass());
+	private static final Log LOGGER = LogFactory
+			.getLog(PatientServiceImpl.class);
 
 	private PatientDao patientDao;
 
@@ -35,19 +36,19 @@ public class PatientServiceImpl implements PatientService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Patient getPatientById(final long id) {
-		return patientDao.getPatientById(id);
+	public Patient getPatientById(final long patientId) {
+		return patientDao.getPatientById(patientId);
 	}
 
 	@Override
 	@Transactional
-	public long addPatient(Patient patient) {
+	public long addPatient(final Patient patient) {
 		return patientDao.addPatient(patient);
 	}
 
 	@Override
 	@Transactional
-	public void deletePatient(Patient patient) {
+	public void deletePatient(final Patient patient) {
 		this.patientDao.deletePatient(patient);
 	}
 

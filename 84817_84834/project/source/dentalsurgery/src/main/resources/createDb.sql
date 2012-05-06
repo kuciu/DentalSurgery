@@ -25,7 +25,8 @@ create table patients (
     city varchar(20),
     street varchar(20),
     blood_group varchar(2),
-	pesel varchar(11) not null
+	pesel varchar(11) not null,
+	gender CHAR NOT null
 );
 
 create table illnesses(

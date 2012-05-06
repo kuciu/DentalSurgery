@@ -21,13 +21,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import pl.poznan.put.dentalsurgery.model.Illness;
+import pl.poznan.put.dentalsurgery.model.Medication;
 import pl.poznan.put.dentalsurgery.model.Patient;
 import pl.poznan.put.dentalsurgery.model.PhoneNumber;
 import pl.poznan.put.dentalsurgery.service.PatientService;
 
 @Controller
 public class PatientController {
-	private static final Log LOG = LogFactory.getLog(PatientController.class);
+	private static final Log LOGER = LogFactory.getLog(PatientController.class);
 	private PatientService patientService;
 
 	@Autowired
@@ -56,21 +58,47 @@ public class PatientController {
 	@RequestMapping(value = "/patients/new", method = RequestMethod.POST)
 	public String newPatientSubmit(
 			@Valid @ModelAttribute final Patient patient,
-			final HttpServletRequest request, final BindingResult result) {
-		if (result.hasErrors()) {
-			// jeśli są błędy w formularzu - wyświetlamy go ponownie
-			return "patientForm";
-		}
+			final BindingResult result, final HttpServletRequest request,
+			final HttpServletResponse response) {
 		// SPAW Ni jak nie mogłem rozkminić jak w formularzu JSP, gdzie dane są
 		// tylko stringami można utworzyć listę obiektów. Alternatywną pewnie by
 		// było puszczanie wszystkiego JSONem.
 		// Analogicznie będą robione pozostałe listy :(
+		// Specjalnie przed zwroceniem błędów, można będzie iterować i wypełnić
+		// ponownie pola!
 		final String[] phones = request.getParameterValues("phones");
 		final List<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
-		for (final String phone : phones) {
-			phoneNumbers.add(new PhoneNumber(patient, phone));
+		if (phones != null) {
+			for (final String phone : phones) {
+				phoneNumbers.add(new PhoneNumber(patient, phone));
+			}
 		}
 		patient.setPhoneNumbers(phoneNumbers);
+
+		final String[] illnessTab = request.getParameterValues("illness");
+		final List<Illness> illnesses = new ArrayList<Illness>();
+		if (illnessTab != null) {
+			for (final String illness : illnessTab) {
+				illnesses.add(new Illness(patient, illness));
+			}
+		}
+		patient.setIllnesses(illnesses);
+
+		final String[] medicationsTab = request
+				.getParameterValues("medications");
+		final List<Medication> medications = new ArrayList<Medication>();
+		if (medicationsTab != null) {
+			for (final String medication : medicationsTab) {
+				medications.add(new Medication(patient, medication));
+			}
+		}
+		patient.setMedications(medications);
+
+		if (result.hasErrors()) {
+			// jeśli są błędy w formularzu - wyświetlamy go ponownie
+			return "patientForm";
+		}
+
 		// nie ma błędów, dodajemy pacjenta
 		patientService.addPatient(patient);
 		// przekierowanie na listę pacjentów

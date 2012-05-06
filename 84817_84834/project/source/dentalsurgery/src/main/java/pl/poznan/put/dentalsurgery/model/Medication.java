@@ -5,12 +5,13 @@ public class Medication {
 	private Patient patient;
 	private String name;
 
-	public Medication() {
+	public Medication(final Patient patient) {
+		this(patient, null);
 	}
 
-	public Medication(final Patient patient) {
-		super();
+	public Medication(final Patient patient, final String name) {
 		this.patient = patient;
+		this.name = name;
 	}
 
 	public long getMedicationId() {

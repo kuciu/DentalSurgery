@@ -5,11 +5,17 @@ public class Illness {
 	private Patient patient;
 	private String name;
 
-	public Illness() {
+	public Illness(final Patient patient, final String name) {
+		this.patient = patient;
+		this.name = name;
 	}
 
 	public Illness(final Patient patient) {
-		this.patient = patient;
+		this(patient, null);
+	}
+
+	public Illness() {
+		this(null);
 	}
 
 	public long getIllnessId() {

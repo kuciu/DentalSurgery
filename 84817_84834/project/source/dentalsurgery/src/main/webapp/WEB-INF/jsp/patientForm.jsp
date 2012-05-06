@@ -27,6 +27,7 @@
 				$('button').button();
 				//Tylko wartosci numeryczne - dodatek do jquery
 				$('#phone-input').numeric();
+				$('#pesel-input').numeric();
 				//Blokowanie przycisku gdy pusty numer tel
 				$('#phone-add').attr('disabled', 'disabled');
 				$('#phone-input').keyup(function() {
@@ -63,6 +64,96 @@
 						$('#phone-remove').attr('disabled', 'disabled');
 					}
 				});
+
+				//Copy & paste z numerów telefonów - dla chorób
+				$('#illness-add').attr('disabled', 'disabled');
+				$('#illness-input').keyup(function() {
+					if ($(this).val().length) {
+						$('#illness-add').removeAttr('disabled');
+					} else {
+						$('#illness-add').attr('disabled', 'disabled');
+					}
+				});
+
+				//Blokowanie przycisku usuwania jesli lista pusta
+				if ($("#illness-list option").length == 0) {
+					$('#illness-remove').attr('disabled', 'disabled');
+				}
+
+				//Dodawnie numeru do listy
+				$('#illness-add').click(
+						function() {
+							$('#illness-list').append(
+									"<option value='"
+											+ $('#illness-input').val() + "'>"
+											+ $('#illness-input').val()
+											+ "</option>");
+							$('#illness-input').val('');
+							$('#illness-add').attr('disabled', 'disabled');
+							$('#illness-remove').removeAttr('disabled');
+						});
+
+				//Usuwanie elementow
+				$('#illness-remove').click(function() {
+					$('#illness-list option:selected').each(function() {
+						$(this).remove();
+					});
+					if ($("#illness-list option").length == 0) {
+						$('#illness-remove').attr('disabled', 'disabled');
+					}
+				});
+
+				//Copy & paste z numerów telefonów - dla lekow
+				$('#medication-add').attr('disabled', 'disabled');
+				$('#medication-input').keyup(function() {
+					if ($(this).val().length) {
+						$('#medication-add').removeAttr('disabled');
+					} else {
+						$('#medication-add').attr('disabled', 'disabled');
+					}
+				});
+
+				//Blokowanie przycisku usuwania jesli lista pusta
+				if ($("#medications-list option").length == 0) {
+					$('#medication-remove').attr('disabled', 'disabled');
+				}
+
+				//Dodawnie numeru do listy
+				$('#medication-add').click(
+						function() {
+							$('#medications-list').append(
+									"<option value='"
+											+ $('#medication-input').val()
+											+ "'>"
+											+ $('#medication-input').val()
+											+ "</option>");
+							$('#medication-input').val('');
+							$('#medication-add').attr('disabled', 'disabled');
+							$('#medication-remove').removeAttr('disabled');
+						});
+
+				//Usuwanie elementow
+				$('#medication-remove').click(function() {
+					$('#medications-list option:selected').each(function() {
+						$(this).remove();
+					});
+					if ($("#medications-list option").length == 0) {
+						$('#medications-remove').attr('disabled', 'disabled');
+					}
+				});
+
+				//Zaznaczanie wszystkich numerów telefonów, chorób itp.
+				$('#create-btn').click(function() {
+					$('#phones-list option').each(function() {
+						$(this).attr('selected', 'selected');
+					});
+					$('#illness-list option').each(function() {
+						$(this).attr('selected', 'selected');
+					});
+					$('#medications-list option').each(function() {
+						$(this).attr('selected', 'selected');
+					});
+				});
 			});
 </script>
 
@@ -97,7 +188,21 @@
 						<td>Nazwisko:</td>
 						<td><form:input path="surname" /></td>
 						<td><form:errors path="surname" cssClass="error" /></td>
+					</tr>
 
+					<tr>
+						<td>Płeć:</td>
+						<td><form:select path="gender">
+								<form:option value="M">Mężczyzna</form:option>
+								<form:option value="K">Kobieta</form:option>
+							</form:select></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>Pesel:</td>
+						<td><form:input path="pesel" id="pesel-input" maxlength="11" /></td>
+						<td><form:errors path="pesel" cssClass="error" /></td>
 					</tr>
 
 					<tr>
@@ -117,22 +222,59 @@
 						<td><form:input path="bornDate" cssClass="datepicker" /></td>
 						<td><form:errors path="bornDate" cssClass="error" /></td>
 					</tr>
-						<tr>
-							<td>Numery kontaktowe:</td>
-
-							<td><input id="phone-input" maxlength="20" /></td>
-							<td><input type="button" id="phone-add" value="Dodaj" /></td>
-						</tr>
-						<tr>
-							<td></td>
-
-							<td><select  name="phones" id="phones-list"
-									style="width: 170px" multiple size="5"></select></td>
-							<td><input type="button" id="phone-remove" value="Usuń" /></td>
-
-						</tr>
 					<tr>
-						<td colspan="2"><form:button id="create-btn">Utwórz</form:button>
+						<td>Numery kontaktowe:</td>
+						<td><input id="phone-input" maxlength="20" /></td>
+						<td><input type="button" id="phone-add" value="Dodaj" /></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><select name="phones" id="phones-list"
+							style="width: 170px" multiple size="5">
+								<c:forEach items="${patient.phoneNumbers}" var="phone">
+									<option value="${phone.number}">
+										<c:out value="${phone.number}" />
+									</option>
+								</c:forEach>
+						</select></td>
+						<td><input type="button" id="phone-remove" value="Usuń" /></td>
+					</tr>
+					<tr>
+						<td>Przebyte choroby</td>
+						<td><input id="illness-input" maxlength="20" /></td>
+						<td><input type="button" id="illness-add" value="Dodaj" /></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><select name="illness" id="illness-list"
+							style="width: 170px" multiple size="5">
+								<c:forEach items="${patient.illnesses}" var="ilness">
+									<option value="${ilness.name}">
+										<c:out value="${ilness.name}" />
+									</option>
+								</c:forEach>
+						</select></td>
+						<td><input type="button" id="illness-remove" value="Usuń" /></td>
+					</tr>
+					<tr>
+						<td>Przyjmowane leki</td>
+						<td><input id="medication-input" maxlength="20" /></td>
+						<td><input type="button" id="medication-add" value="Dodaj" /></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><select name="medications" id="medications-list"
+							style="width: 170px" multiple size="5">
+								<c:forEach items="${patient.medications}" var="medication">
+									<option value="${medication.name}">
+										<c:out value="${medication.name}" />
+									</option>
+								</c:forEach>
+						</select></td>
+						<td><input type="button" id="medication-remove" value="Usuń" /></td>
+					</tr>
+					<tr>
+						<td colspan="3"><form:button id="create-btn">Utwórz</form:button>
 						</td>
 				</table>
 

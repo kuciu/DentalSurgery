@@ -6,13 +6,16 @@ public class PhoneNumber {
 	private String number;
 
 	public PhoneNumber() {
+		/**
+		 * Wymagany przez hibernate
+		 */
 	}
 
 	public PhoneNumber(final Patient patient) {
 		this(patient, null);
 	}
 
-	public PhoneNumber(final Patient patient, String number) {
+	public PhoneNumber(final Patient patient, final String number) {
 		this.patient = patient;
 		this.number = number;
 	}

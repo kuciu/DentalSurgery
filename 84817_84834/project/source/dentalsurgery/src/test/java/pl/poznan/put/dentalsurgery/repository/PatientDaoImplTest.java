@@ -67,6 +67,8 @@ public class PatientDaoImplTest extends
 				.getIllnesses().size());
 		Assert.assertEquals(patient.getVisits().size(), patientFromDb
 				.getVisits().size());
+
+		Assert.assertEquals(patient.getGender(), patientFromDb.getGender());
 	}
 
 	@Test
@@ -95,8 +97,9 @@ public class PatientDaoImplTest extends
 
 		Assert.assertEquals(patient.getName(), patientFromDb.getName());
 		Assert.assertEquals(patient.getSurname(), patientFromDb.getSurname());
-		Assert.assertEquals(patient.getCity(), patient.getCity());
-		Assert.assertEquals(patient.getStreet(), patient.getStreet());
+		Assert.assertEquals(patient.getCity(), patientFromDb.getCity());
+		Assert.assertEquals(patient.getStreet(), patientFromDb.getStreet());
+		Assert.assertEquals(patient.getPesel(), patientFromDb.getPesel());
 		Assert.assertEquals(patient.getBornDate(), patientFromDb.getBornDate());
 		Assert.assertEquals(patient.getPhoneNumbers().size(), patientFromDb
 				.getPhoneNumbers().size());
@@ -106,6 +109,7 @@ public class PatientDaoImplTest extends
 				.getIllnesses().size());
 		Assert.assertEquals(patient.getVisits().size(), patientFromDb
 				.getVisits().size());
+		Assert.assertEquals(patient.getGender(), patientFromDb.getGender());
 
 	}
 
@@ -116,7 +120,8 @@ public class PatientDaoImplTest extends
 		patient.setCity("TestCity");
 		patient.setStreet("TestStreet");
 		patient.setBornDate(new Date());
-
+		patient.setPesel("88121011198");
+		patient.setGender('M');
 		final PhoneNumber phoneNumber1 = new PhoneNumber(patient);
 		phoneNumber1.setNumber("1234567890");
 		final PhoneNumber phoneNumber2 = new PhoneNumber(patient);
@@ -124,13 +129,13 @@ public class PatientDaoImplTest extends
 
 		final Illness illness = new Illness(patient);
 		illness.setName("AAAA");
-		final Set<Illness> illnesses = new HashSet<Illness>();
+		final List<Illness> illnesses = new ArrayList<Illness>();
 		illnesses.add(illness);
 		patient.setIllnesses(illnesses);
 
 		final Medication medication = new Medication(patient);
 		medication.setName("AAAA");
-		final Set<Medication> medications = new HashSet<Medication>();
+		final List<Medication> medications = new ArrayList<Medication>();
 		medications.add(medication);
 		patient.setMedications(medications);
 

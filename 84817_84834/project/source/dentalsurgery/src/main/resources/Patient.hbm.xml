@@ -14,6 +14,8 @@
 		<property name="bornDate" column="born_date" type="timestamp" />
 		<property name="city" column="city" />
 		<property name="street" column="street" />
+		<property name="pesel" column="pesel" />
+		<property name="gender" column="gender" />
 		<list name="phoneNumbers" table="phone_numbers" inverse="true"
 			lazy="false" fetch="select" cascade="delete, save-update">
 			<key>
@@ -22,20 +24,22 @@
 			<index column="phone_id"></index>
 			<one-to-many class="pl.poznan.put.dentalsurgery.model.PhoneNumber" />
 		</list>
-		<set name="illnesses" table="illnesses" inverse="true" lazy="false"
+		<list name="illnesses" table="illnesses" inverse="true" lazy="false"
 			fetch="select" cascade="delete, save-update">
 			<key>
 				<column name="patient_id" not-null="true" />
 			</key>
+			<index column="illness_id"></index>
 			<one-to-many class="pl.poznan.put.dentalsurgery.model.Illness" />
-		</set>
-		<set name="medications" table="medications" inverse="true" lazy="false"
+		</list>
+		<list name="medications" table="medications" inverse="true" lazy="false"
 			fetch="select" cascade="delete, save-update">
 			<key>
 				<column name="patient_id" not-null="true" />
 			</key>
+			<index column="medication_id" />
 			<one-to-many class="pl.poznan.put.dentalsurgery.model.Medication" />
-		</set>
+		</list>
 		<set name="visits" table="visits" inverse="true" lazy="false"
 			fetch="select" cascade="delete, save-update">
 			<key>

@@ -1,5 +1,6 @@
 package pl.poznan.put.dentalsurgery.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -9,6 +10,7 @@ import java.util.Set;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.util.AutoPopulatingList;
@@ -38,14 +40,17 @@ public class Patient {
 	@NotBlank
 	private String street;
 
+	@NotBlank
+	@Length(min = 11, max = 11)
+	private String pesel;
+
+	private char gender;
+
 	private List<PhoneNumber> phoneNumbers = new AutoPopulatingList<PhoneNumber>(
 			PhoneNumber.class);
-	private Set<Illness> illnesses = new HashSet<Illness>();
-	private Set<Medication> medications = new HashSet<Medication>();
+	private List<Illness> illnesses = new ArrayList<Illness>();
+	private List<Medication> medications = new ArrayList<Medication>();
 	private Set<Visit> visits = new HashSet<Visit>();
-
-	public Patient() {
-	}
 
 	public Long getPatientId() {
 		return patientId;
@@ -111,20 +116,35 @@ public class Patient {
 		this.phoneNumbers = phoneNumbers;
 	}
 
-	public Set<Illness> getIllnesses() {
+	public List<Illness> getIllnesses() {
 		return illnesses;
 	}
 
-	public void setIllnesses(final Set<Illness> illnesses) {
+	public void setIllnesses(final List<Illness> illnesses) {
 		this.illnesses = illnesses;
 	}
 
-	public Set<Medication> getMedications() {
+	public List<Medication> getMedications() {
 		return medications;
 	}
 
-	public void setMedications(final Set<Medication> medications) {
+	public void setMedications(final List<Medication> medications) {
 		this.medications = medications;
 	}
 
+	public char getGender() {
+		return gender;
+	}
+
+	public void setGender(final char gender) {
+		this.gender = gender;
+	}
+
+	public String getPesel() {
+		return pesel;
+	}
+
+	public void setPesel(final String pesel) {
+		this.pesel = pesel;
+	}
 }

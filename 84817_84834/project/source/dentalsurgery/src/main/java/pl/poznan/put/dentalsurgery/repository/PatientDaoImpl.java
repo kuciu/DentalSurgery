@@ -28,7 +28,7 @@ public class PatientDaoImpl extends AbstractDao<Patient> implements PatientDao {
 	}
 
 	@Override
-	public void updateUser(final Patient patient) {
+	public void updatePatient(final Patient patient) {
 		sessionFactory.getCurrentSession().update(patient);
 	}
 

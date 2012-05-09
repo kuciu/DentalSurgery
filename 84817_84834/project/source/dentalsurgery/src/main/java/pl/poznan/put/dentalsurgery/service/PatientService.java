@@ -12,5 +12,7 @@ public interface PatientService {
 	long addPatient(Patient patient);
 
 	void deletePatient(Patient patient);
-	
+
+	void updatePatient(Patient patient);
+
 }

@@ -172,16 +172,16 @@
 								<s:url value="/patients/${patient.patientId}" var="patientInfoUrl"/>
 								<s:url value="/patients/${patient.patientId}/edit" var="editUrl"/>
 								
-								<a href="${editUrl}"  >
-									<span class="ui-icon ui-icon-pencil icon-operation" ></span>
-								</a>
 								<a href="#" onclick="loadPatientInfo('${patientInfoUrl}')">
 									<span class="ui-icon ui-icon-info icon-operation" ></span>
 								</a>
 								<a href="#" onclick="deletePatient('${deleteUrl}')" >
 									<span class="ui-icon ui-icon-trash icon-operation" ></span>
 								</a>
-
+								<a href="${editUrl}"  >
+									<span class="ui-icon ui-icon-pencil icon-operation" ></span>
+								</a>
+								
 							</td>
 						</tr>
 					</c:forEach>

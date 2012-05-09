@@ -17,7 +17,7 @@
 		<property name="pesel" column="pesel" />
 		<property name="gender" column="gender" />
 		<list name="phoneNumbers" table="phone_numbers" inverse="true"
-			lazy="false" fetch="select" cascade="delete, save-update">
+			lazy="false" fetch="select" cascade="all">
 			<key>
 				<column name="patient_id" not-null="true" />
 			</key>
@@ -25,7 +25,7 @@
 			<one-to-many class="pl.poznan.put.dentalsurgery.model.PhoneNumber" />
 		</list>
 		<list name="illnesses" table="illnesses" inverse="true" lazy="false"
-			fetch="select" cascade="delete, save-update">
+			fetch="select" cascade="all">
 			<key>
 				<column name="patient_id" not-null="true" />
 			</key>
@@ -33,7 +33,7 @@
 			<one-to-many class="pl.poznan.put.dentalsurgery.model.Illness" />
 		</list>
 		<list name="medications" table="medications" inverse="true" lazy="false"
-			fetch="select" cascade="delete, save-update">
+			fetch="select" cascade="all">
 			<key>
 				<column name="patient_id" not-null="true" />
 			</key>

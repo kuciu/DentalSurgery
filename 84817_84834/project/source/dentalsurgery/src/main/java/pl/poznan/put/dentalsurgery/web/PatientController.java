@@ -1,9 +1,7 @@
 package pl.poznan.put.dentalsurgery.web;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,19 +23,60 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import pl.poznan.put.dentalsurgery.model.Illness;
+import pl.poznan.put.dentalsurgery.model.IllnessEditor;
 import pl.poznan.put.dentalsurgery.model.Medication;
+import pl.poznan.put.dentalsurgery.model.MedicationEditor;
 import pl.poznan.put.dentalsurgery.model.Patient;
 import pl.poznan.put.dentalsurgery.model.PhoneNumber;
+import pl.poznan.put.dentalsurgery.model.PhoneNumberEditor;
+import pl.poznan.put.dentalsurgery.service.IllnessService;
+import pl.poznan.put.dentalsurgery.service.MedicationService;
 import pl.poznan.put.dentalsurgery.service.PatientService;
+import pl.poznan.put.dentalsurgery.service.PhoneNumberService;
 
 @Controller
 public class PatientController {
 	private static final Log LOGER = LogFactory.getLog(PatientController.class);
 	private PatientService patientService;
+	private PhoneNumberService phoneNumberService;
+	private IllnessService illnessService;
+
+	private MedicationService medicationService;
 
 	@Autowired
-	public void setPatientServiceService(final PatientService patientService) {
+	public void setPatientService(final PatientService patientService) {
 		this.patientService = patientService;
+	}
+
+	@Autowired
+	public void setIllnessService(final IllnessService illnessService) {
+		this.illnessService = illnessService;
+	}
+
+	@Autowired
+	public void setMedicationService(final MedicationService medicationService) {
+		this.medicationService = medicationService;
+	}
+
+	@Autowired
+	public void setPhoneNumberService(
+			final PhoneNumberService phoneNumberService) {
+		this.phoneNumberService = phoneNumberService;
+	}
+
+	@InitBinder
+	protected void initBinder(final HttpServletRequest request,
+			final ServletRequestDataBinder binder) throws Exception {
+		final PhoneNumberEditor phoneNumberEditor = new PhoneNumberEditor();
+		phoneNumberEditor.setPhoneNumberService(phoneNumberService);
+		final IllnessEditor illnessEditor = new IllnessEditor();
+		illnessEditor.setIllnessService(illnessService);
+		final MedicationEditor medicationEditor = new MedicationEditor();
+		medicationEditor.setMedicationService(medicationService);
+
+		binder.registerCustomEditor(PhoneNumber.class, phoneNumberEditor);
+		binder.registerCustomEditor(Illness.class, illnessEditor);
+		binder.registerCustomEditor(Medication.class, medicationEditor);
 	}
 
 	@RequestMapping(value = "/patients", method = RequestMethod.GET)
@@ -52,56 +93,22 @@ public class PatientController {
 	@RequestMapping(value = "/patients/new", method = RequestMethod.GET)
 	public String newPatientForm(final Model model) {
 		model.addAttribute("patient", new Patient());
+		model.addAttribute("editMode", false);
 		return "patientForm";
 	}
 
 	@RequestMapping(value = "/patients/new", method = RequestMethod.POST)
 	public String newPatientSubmit(
 			@Valid @ModelAttribute final Patient patient,
-			final BindingResult result, final HttpServletRequest request,
-			final HttpServletResponse response) {
-		// SPAW Ni jak nie mogłem rozkminić jak w formularzu JSP, gdzie dane są
-		// tylko stringami można utworzyć listę obiektów. Alternatywną pewnie by
-		// było puszczanie wszystkiego JSONem.
-		// Analogicznie będą robione pozostałe listy :(
-		// Specjalnie przed zwroceniem błędów, można będzie iterować i wypełnić
-		// ponownie pola!
-		final String[] phones = request.getParameterValues("phones");
-		final List<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
-		if (phones != null) {
-			for (final String phone : phones) {
-				phoneNumbers.add(new PhoneNumber(patient, phone));
-			}
-		}
-		patient.setPhoneNumbers(phoneNumbers);
-
-		final String[] illnessTab = request.getParameterValues("illness");
-		final List<Illness> illnesses = new ArrayList<Illness>();
-		if (illnessTab != null) {
-			for (final String illness : illnessTab) {
-				illnesses.add(new Illness(patient, illness));
-			}
-		}
-		patient.setIllnesses(illnesses);
-
-		final String[] medicationsTab = request
-				.getParameterValues("medications");
-		final List<Medication> medications = new ArrayList<Medication>();
-		if (medicationsTab != null) {
-			for (final String medication : medicationsTab) {
-				medications.add(new Medication(patient, medication));
-			}
-		}
-		patient.setMedications(medications);
+			final BindingResult result) {
 
 		if (result.hasErrors()) {
-			// jeśli są błędy w formularzu - wyświetlamy go ponownie
 			return "patientForm";
 		}
 
-		// nie ma błędów, dodajemy pacjenta
+		linkListsWithPatient(patient);
 		patientService.addPatient(patient);
-		// przekierowanie na listę pacjentów
+
 		return "redirect:/patients";
 	}
 
@@ -127,7 +134,7 @@ public class PatientController {
 	}
 
 	/**
-	 * Usunięcie pacjenta o podanym identyfikatorze
+	 * Pobranie pacjenta do edycji o podanym identyfikatorze
 	 * 
 	 * @param patientId
 	 * @param response
@@ -151,6 +158,41 @@ public class PatientController {
 		} else {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return "redirect:/patients";
+		}
+	}
+
+	@RequestMapping(value = "/patients/{patientId}/edit", method = RequestMethod.POST)
+	public String editPatientSubmit(
+			@Valid @ModelAttribute final Patient patient,
+			final BindingResult result, final HttpServletRequest request,
+			final HttpServletResponse response) {
+
+		if (result.hasErrors()) {
+			return "patientForm";
+		}
+
+		linkListsWithPatient(patient);
+		patientService.updatePatient(patient);
+
+		return "redirect:/patients";
+	}
+
+	private void linkListsWithPatient(final Patient patient) {
+		for (final PhoneNumber phoneNumber : patient.getPhoneNumbers()) {
+			// Property Editor może dodać do listy null :(
+			if (phoneNumber != null) {
+				phoneNumber.setPatient(patient);
+			}
+		}
+		for (final Medication medication : patient.getMedications()) {
+			if (medication != null) {
+				medication.setPatient(patient);
+			}
+		}
+		for (final Illness illness : patient.getIllnesses()) {
+			if (illness != null) {
+				illness.setPatient(patient);
+			}
 		}
 	}
 }

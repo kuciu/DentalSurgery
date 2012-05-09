@@ -5,6 +5,10 @@ public class Medication {
 	private Patient patient;
 	private String name;
 
+	public Medication() {
+		this(null);
+	}
+
 	public Medication(final Patient patient) {
 		this(patient, null);
 	}

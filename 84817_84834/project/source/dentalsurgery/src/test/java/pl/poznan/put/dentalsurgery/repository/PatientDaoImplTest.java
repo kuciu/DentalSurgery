@@ -92,7 +92,7 @@ public class PatientDaoImplTest extends
 		patient = patientDao.getPatientById(id);
 		patient.getPhoneNumbers().clear();
 		patient.setName("NewName");
-		patientDao.updateUser(patient);
+		patientDao.updatePatient(patient);
 		final Patient patientFromDb = patientDao.getPatientById(id);
 
 		Assert.assertEquals(patient.getName(), patientFromDb.getName());

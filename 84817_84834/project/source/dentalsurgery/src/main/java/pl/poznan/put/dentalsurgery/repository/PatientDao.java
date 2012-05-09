@@ -12,7 +12,7 @@ public interface PatientDao {
 
 	Patient getPatientById(Long patientId);
 
-	void updateUser(Patient patientFromDb);
+	void updatePatient(Patient patientFromDb);
 
 	Collection<Patient> getAllPatients();
 }

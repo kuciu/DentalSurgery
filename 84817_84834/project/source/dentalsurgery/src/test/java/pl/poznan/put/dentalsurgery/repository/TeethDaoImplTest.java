@@ -184,7 +184,7 @@ public class TeethDaoImplTest extends
 				.createToothState();
 		toothStateDictDao.addToothState(toothState);
 		teethDao.addTooth(tooth);
-		patientDao.updateUser(patient);
+		patientDao.updatePatient(patient);
 		teeth = visit.getTeeth();
 		final List<Tooth> teethFromDb = teethDao.getTeethByVisit(visit);
 		Assert.assertEquals(teeth.size(), teethFromDb.size());

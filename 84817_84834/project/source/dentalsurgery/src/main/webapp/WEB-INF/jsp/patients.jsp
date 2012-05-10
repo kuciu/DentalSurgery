@@ -110,7 +110,51 @@
 	}
 	
 	.icon-operation {
-	float: right; margin: 0px;
+		float: right; margin: 0px;
+	}
+	
+	#body-content {
+		
+		/*border: solid;*/
+		border-width: 1px;
+		border-color: #80C2FF;
+	}
+	
+	#patient-list-border {
+		float: left;
+	
+		width: 370px;
+		/*border: solid;*/
+		border-width: 1px;
+		border-color: #80C2FF;
+	}
+	
+	#patient-info-border {
+		float: right;
+	
+		width: 430px;
+		/*border: solid;*/
+		border-width: 1px;
+		border-color: #80C2FF;
+	}
+	
+	#patient-info-border table  {
+		
+		margin-top: 2px;
+		text-align: left;	
+		
+		
+	}
+	
+	#patient-info-border table tr td:first-child {
+		vertical-align: top;
+		padding-right: 10px;
+		color: #80C2FF;
+	}
+	
+	#patient-info-border table tr td:nth-child(2){
+		font-style: italic;
+		color: #D9B36C;
 	}
 	
 </style>
@@ -157,47 +201,93 @@
 		<div id="body-content">
 			<h1>Lista pacjentów</h1>
 
+				<div id="patient-list-border">
 						
-				<table id="patient-list" border="0">
+					<table id="patient-list" border="0">
+						
+						<thead>
+							<tr> <th>Imię i nazwisko</th><th>Operacje</th></tr>
+						</thead>
 					
-					<thead>
-						<tr> <th>Imię i nazwisko</th><th>Operacje</th></tr>
-					</thead>
+						<c:forEach items="${patientList}" var="patient">
+							<s:url value="/patients/${patient.patientId}/delete" var="deleteUrl"/>
+							<s:url value="/patients/${patient.patientId}" var="patientInfoUrl"/>
+							<s:url value="/patients/${patient.patientId}/edit" var="editUrl"/>
+							<s:url value="/patients/${patient.patientId}/visits/add" var="editUrl"/>
+							<tr> 
+								<td> 
+									<a href="#" title="Pokaż informacje o pacjencie" onclick="loadPatientInfo('${patientInfoUrl}')">
+										<c:out value="${patient.name}" /> <c:out value="${patient.surname}" /> 
+									</a>
+								</td>
+								<td> 
+									
+									
+									<a href="#" title="Pokaż informacje o pacjencie" onclick="loadPatientInfo('${patientInfoUrl}')">
+										<span class="ui-icon ui-icon-info icon-operation" ></span>
+									</a>
+									<a href="#" title="Przeglądaj wizyty pacjenta" onclick="addVisit('${addVisitUrl}')" >
+										<span class="ui-icon ui-icon-folder-collapsed icon-operation" ></span>
+									</a>
+									<a href="#" title="Dodaj nową wizytę" onclick="addVisit('${addVisitUrl}')" >
+										<span class="ui-icon ui-icon-circle-plus icon-operation" ></span>
+									</a>
+									<a href="#" title="Usuń pacjenta" onclick="deletePatient('${deleteUrl}')" >
+										<span class="ui-icon ui-icon-trash icon-operation" ></span>
+									</a>
+									<a href="${editUrl}" title="Edytuj pacjenta"  >
+										<span class="ui-icon ui-icon-pencil icon-operation" ></span>
+									</a>
+									
+								</td>
+							</tr>
+						</c:forEach>
+					</table>
+				</div>
 				
-					<c:forEach items="${patientList}" var="patient">
-						<s:url value="/patients/${patient.patientId}/delete" var="deleteUrl"/>
-						<s:url value="/patients/${patient.patientId}" var="patientInfoUrl"/>
-						<s:url value="/patients/${patient.patientId}/edit" var="editUrl"/>
-						<s:url value="/patients/${patient.patientId}/visits/add" var="editUrl"/>
-						<tr> 
-							<td> 
-								<a href="#" title="Pokaż informacje o pacjencie" onclick="loadPatientInfo('${patientInfoUrl}')">
-									<c:out value="${patient.name}" /> <c:out value="${patient.surname}" /> 
-								</a>
-							</td>
-							<td> 
-								
-								
-								<a href="#" title="Pokaż informacje o pacjencie" onclick="loadPatientInfo('${patientInfoUrl}')">
-									<span class="ui-icon ui-icon-info icon-operation" ></span>
-								</a>
-								<a href="#" title="Przeglądaj wizyty pacjenta" onclick="addVisit('${addVisitUrl}')" >
-									<span class="ui-icon ui-icon-folder-collapsed icon-operation" ></span>
-								</a>
-								<a href="#" title="Dodaj nową wizytę" onclick="addVisit('${addVisitUrl}')" >
-									<span class="ui-icon ui-icon-circle-plus icon-operation" ></span>
-								</a>
-								<a href="#" title="Usuń pacjenta" onclick="deletePatient('${deleteUrl}')" >
-									<span class="ui-icon ui-icon-trash icon-operation" ></span>
-								</a>
-								<a href="${editUrl}" title="Edytuj pacjenta"  >
-									<span class="ui-icon ui-icon-pencil icon-operation" ></span>
-								</a>
-								
+				<div id="patient-info-border">
+				
+					<table >
+						<thead>
+							<tr> <th colspan="2">Szczegółowe informacje</th></tr>
+						</thead>
+						<tr>
+							<td>Imię i nazwisko:</td><td>Tomasz Kamiński</td>
+						</tr>
+						<tr>
+							<td>PESEL:</td><td>12312312312</td>
+						</tr>
+						<tr>
+							<td>Płeć:</td><td>mężczyzna</td>
+						</tr>
+						<tr>
+							<td>Data urodzenia:</td><td>18-05-1988</td>
+						</tr>
+						<tr>
+							<td>Adres zamieszkania:</td>
+							<td>
+								ul. Przykładowa 13/16 <br/> 
+								34-454 Londyn<br/>
 							</td>
 						</tr>
-					</c:forEach>
-				</table>
+						<tr>
+							<td>Nr telefonu:</td>
+							<td>
+								12-123-123-123</br>
+								12-123-123-123</br>
+							</td>
+						</tr>
+						<tr>
+							<td>Choroby pacjenta:</td>
+							<td>
+								choroba 1<br/>
+								choroba 2<br/>
+								choroba 3<br/>
+								choroba 4<br/>
+							</td>
+						</tr>
+					</table>
+				</div>
 		</div>
 	</div>
 	<div id="body-footer" class="ui-corner-bottom">(C) 2012 by Kamiński &amp; Kuć</div>

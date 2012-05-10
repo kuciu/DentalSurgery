@@ -1,7 +1,10 @@
 package pl.poznan.put.dentalsurgery.model;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 public class Illness {
 	private long illnessId;
+	@JsonIgnore
 	private Patient patient;
 	private String name;
 
@@ -26,6 +29,7 @@ public class Illness {
 		this.illnessId = illnessId;
 	}
 
+	@JsonIgnore
 	public Patient getPatient() {
 		return patient;
 	}

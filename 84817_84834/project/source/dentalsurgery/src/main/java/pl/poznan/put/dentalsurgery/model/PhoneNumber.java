@@ -1,7 +1,10 @@
 package pl.poznan.put.dentalsurgery.model;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 public class PhoneNumber {
 	private long phoneId;
+	@JsonIgnore
 	private Patient patient;
 	private String number;
 
@@ -28,6 +31,7 @@ public class PhoneNumber {
 		this.phoneId = phoneId;
 	}
 
+	@JsonIgnore
 	public Patient getPatient() {
 		return patient;
 	}

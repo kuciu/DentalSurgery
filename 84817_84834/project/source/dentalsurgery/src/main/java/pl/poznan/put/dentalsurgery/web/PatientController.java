@@ -149,9 +149,7 @@ public class PatientController {
 			 * Czyszczenie listy z nulli - przyleglość hibernate z
 			 * wykorzystaniem list!
 			 */
-			patient.getPhoneNumbers().removeAll(Collections.singleton(null));
-			patient.getIllnesses().removeAll(Collections.singleton(null));
-			patient.getMedications().removeAll(Collections.singleton(null));
+			clearLists(patient);
 
 			model.addAttribute("patient", patient);
 			return "patientForm";
@@ -159,6 +157,12 @@ public class PatientController {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return "redirect:/patients";
 		}
+	}
+
+	private void clearLists(final Patient patient) {
+		patient.getPhoneNumbers().removeAll(Collections.singleton(null));
+		patient.getIllnesses().removeAll(Collections.singleton(null));
+		patient.getMedications().removeAll(Collections.singleton(null));
 	}
 
 	@RequestMapping(value = "/patients/{patientId}/edit", method = RequestMethod.POST)
@@ -175,6 +179,20 @@ public class PatientController {
 		patientService.updatePatient(patient);
 
 		return "redirect:/patients";
+	}
+
+	@RequestMapping(value = "/patients/{patientId}", method = RequestMethod.GET)
+	public @ResponseBody
+	Patient getPatient(@PathVariable final Long patientId, final Model model,
+			final HttpServletResponse response) {
+		final Patient patient = patientService.getPatientById(patientId);
+		if (patient != null) {
+			clearLists(patient);
+			return patient;
+		} else {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return null;
+		}
 	}
 
 	private void linkListsWithPatient(final Patient patient) {

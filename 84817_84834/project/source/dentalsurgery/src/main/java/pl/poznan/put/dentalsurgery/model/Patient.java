@@ -10,16 +10,20 @@ import java.util.Set;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.util.AutoPopulatingList;
+
+import pl.poznan.put.dentalsurgery.components.DateSerializer;
 
 /**
  * 
  * @author Kuciu
  * 
  */
+
 public class Patient {
 	private Long patientId;
 
@@ -60,6 +64,7 @@ public class Patient {
 		this.patientId = patientId;
 	}
 
+	@JsonSerialize(using = DateSerializer.class)
 	public Date getBornDate() {
 		return bornDate;
 	}

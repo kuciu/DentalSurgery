@@ -90,6 +90,13 @@ body {
 	border-width: 1px;*/
 }
 
+#patient-details {
+	margin-top: 10px;
+	margin-right: 10px;
+	float: right;
+	width: 400px;
+}
+
 #body-footer {
 	
 	color: #B39359;

@@ -9,7 +9,7 @@
 		<id name="phoneId" column="phone_id">
 			<generator class="native" />
 		</id>
-		<many-to-one name="patient" class="pl.poznan.put.dentalsurgery.model.Patient" fetch="select" >
+		<many-to-one name="patient" class="pl.poznan.put.dentalsurgery.model.Patient" fetch="join" >
             <column name="patient_id" not-null="false"/>
         </many-to-one>
 		<property name="number" column="phone_number" />

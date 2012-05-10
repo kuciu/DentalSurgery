@@ -165,20 +165,32 @@
 					</thead>
 				
 					<c:forEach items="${patientList}" var="patient">
+						<s:url value="/patients/${patient.patientId}/delete" var="deleteUrl"/>
+						<s:url value="/patients/${patient.patientId}" var="patientInfoUrl"/>
+						<s:url value="/patients/${patient.patientId}/edit" var="editUrl"/>
+						<s:url value="/patients/${patient.patientId}/visits/add" var="editUrl"/>
 						<tr> 
-							<td> <c:out value="${patient.name}" /> <c:out value="${patient.surname}" /> </td>
 							<td> 
-								<s:url value="/patients/${patient.patientId}/delete" var="deleteUrl"/>
-								<s:url value="/patients/${patient.patientId}" var="patientInfoUrl"/>
-								<s:url value="/patients/${patient.patientId}/edit" var="editUrl"/>
+								<a href="#" title="Pokaż informacje o pacjencie" onclick="loadPatientInfo('${patientInfoUrl}')">
+									<c:out value="${patient.name}" /> <c:out value="${patient.surname}" /> 
+								</a>
+							</td>
+							<td> 
 								
-								<a href="#" onclick="loadPatientInfo('${patientInfoUrl}')">
+								
+								<a href="#" title="Pokaż informacje o pacjencie" onclick="loadPatientInfo('${patientInfoUrl}')">
 									<span class="ui-icon ui-icon-info icon-operation" ></span>
 								</a>
-								<a href="#" onclick="deletePatient('${deleteUrl}')" >
+								<a href="#" title="Przeglądaj wizyty pacjenta" onclick="addVisit('${addVisitUrl}')" >
+									<span class="ui-icon ui-icon-folder-collapsed icon-operation" ></span>
+								</a>
+								<a href="#" title="Dodaj nową wizytę" onclick="addVisit('${addVisitUrl}')" >
+									<span class="ui-icon ui-icon-circle-plus icon-operation" ></span>
+								</a>
+								<a href="#" title="Usuń pacjenta" onclick="deletePatient('${deleteUrl}')" >
 									<span class="ui-icon ui-icon-trash icon-operation" ></span>
 								</a>
-								<a href="${editUrl}"  >
+								<a href="${editUrl}" title="Edytuj pacjenta"  >
 									<span class="ui-icon ui-icon-pencil icon-operation" ></span>
 								</a>
 								

@@ -161,10 +161,22 @@
 	function afterLoad() {
 		$('#patient-info-border').hide();
 	}
+	
+	function filterList() {
+		$('#patient-list .name-surname').each(
+				function() {
+					if ($(this).text().toLowerCase().indexOf(
+							$('#filter').val().toLowerCase()) >= 0) {
+						$(this).closest("tr").show();
+					} else {
+						$(this).closest("tr").hide();
+					}
+				});
+	}
+	
 </script>
 
 <style type="text/css">
-
 #patient-list {
 	text-align: right;
 	width: 300px;
@@ -255,58 +267,56 @@
 
 	<%@ include file="/WEB-INF/include/body-top.jsp"%>
 	<div id="body-container">
-	
+
 		<%@ include file="/WEB-INF/include/body-nav.jsp"%>
 
 		<div id="body-content">
 			<h1>Lista pacjentów</h1>
+			
+			<div id="patient-list-border">
+				Filtr: <input type="text" id="filter" onkeyup="filterList()"/>
+				<table id="patient-list" border="0">
 
+					<thead>
+						<tr>
+							<th>Imię i nazwisko</th>
+							<th>Operacje</th>
+						</tr>
+					</thead>
 
-				<div id="patient-list-border">
-						
-					<table id="patient-list" border="0">
-						
-						<thead>
-							<tr> <th>Imię i nazwisko</th><th>Operacje</th></tr>
-						</thead>
-					
-						<c:forEach items="${patientList}" var="patient">
-							<s:url value="/patients/${patient.patientId}/delete" var="deleteUrl"/>
-							<s:url value="/patients/${patient.patientId}" var="patientInfoUrl"/>
-							<s:url value="/patients/${patient.patientId}/edit" var="editUrl"/>
-							<s:url value="/patients/${patient.patientId}/visits/add" var="addVisitUrl"/>
-							<s:url value="/patients/${patient.patientId}/visits" var="showVisitsUrl"/>
-							<tr> 
-								<td> 
-									<a href="#" title="Pokaż informacje o pacjencie" onclick="loadPatientInfo('${patientInfoUrl}')">
-										<c:out value="${patient.name}" /> <c:out value="${patient.surname}" /> 
-									</a>
-								</td>
-								<td> 
-									
-									
-									<a href="#" title="Pokaż informacje o pacjencie" onclick="loadPatientInfo('${patientInfoUrl}')">
-										<span class="ui-icon ui-icon-info icon-operation" ></span>
-									</a>
-									<a href="${showVisitsUrl}" title="Przeglądaj wizyty pacjenta" >
-										<span class="ui-icon ui-icon-folder-collapsed icon-operation" ></span>
-									</a>
-									<a href="${addVisitUrl}" title="Dodaj nową wizytę">
-										<span class="ui-icon ui-icon-circle-plus icon-operation" ></span>
-									</a>
-									<a href="#" title="Usuń pacjenta" onclick="deletePatient('${deleteUrl}')" >
-										<span class="ui-icon ui-icon-trash icon-operation" ></span>
-									</a>
-									<a href="${editUrl}" title="Edytuj pacjenta"  >
-										<span class="ui-icon ui-icon-pencil icon-operation" ></span>
-									</a>
-									
-								</td>
-							</tr>
-						</c:forEach>
-					</table>
-				</div>
-				
+					<c:forEach items="${patientList}" var="patient">
+						<s:url value="/patients/${patient.patientId}/delete"
+							var="deleteUrl" />
+						<s:url value="/patients/${patient.patientId}" var="patientInfoUrl" />
+						<s:url value="/patients/${patient.patientId}/edit" var="editUrl" />
+						<s:url value="/patients/${patient.patientId}/visits/add"
+							var="addVisitUrl" />
+						<s:url value="/patients/${patient.patientId}/visits"
+							var="showVisitsUrl" />
+						<tr>
+							<td class='name-surname'><a href="#"
+								title="Pokaż informacje o pacjencie"
+								onclick="loadPatientInfo('${patientInfoUrl}')"> <c:out
+										value="${patient.name}" /> <c:out value="${patient.surname}" />
+							</a></td>
+							<td><a href="#" title="Pokaż informacje o pacjencie"
+								onclick="loadPatientInfo('${patientInfoUrl}')"> <span
+									class="ui-icon ui-icon-info icon-operation"></span>
+							</a> <a href="${showVisitsUrl}" title="Przeglądaj wizyty pacjenta">
+									<span class="ui-icon ui-icon-folder-collapsed icon-operation"></span>
+							</a> <a href="${addVisitUrl}" title="Dodaj nową wizytę"> <span
+									class="ui-icon ui-icon-circle-plus icon-operation"></span>
+							</a> <a href="#" title="Usuń pacjenta"
+								onclick="deletePatient('${deleteUrl}')"> <span
+									class="ui-icon ui-icon-trash icon-operation"></span>
+							</a> <a href="${editUrl}" title="Edytuj pacjenta"> <span
+									class="ui-icon ui-icon-pencil icon-operation"></span>
+							</a></td>
+						</tr>
+					</c:forEach>
+				</table>
+			</div>
+
 			<div id="patient-info-border">
 
 				<table>

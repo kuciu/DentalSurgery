@@ -3,6 +3,8 @@ package pl.poznan.put.dentalsurgery.repository;
 import java.util.Collection;
 import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Repository;
 
 import pl.poznan.put.dentalsurgery.model.Patient;
@@ -35,8 +37,12 @@ public class PatientDaoImpl extends AbstractDao<Patient> implements PatientDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Patient> getAll() {
-		return this.sessionFactory.getCurrentSession()
-				.createQuery("from Patient").list();
+
+		final Criteria criteria = this.sessionFactory.getCurrentSession()
+				.createCriteria(Patient.class);
+		criteria.addOrder(Order.asc("surname"));
+		criteria.addOrder(Order.asc("name"));
+		return criteria.list();
 	}
 
 	@Override

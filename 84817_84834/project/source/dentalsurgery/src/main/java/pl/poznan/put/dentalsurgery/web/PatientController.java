@@ -196,20 +196,26 @@ public class PatientController {
 	}
 
 	private void linkListsWithPatient(final Patient patient) {
-		for (final PhoneNumber phoneNumber : patient.getPhoneNumbers()) {
-			// Property Editor może dodać do listy null :(
-			if (phoneNumber != null) {
-				phoneNumber.setPatient(patient);
+		if (patient.getPhoneNumbers() != null) {
+			for (final PhoneNumber phoneNumber : patient.getPhoneNumbers()) {
+				// Property Editor może dodać do listy null :(
+				if (phoneNumber != null) {
+					phoneNumber.setPatient(patient);
+				}
 			}
 		}
-		for (final Medication medication : patient.getMedications()) {
-			if (medication != null) {
-				medication.setPatient(patient);
+		if (patient.getMedications() != null) {
+			for (final Medication medication : patient.getMedications()) {
+				if (medication != null) {
+					medication.setPatient(patient);
+				}
 			}
 		}
-		for (final Illness illness : patient.getIllnesses()) {
-			if (illness != null) {
-				illness.setPatient(patient);
+		if (patient.getIllnesses() != null) {
+			for (final Illness illness : patient.getIllnesses()) {
+				if (illness != null) {
+					illness.setPatient(patient);
+				}
 			}
 		}
 	}

@@ -92,7 +92,7 @@
 		
 	}
 	#milk-teeth-map {
-		margin-left: 65px;
+		margin-left: 63px;
 		width: 225px;
 		height: 105px;
 		
@@ -149,6 +149,30 @@
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-top-light.png');
 	}
 	
+	.tooth-top-red {
+		background-image: url('/dentalsurgery/resources/img/teeth/tooth-top-lightred.png');
+	}
+	
+	.tooth-top-red:hover {
+		background-image: url('/dentalsurgery/resources/img/teeth/tooth-top-darkred.png');
+	}
+	
+	.tooth-top-green {
+		background-image: url('/dentalsurgery/resources/img/teeth/tooth-top-lightgreen.png');
+	}
+	
+	.tooth-top-green:hover {
+		background-image: url('/dentalsurgery/resources/img/teeth/tooth-top-darkgreen.png');
+	}
+	
+	.tooth-top-blue {
+		background-image: url('/dentalsurgery/resources/img/teeth/tooth-top-lightblue.png');
+	}
+	
+	.tooth-top-blue:hover {
+		background-image: url('/dentalsurgery/resources/img/teeth/tooth-top-darkblue.png');
+	}	
+	
 	/* obrazki zębów dolnych (odwrócone) */
 	.tooth-bottom-white {
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-white.png');
@@ -157,6 +181,30 @@
 	.tooth-bottom-white:hover {
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-light.png');
 	}
+	
+	.tooth-bottom-red {
+		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-lightred.png');
+	}
+	
+	.tooth-bottom-red:hover {
+		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-darkred.png');
+	}
+	
+	.tooth-bottom-green {
+		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-lightgreen.png');
+	}
+	
+	.tooth-bottom-green:hover {
+		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-darkgreen.png');
+	}
+	
+	.tooth-bottom-blue {
+		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-lightblue.png');
+	}
+	
+	.tooth-bottom-blue:hover {
+		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-darkblue.png');
+	}	
 	
 	/* zęby górne */
 	.tooth-top {
@@ -175,7 +223,7 @@
 	.tooth-top .tooth-number {
 		position: relative;
 		top: 33px;
-		left: 3px;
+		left: 4px;
 	}
 	
 	/* zęby dolne */
@@ -193,7 +241,7 @@
 	.tooth-bottom .tooth-number {
 		position: relative;
 		top: 3px;
-		left: 3px;
+		left: 4px;
 	}
 	
 	/* odsunięcie prawej górnej i lewej dolnej części */
@@ -259,8 +307,8 @@
 				
 					<!-- prawa (sic! ma być prawa, nie lewa) górna -->
 					<div class="tooth-top tooth-top-white" id="tooth18"><span class="tooth-number">18</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth17"><span class="tooth-number">17</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth16"><span class="tooth-number">16</span></div>
+					<div class="tooth-top tooth-top-red" id="tooth17"><span class="tooth-number">17</span></div>
+					<div class="tooth-top tooth-top-green" id="tooth16"><span class="tooth-number">16</span></div>
 					<div class="tooth-top tooth-top-white" id="tooth15"><span class="tooth-number">15</span></div>
 					<div class="tooth-top tooth-top-white" id="tooth14"><span class="tooth-number">14</span></div>
 					<div class="tooth-top tooth-top-white" id="tooth13"><span class="tooth-number">13</span></div>
@@ -268,7 +316,7 @@
 					<div class="tooth-top tooth-top-white" id="tooth11"><span class="tooth-number">11</span></div>
 					
 					<!-- lewa górna -->
-					<div class="tooth-top tooth-top-white" id="tooth21"><span class="tooth-number">21</span></div>
+					<div class="tooth-top tooth-top-blue" id="tooth21"><span class="tooth-number">21</span></div>
 					<div class="tooth-top tooth-top-white" id="tooyh22"><span class="tooth-number">22</span></div>
 					<div class="tooth-top tooth-top-white" id="tooth23"><span class="tooth-number">23</span></div>
 					<div class="tooth-top tooth-top-white" id="tooth24"><span class="tooth-number">24</span></div>
@@ -281,7 +329,7 @@
 					<div class="tooth-bottom tooth-bottom-white" id="tooth48"><span class="tooth-number">48</span></div>
 					<div class="tooth-bottom tooth-bottom-white" id="tooth47"><span class="tooth-number">47</span></div>
 					<div class="tooth-bottom tooth-bottom-white" id="tooth46"><span class="tooth-number">46</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth45"><span class="tooth-number">45</span></div>
+					<div class="tooth-bottom tooth-bottom-red" id="tooth45"><span class="tooth-number">45</span></div>
 					<div class="tooth-bottom tooth-bottom-white" id="tooth44"><span class="tooth-number">44</span></div>
 					<div class="tooth-bottom tooth-bottom-white" id="tooth43"><span class="tooth-number">43</span></div>
 					<div class="tooth-bottom tooth-bottom-white" id="tooth42"><span class="tooth-number">42</span></div>
@@ -290,10 +338,10 @@
 					<!-- lewa dolna -->
 					<div class="tooth-bottom tooth-bottom-white" id="teeth31"><span class="tooth-number">31</span></div>
 					<div class="tooth-bottom tooth-bottom-white" id="teeth32"><span class="tooth-number">32</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="teeth33"><span class="tooth-number">33</span></div>
+					<div class="tooth-bottom tooth-bottom-green" id="teeth33"><span class="tooth-number">33</span></div>
 					<div class="tooth-bottom tooth-bottom-white" id="teeth34"><span class="tooth-number">34</span></div>
 					<div class="tooth-bottom tooth-bottom-white" id="teeth35"><span class="tooth-number">35</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="teeth36"><span class="tooth-number">36</span></div>
+					<div class="tooth-bottom tooth-bottom-blue" id="teeth36"><span class="tooth-number">36</span></div>
 					<div class="tooth-bottom tooth-bottom-white" id="teeth37"><span class="tooth-number">37</span></div>
 					<div class="tooth-bottom tooth-bottom-white" id="teeth38"><span class="tooth-number">38</span></div>			
 					
@@ -325,8 +373,8 @@
 					<div class="tooth-bottom tooth-bottom-white" id="tooth81"><span class="tooth-number">81</span></div>
 					
 					<!-- lewa dolna -->
-					<div class="tooth-bottom tooth-bottom-white" id="teeth71"><span class="tooth-number">71</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="teeth72"><span class="tooth-number">72</span></div>
+					<div class="tooth-bottom tooth-bottom-red" id="teeth71"><span class="tooth-number">71</span></div>
+					<div class="tooth-bottom tooth-bottom-red" id="teeth72"><span class="tooth-number">72</span></div>
 					<div class="tooth-bottom tooth-bottom-white" id="teeth73"><span class="tooth-number">73</span></div>
 					<div class="tooth-bottom tooth-bottom-white" id="teeth74"><span class="tooth-number">74</span></div>
 					<div class="tooth-bottom tooth-bottom-white" id="teeth75"><span class="tooth-number">75</span></div>			

@@ -62,6 +62,71 @@
 
 <style type="text/css">
 	
+	#body-content{
+		border: solid;
+		border-width: 1px;
+		border-color: #80C2FF;
+	}
+	
+	#teeth-maps-div {
+		float: left;
+		padding: 10px;
+		width: 350px;
+		height: 300px;
+	
+	
+		border: solid;
+		border-width: 1px;
+		border-color: #80C2FF;
+	}
+	
+	#permanent-teeth-map, #milk-teeth-map {
+		width: 340px;
+		height: 100px;
+		border: solid;
+		border-width: 1px;
+		border-color: #80C2FF;
+	}
+	
+	#selected-tooth-div {
+		float: right;
+		padding: 10px;
+		width: 400px;
+		height: 300px;
+	
+	
+		border: solid;
+		border-width: 1px;
+		border-color: #80C2FF;
+	}
+	
+	#selected-tooth-map {
+		width: 140px;
+		height: 100px;
+		border: solid;
+		border-width: 1px;
+		border-color: #80C2FF;
+		margin:auto;
+	}
+	
+	#modify-form-div {
+		
+		float: left;
+		padding: 10px;
+		border: solid;
+		border-width: 1px;
+		border-color: #80C2FF;
+		width: 350px;
+	}
+	
+	#list-activities {
+		float: right;
+		padding: 10px;
+		border: solid;
+		border-width: 1px;
+		border-color: #80C2FF;
+		width: 400px;
+	}
 	
 </style>
 
@@ -94,6 +159,7 @@
 
 	<!-- Właściwa treść -->
 
+
 	<%@ include file="/WEB-INF/include/body-top.jsp"%>
 	<div id="body-container">
 	
@@ -101,7 +167,68 @@
 		<div id="body-content">
 			
 			<h1>Nowa wizyta: <c:out	value="${patient.surname}" /> <c:out value="${patient.name}" /></title></h1>		
+			
+			<div id="teeth-maps-div">
+				<h3>Zęby stałe</h3>
+			
+				<div id="permanent-teeth-map">
+				</div>
 				
+				<h3>Zęby mleczne</h3>
+			
+				<div id="milk-teeth-map">
+				</div>
+			
+			</div>
+			
+			<div id="selected-tooth-div">
+				
+				<h3>Wybierz ząb lub jego powierzchnię</h3>
+				
+				Połącz powierzchnie:
+					<input type="checkbox" id="is-whole-tooth-selected"/>
+				<div id="selected-tooth-map">
+					
+				</div>
+				
+				<h3>Wybrany ząb:
+					<span id="selected-tooth-number">12</span>,
+					powierzchnia:
+					<span id="selected-tooth-surface">wszystkie</span>
+				</h3>
+				
+				Obecny stan:
+				<select>
+					<option>stan1</option>
+					<option>stan2</option>
+					<option>stan3</option>
+					<option>stan4</option>
+				</select>
+				
+			</div>
+			
+			<div id="modify-form-div">
+				<h3>Dodaj czynność związaną z wybranym zębem</h3>
+				<select>
+					<option>Czynność 1, cena: 500 zł</option>
+					<option>Czynność 2, cena: 500 zł</option>
+					<option>Czynność 3, cena: 500 zł</option>
+					<option>Czynność 4, cena: 500 zł</option>
+					<option>Czynność 5, cena: 500 zł</option>
+				</select>
+				<button value="Dodaj" title="Dodaj">Dodaj czynność</button>
+			</div>
+			
+			<div id="list-activities">
+				<h3>Lista dodanych czynności</h3>
+				<ul>
+					<li> Ząb: 23, powierzchnia: żująca, czynność: usunięcie</li>
+					<li> Ząb: 23, powierzchnia: żująca, czynność: usunięcie</li>
+					<li> Ząb: 23, powierzchnia: żująca, czynność: usunięcie</li>
+					<li> Ząb: 23, powierzchnia: żująca, czynność: usunięcie</li>
+				</ul>
+			</div>
+			
 		</div>
 	</div>
 	<%@ include file="/WEB-INF/include/body-footer.jsp"%>

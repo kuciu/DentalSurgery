@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/jsp/include.jsp"%>
+<%@ include file="/WEB-INF/include/include.jsp"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -164,7 +164,7 @@
 </script>
 
 <style type="text/css">
-<<<<<<< HEAD
+
 #patient-list {
 	text-align: right;
 	width: 300px;
@@ -221,62 +221,6 @@
 	font-style: italic;
 	color: #D9B36C;
 }
-=======
-	
-	#patient-list {
-		text-align: right;
-		width: 300px;
-	}
-	
-	.icon-operation {
-		float: right; margin: 0px;
-	}
-	
-	#body-content {
-		
-		/*border: solid;*/
-		border-width: 1px;
-		border-color: #80C2FF;
-	}
-	
-	#patient-list-border {
-		float: left;
-	
-		width: 370px;
-		/*border: solid;*/
-		border-width: 1px;
-		border-color: #80C2FF;
-	}
-	
-	#patient-info-border {
-		float: right;
-	
-		width: 430px;
-		/*border: solid;*/
-		border-width: 1px;
-		border-color: #80C2FF;
-	}
-	
-	#patient-info-border table  {
-		
-		margin-top: 2px;
-		text-align: left;	
-		
-		
-	}
-	
-	#patient-info-border table tr td:first-child {
-		vertical-align: top;
-		padding-right: 10px;
-		color: #80C2FF;
-	}
-	
-	#patient-info-border table tr td:nth-child(2){
-		font-style: italic;
-		color: #D9B36C;
-	}
-	
->>>>>>> branch 'master' of https://github.com/unvector/DentalSurgery.git
 </style>
 
 </head>
@@ -309,17 +253,10 @@
 		</p>
 	</div>
 
-
-
-	<div id="body-top" class="ui-corner-top">
-		<h1>Dental Surgery</h1>
-	</div>
-
+	<%@ include file="/WEB-INF/include/body-top.jsp"%>
 	<div id="body-container">
-		<div id="body-nav">
-			<a href="<c:url value="/patients/new" />">Nowy pacjent</a> <br /> <a
-				href="<c:url value="/patients" />">Kartoteka</a> <br />
-		</div>
+	
+		<%@ include file="/WEB-INF/include/body-nav.jsp"%>
 
 		<div id="body-content">
 			<h1>Lista pacjentów</h1>
@@ -337,7 +274,8 @@
 							<s:url value="/patients/${patient.patientId}/delete" var="deleteUrl"/>
 							<s:url value="/patients/${patient.patientId}" var="patientInfoUrl"/>
 							<s:url value="/patients/${patient.patientId}/edit" var="editUrl"/>
-							<s:url value="/patients/${patient.patientId}/visits/add" var="editUrl"/>
+							<s:url value="/patients/${patient.patientId}/visits/add" var="addVisitUrl"/>
+							<s:url value="/patients/${patient.patientId}/visits" var="showVisitsUrl"/>
 							<tr> 
 								<td> 
 									<a href="#" title="Pokaż informacje o pacjencie" onclick="loadPatientInfo('${patientInfoUrl}')">
@@ -350,10 +288,10 @@
 									<a href="#" title="Pokaż informacje o pacjencie" onclick="loadPatientInfo('${patientInfoUrl}')">
 										<span class="ui-icon ui-icon-info icon-operation" ></span>
 									</a>
-									<a href="#" title="Przeglądaj wizyty pacjenta" onclick="addVisit('${addVisitUrl}')" >
+									<a href="${showVisitsUrl}" title="Przeglądaj wizyty pacjenta" >
 										<span class="ui-icon ui-icon-folder-collapsed icon-operation" ></span>
 									</a>
-									<a href="#" title="Dodaj nową wizytę" onclick="addVisit('${addVisitUrl}')" >
+									<a href="${addVisitUrl}" title="Dodaj nową wizytę">
 										<span class="ui-icon ui-icon-circle-plus icon-operation" ></span>
 									</a>
 									<a href="#" title="Usuń pacjenta" onclick="deletePatient('${deleteUrl}')" >
@@ -426,8 +364,7 @@
 	<script>
 		window.onload = afterLoad;
 	</script>
-	<div id="body-footer" class="ui-corner-bottom">(C) 2012 by
-		Kamiński &amp; Kuć</div>
+	<%@ include file="/WEB-INF/include/body-footer.jsp"%>
 
 </body>
 </html>

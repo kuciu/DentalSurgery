@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/jsp/include.jsp"%>
+<%@ include file="/WEB-INF/include/include.jsp"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -124,18 +124,13 @@
 </head>
 <body>
 
-	<div id="body-top" class="ui-corner-top">
-		<h1>Dental Surgery</h1>
-	</div>
-
+	
+	<%@ include file="/WEB-INF/include/body-top.jsp"%>
 	<div id="body-container">
-
-		<div id="body-nav">
-			<a href="<c:url value="/patients/new" />">Nowy pacjent</a> <br /> <a
-				href="<c:url value="/patients" />">Kartoteka</a> <br />
-		</div>
-
+	
+		<%@ include file="/WEB-INF/include/body-nav.jsp"%>
 		<div id="body-content">
+		
 			<c:choose>
 				<c:when test="${editMode == true }">
 					<h2>
@@ -253,25 +248,13 @@
 				<input type="hidden" name="editMode" value="${editMode}" />
 			</form:form>
 
-			<div class="ui-widget" style="display: none">
-				<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
-					<p>
-						<span class="ui-icon ui-icon-alert"
-							style="float: left; margin-right: .3em;"></span> Sample
-						ui-state-error style.
-
-					</p>
-				</div>
-			</div>
-
 		</div>
 
 	</div>
 	<script>
 		window.onload = afterLoad;
 	</script>
-	<div id="body-footer" class="ui-corner-bottom">(C) 2012 by
-		Kamiński &amp; Kuć</div>
+	<%@ include file="/WEB-INF/include/body-footer.jsp"%>
 </body>
 </html>
 

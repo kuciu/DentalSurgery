@@ -13,34 +13,34 @@
 		<many-to-one name="visit" class="pl.poznan.put.dentalsurgery.model.Visit" fetch="select">
             <column name="visit_id" />
         </many-to-one>
-		<many-to-one name="allToothState" class="pl.poznan.put.dentalsurgery.model.ToothState" fetch="select">
+		<many-to-one name="allToothState" class="pl.poznan.put.dentalsurgery.model.ToothState" fetch="select" lazy="false">
             <column name="all_tooth_state" />
         </many-to-one>
-		<many-to-one name="area1State" class="pl.poznan.put.dentalsurgery.model.ToothState" fetch="select">
+		<many-to-one name="area1State" class="pl.poznan.put.dentalsurgery.model.ToothState" fetch="select" lazy="false">
             <column name="area_1_state" />
         </many-to-one>
-        <many-to-one name="area2State" class="pl.poznan.put.dentalsurgery.model.ToothState" fetch="select">
+        <many-to-one name="area2State" class="pl.poznan.put.dentalsurgery.model.ToothState" fetch="select" lazy="false">
             <column name="area_2_state" />
         </many-to-one>
-        <many-to-one name="area3State" class="pl.poznan.put.dentalsurgery.model.ToothState" fetch="select">
+        <many-to-one name="area3State" class="pl.poznan.put.dentalsurgery.model.ToothState" fetch="select" lazy="false">
             <column name="area_3_state" />
         </many-to-one>
-        <many-to-one name="area4State" class="pl.poznan.put.dentalsurgery.model.ToothState" fetch="select">
+        <many-to-one name="area4State" class="pl.poznan.put.dentalsurgery.model.ToothState" fetch="select" lazy="false">
             <column name="area_4_state" />
         </many-to-one>
-        <many-to-one name="area5State" class="pl.poznan.put.dentalsurgery.model.ToothState" fetch="select">
+        <many-to-one name="area5State" class="pl.poznan.put.dentalsurgery.model.ToothState" fetch="select" lazy="false">
             <column name="area_5_state" />
         </many-to-one>
-        <many-to-one name="area6State" class="pl.poznan.put.dentalsurgery.model.ToothState" fetch="select">
+        <many-to-one name="area6State" class="pl.poznan.put.dentalsurgery.model.ToothState" fetch="select" lazy="false">
             <column name="area_6_state" />
         </many-to-one>
-        <many-to-one name="area7State" class="pl.poznan.put.dentalsurgery.model.ToothState" fetch="select">
+        <many-to-one name="area7State" class="pl.poznan.put.dentalsurgery.model.ToothState" fetch="select" lazy="false">
             <column name="area_7_state" />
         </many-to-one>
-        <many-to-one name="area8State" class="pl.poznan.put.dentalsurgery.model.ToothState" fetch="select">
+        <many-to-one name="area8State" class="pl.poznan.put.dentalsurgery.model.ToothState" fetch="select" lazy="false">
             <column name="area_8_state" />
         </many-to-one>
-        <set name="activities" table="tooth_activities" cascade="all">
+        <set name="activities" table="tooth_activities" cascade="all" lazy="false">
 			<key column="tooth_id" />
 			<many-to-many column="ta_dict_id"
 				class="pl.poznan.put.dentalsurgery.model.ToothActivity" />

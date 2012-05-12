@@ -54,7 +54,7 @@ public class Patient {
 			PhoneNumber.class);
 	private List<Illness> illnesses = new ArrayList<Illness>();
 	private List<Medication> medications = new ArrayList<Medication>();
-	private Set<Visit> visits = new HashSet<Visit>();
+	private List<Visit> visits = new ArrayList<Visit>();
 
 	public Long getPatientId() {
 		return patientId;
@@ -73,11 +73,11 @@ public class Patient {
 		this.bornDate = bornDate;
 	}
 
-	public Collection<Visit> getVisits() {
+	public List<Visit> getVisits() {
 		return visits;
 	}
 
-	public void setVisits(final Set<Visit> visits) {
+	public void setVisits(final List<Visit> visits) {
 		this.visits = visits;
 	}
 

@@ -257,15 +257,34 @@
 
 <script type="text/javascript">
 
+	/* identyfikator aktualnego zęba */
 	var currentId = null;
 
+	/* dostępne kolory zębów */
 	var toothColors = ["white", "red", "green", "blue"];
+	
+	/* tabelka z nazwami zębów */
+	var teethNames = [
+	    
+		                  
+	];
+	
+	/**
+	 * Zwraca numer aktualnego zęba w notacji FDI
+	 */
+	function currentToothNumber() {
+		if (currentId == null) return null;
+		else return currentId.substring(5,7);
+	}
 	
 	$(document).ready(function() {
 		
+		/**
+		 * Kliknięcię na ząb na mapie
+		 */
 		$.each(['top','bottom'], function(_,side) {
+			
 			$('.tooth-'+side).click(function(){
-				
 				thisId = this.id;
 				if (thisId != currentId) { 
 						$.each(toothColors, function(index,value) {
@@ -292,6 +311,55 @@
 	
 </head>
 <body>
+
+
+	<!-- takie moje do testowania postów ajaxowych -->
+	<div style="border: solid; display: none">
+		<script type="text/javascript">
+		
+			var visit = 
+			{
+				"teeth": null,
+				"comments": "wizyta druga",
+				"visitId": 2,
+				"visitDate": "03-04-2012",
+				"activities": [
+				  {
+				    "description": "visit activity2",
+				    "activityId": 2,
+				    "price": 2.5,
+				    "vat": 0.2
+				  },
+				  {
+				    "description": "visit activity1",
+				    "activityId": 1,
+				    "price": 2.5,
+				    "vat": 0.2
+				  }
+				]
+			};
+		
+		
+			$(document).ready(function(){
+				$("#postTest").click(function(){
+								
+					$.ajax({
+						type: "POST", url: "/dentalsurgery/patients/2/visits/save", 
+						data: JSON.stringify(visit), contentType: "application/json", dataType: "text",
+						success: function(text) {
+							$("#destination").text(text);
+						}
+					});
+					
+				});
+				
+			});
+		
+		</script>
+		<button id="postTest">send</button>
+		<span id="destination"></span>
+	</div>
+
 
 	<!-- Okno dialogowe z pytaniem o potwierdzenie wykonania operacji -->
 	<div id="dialog-confirm" style="display: none">
@@ -365,14 +433,14 @@
 					<div class="tooth-bottom tooth-bottom-white" id="tooth41"><span class="tooth-number">41</span></div>
 					
 					<!-- lewa dolna -->
-					<div class="tooth-bottom tooth-bottom-white" id="teeth31"><span class="tooth-number">31</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="teeth32"><span class="tooth-number">32</span></div>
-					<div class="tooth-bottom tooth-bottom-green" id="teeth33"><span class="tooth-number">33</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="teeth34"><span class="tooth-number">34</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="teeth35"><span class="tooth-number">35</span></div>
-					<div class="tooth-bottom tooth-bottom-blue" id="teeth36"><span class="tooth-number">36</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="teeth37"><span class="tooth-number">37</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="teeth38"><span class="tooth-number">38</span></div>			
+					<div class="tooth-bottom tooth-bottom-white" id="tooth31"><span class="tooth-number">31</span></div>
+					<div class="tooth-bottom tooth-bottom-white" id="tooth32"><span class="tooth-number">32</span></div>
+					<div class="tooth-bottom tooth-bottom-green" id="tooth33"><span class="tooth-number">33</span></div>
+					<div class="tooth-bottom tooth-bottom-white" id="tooth34"><span class="tooth-number">34</span></div>
+					<div class="tooth-bottom tooth-bottom-white" id="tooth35"><span class="tooth-number">35</span></div>
+					<div class="tooth-bottom tooth-bottom-blue" id="tooth36"><span class="tooth-number">36</span></div>
+					<div class="tooth-bottom tooth-bottom-white" id="tooth37"><span class="tooth-number">37</span></div>
+					<div class="tooth-bottom tooth-bottom-white" id="tooth38"><span class="tooth-number">38</span></div>			
 					
 				</div>
 				
@@ -402,11 +470,11 @@
 					<div class="tooth-bottom tooth-bottom-white" id="tooth81"><span class="tooth-number">81</span></div>
 					
 					<!-- lewa dolna -->
-					<div class="tooth-bottom tooth-bottom-red" id="teeth71"><span class="tooth-number">71</span></div>
-					<div class="tooth-bottom tooth-bottom-red" id="teeth72"><span class="tooth-number">72</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="teeth73"><span class="tooth-number">73</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="teeth74"><span class="tooth-number">74</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="teeth75"><span class="tooth-number">75</span></div>			
+					<div class="tooth-bottom tooth-bottom-red" id="tooth71"><span class="tooth-number">71</span></div>
+					<div class="tooth-bottom tooth-bottom-red" id="tooth72"><span class="tooth-number">72</span></div>
+					<div class="tooth-bottom tooth-bottom-white" id="tooth73"><span class="tooth-number">73</span></div>
+					<div class="tooth-bottom tooth-bottom-white" id="tooth74"><span class="tooth-number">74</span></div>
+					<div class="tooth-bottom tooth-bottom-white" id="tooth75"><span class="tooth-number">75</span></div>			
 				
 				</div>
 			

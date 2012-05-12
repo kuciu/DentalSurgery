@@ -144,7 +144,7 @@ public class PatientDaoImplTest extends
 		phoneNumbers.add(phoneNumber2);
 		patient.setPhoneNumbers(phoneNumbers);
 
-		final Set<Visit> visits = new HashSet<Visit>();
+		final List<Visit> visits = new ArrayList<Visit>();
 
 		final Visit visit1 = new Visit(patient);
 		visit1.setVisitDate(new Date());

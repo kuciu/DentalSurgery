@@ -40,13 +40,14 @@
 			<index column="medication_id" />
 			<one-to-many class="pl.poznan.put.dentalsurgery.model.Medication" />
 		</list>
-		<set name="visits" table="visits" inverse="true" lazy="false"
-			fetch="select" cascade="delete, save-update">
+		<list name="visits" table="visits" inverse="true" lazy="false"
+			fetch="select" cascade="all">
 			<key>
 				<column name="patient_id" not-null="true" />
 			</key>
+			<index column="visit_id" />
 			<one-to-many class="pl.poznan.put.dentalsurgery.model.Visit"/>
-		</set>
+		</list>
 	</class>
 
 </hibernate-mapping>

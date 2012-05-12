@@ -1,6 +1,7 @@
 package pl.poznan.put.dentalsurgery.repository;
 
 import java.util.List;
+import java.util.Set;
 
 import pl.poznan.put.dentalsurgery.model.VisitActivity;
 
@@ -15,5 +16,7 @@ public interface VisitActivityDictDao {
 	VisitActivity getVisitActivityById(long visitActivityId);
 
 	List<VisitActivity> getAllVisitActivities();
+	
+	void loadPersistentSetOfActivities(Set<VisitActivity> setOfActivities);
 
 }

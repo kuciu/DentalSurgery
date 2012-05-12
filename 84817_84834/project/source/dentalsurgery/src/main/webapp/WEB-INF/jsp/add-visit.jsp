@@ -319,24 +319,23 @@
 		
 			var visit = 
 			{
-				"teeth": null,
-				"comments": "wizyta druga",
-				"visitId": 2,
-				"visitDate": "03-04-2012",
+				"teeth": [
+				          	{
+				          		"number" : 123
+				          	}
+				          
+				          ],
+				"comments": "wizyta A",
+				
+				"visitDate": "03-04-2010",
 				"activities": [
-				  {
-				    "description": "visit activity2",
-				    "activityId": 2,
-				    "price": 2.5,
-				    "vat": 0.2
-				  },
-				  {
-				    "description": "visit activity1",
-				    "activityId": 1,
-				    "price": 2.5,
-				    "vat": 0.2
-				  }
-				]
+				               	{  "activityId" : 1,
+				               		"description" : "visit activity1",
+				               		"price" : 2.50,
+				               		"vat" : 0.20
+				               	}
+				               
+				               ]
 			};
 		
 		
@@ -347,7 +346,7 @@
 						type: "POST", url: "/dentalsurgery/patients/2/visits/save", 
 						data: JSON.stringify(visit), contentType: "application/json", dataType: "text",
 						success: function(text) {
-							$("#destination").text(text);
+							$("#destination").html(text);
 						}
 					});
 					

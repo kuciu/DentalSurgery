@@ -5,6 +5,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,16 @@ public class VisitController {
 	@Autowired
 	public void setVisitService(VisitService visitService) {
 		this.visitService = visitService;
+	}
+	
+	/**
+	 * Dodaje do modelu pacjenta o ID podanym w URLu
+	 * @param patientId
+	 * @return
+	 */
+	@ModelAttribute
+	public Patient getPatient(@PathVariable Long patientId) {
+		return patientService.getPatientById(patientId);
 	}
 	
 	/**
@@ -65,9 +76,12 @@ public class VisitController {
 	 * Zapisuje do bazy obiekt wizyty, wysłany POSTem w postaci jsona
 	 */
 	@RequestMapping(value="/save", method=RequestMethod.POST, consumes="application/json")
-	public @ResponseBody String saveVisit(@RequestBody Visit visit) {
+	public @ResponseBody String saveVisit(@RequestBody Visit visit, @ModelAttribute Patient patient) {
 		
-		return "tu coś będzie";
+		visit.setPatient(patient);
+		visitService.addVisit(visit);
+		
+		return visit.toString();
 	}
 	
 	
@@ -96,7 +110,7 @@ public class VisitController {
 	@RequestMapping(value="/newVisit", produces="application/json")
 	public @ResponseBody Visit getNewVisitObject(@PathVariable Long patientId) {
 		
-		
+		// todo
 		
 		return null;
 		

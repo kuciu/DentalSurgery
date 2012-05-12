@@ -145,7 +145,7 @@
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-top-white.png');
 	}
 	
-	.tooth-top-white:hover {
+	.tooth-top-white-selected, .tooth-top-white:hover {
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-top-light.png');
 	}
 	
@@ -153,7 +153,7 @@
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-top-lightred.png');
 	}
 	
-	.tooth-top-red:hover {
+	.tooth-top-red-selected, .tooth-top-red:hover {
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-top-darkred.png');
 	}
 	
@@ -161,7 +161,7 @@
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-top-lightgreen.png');
 	}
 	
-	.tooth-top-green:hover {
+	.tooth-top-green-selected, .tooth-top-green:hover {
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-top-darkgreen.png');
 	}
 	
@@ -169,7 +169,7 @@
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-top-lightblue.png');
 	}
 	
-	.tooth-top-blue:hover {
+	.tooth-top-blue-selected, .tooth-top-blue:hover {
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-top-darkblue.png');
 	}	
 	
@@ -178,7 +178,7 @@
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-white.png');
 	}
 	
-	.tooth-bottom-white:hover {
+	.tooth-bottom-white-selected, .tooth-bottom-white:hover {
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-light.png');
 	}
 	
@@ -186,7 +186,7 @@
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-lightred.png');
 	}
 	
-	.tooth-bottom-red:hover {
+	.tooth-bottom-red-selected, .tooth-bottom-red:hover {
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-darkred.png');
 	}
 	
@@ -194,7 +194,7 @@
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-lightgreen.png');
 	}
 	
-	.tooth-bottom-green:hover {
+	.tooth-bottom-green-selected, .tooth-bottom-green:hover {
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-darkgreen.png');
 	}
 	
@@ -202,7 +202,7 @@
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-lightblue.png');
 	}
 	
-	.tooth-bottom-blue:hover {
+	.tooth-bottom-blue-selected, .tooth-bottom-blue:hover {
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-darkblue.png');
 	}	
 	
@@ -244,7 +244,7 @@
 		left: 4px;
 	}
 	
-	/* odsunięcie prawej górnej i lewej dolnej części */
+	/* odsunięcie lewej od prawej części szczęki */
 	#permanent-teeth-map .tooth-top:nth-child(9),
 	#permanent-teeth-map .tooth-bottom:nth-child(25),
 	#milk-teeth-map .tooth-top:nth-child(6),
@@ -257,10 +257,39 @@
 
 <script type="text/javascript">
 
+	var currentId = null;
+
+	var toothColors = ["white", "red", "green", "blue"];
+	
+	$(document).ready(function() {
+		
+		$.each(['top','bottom'], function(_,side) {
+			$('.tooth-'+side).click(function(){
+				
+				thisId = this.id;
+				if (thisId != currentId) { 
+						$.each(toothColors, function(index,value) {
+							
+							if (currentId != null) {
+								$.each(['top','bottom'], function(_,side) {
+									$("#"+currentId).removeClass('tooth-'+side+'-'+value+'-selected');
+								});
+							}
+							
+							if ($('#'+thisId).hasClass('tooth-'+side+'-'+value)) {
+								$('#'+thisId).addClass('tooth-'+side+'-'+value+'-selected');
+							}
+						});	
+					
+				}
+				currentId = thisId;
+			});
+		});
+		
+	});
 
 </script>
-
-
+	
 </head>
 <body>
 

@@ -1,7 +1,8 @@
 package pl.poznan.put.dentalsurgery.repository;
 
-import java.util.Collection;
+import java.util.List;
 
+import pl.poznan.put.dentalsurgery.model.Patient;
 import pl.poznan.put.dentalsurgery.model.Visit;
 
 public interface VisitDao {
@@ -12,5 +13,10 @@ public interface VisitDao {
 
 	void updateVisit(Visit visitFromDb);
 
-	Collection<Visit> getAllVisits();
+	List<Visit> getAllVisits();
+	
+	List<Visit> getAllVisits(Patient patient);
+	
+	Visit getLastVisitFromDb(Patient patient);
+	
 }

@@ -1,18 +1,16 @@
 package pl.poznan.put.dentalsurgery.service;
 
+import pl.poznan.put.dentalsurgery.model.Patient;
 import pl.poznan.put.dentalsurgery.model.Visit;
 
 public interface VisitService {
 
 	Visit getVisidById(Long visitId);
 
-	long addVisit(Visit visit);
+	long saveDeserializedVisit(Visit visit);
 	
-	/*
-	Collection<Patient> getAllPatients();
+	Visit getLastVisit(Patient patient);
+	
+	Visit prepareNewVisit(Patient patient);
 
-	void deletePatient(Patient patient);
-
-	void updatePatient(Patient patient);
-	*/
 }

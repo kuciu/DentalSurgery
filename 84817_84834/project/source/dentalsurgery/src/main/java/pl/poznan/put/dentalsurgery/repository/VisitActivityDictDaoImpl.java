@@ -44,17 +44,4 @@ public class VisitActivityDictDaoImpl extends AbstractDao<VisitActivity>
 				VisitActivity.class, visitActivityId);
 	}
 
-	/**
-	 * Zbiór czynności ładuje z bazy danych; przy ładowaniu bierze pod uwagę
-	 * tylko identyfikator czynności, cała reszta jest nadpisywana
-	 * @param setOfActivities
-	 */
-	@Override
-	public void loadPersistentSetOfActivities(Set<VisitActivity> setOfActivities) {
-		for (VisitActivity activity: setOfActivities) {
-			sessionFactory.getCurrentSession().load(activity, activity.getActivityId());
-		}
-		
-	}
-
 }

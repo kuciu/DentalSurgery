@@ -47,75 +47,67 @@ public class VisitController {
 	
 	/**
 	 * Wyświetla stronę JSP z listą wizyt pacjenta, 
-	 * Na stronie tej można zobaczyć listę dotychczasowych wizyt pacjenta
+	 * Na stronie tej można zobaczyć listę dotychczasowych wizyt pacjenta.
 	 * 
 	 * @return
 	 */
 	@RequestMapping({"", "/"})
-	public String listVisitsController(@PathVariable Long patientId) {
+	public String visitsListView(@ModelAttribute Patient patient, Model model) {
+		if (patient == null) {
+			model.addAttribute("message", "Nie ma takiego pacjenta");
+			return "error";
+		}
 		return "visits";
 	}
 	
 	/**
 	 * Wyświetla stronę JSP na której można dodać nową wizytę
-	 * 
+	 * @param patientId
+	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value="/add", method=RequestMethod.GET)
-	public String addVisitController(@PathVariable Long patientId, Model model) {
-		Patient patient = patientService.getPatientById(patientId);
+	public String addVisitController(@ModelAttribute Patient patient, Model model) {
 		if (patient == null) {
-			model.addAttribute("message", "Nie ma pacjenta o identyfikatorze " + patientId);
+			model.addAttribute("message", "Nie ma takiego pacjenta");
 			return "error";
 		}
-		model.addAttribute(patient);
 		return "add-visit";
 	}
 	
 	/**
 	 * Zapisuje do bazy obiekt wizyty, wysłany POSTem w postaci jsona
+	 * @param visit
+	 * @param patient
+	 * @return
 	 */
 	@RequestMapping(value="/save", method=RequestMethod.POST, consumes="application/json")
 	public @ResponseBody String saveVisit(@RequestBody Visit visit, @ModelAttribute Patient patient) {
-		
 		visit.setPatient(patient);
-		visitService.addVisit(visit);
-		
-		return visit.toString();
+		visitService.saveDeserializedVisit(visit);
+		return "OK";
 	}
 	
-	
 	/**
-	 * Zwraca obiekt JSON konkretnej wizyty istniejącej w bazie danych
-	 * @param patientId
+	 * Zwraca obiekt w postaci JSON konkretnej wizyty istniejącej w bazie danych
 	 * @param visitId
 	 * @return
 	 */
 	@RequestMapping(value="/{visitId}")
-	public @ResponseBody Visit getVisit(@PathVariable Long patientId, @PathVariable Long visitId) {
-		
+	public @ResponseBody Visit getVisit(@PathVariable Long visitId) {
 		return visitService.getVisidById(visitId);
-		
 	}
 	
-	
-	
 	/**
-	 * Zwraca JSONa z obiektem nowej wizyty. Obiekt ten tworzony jest w oparciu o wcześniejsze wizyty, 
-	 * po to aby przenieść poprzednio ustalone stany zębów 
+	 * Zwraca JSONa z obiektem nowej wizyty. Obiekt ten tworzony jest w oparciu o ostatnia wizytę. 
+	 * Jeśli jest to pierwsza wizyta, tworzone są obiekty wszystkich zębów w notacji FDI.
 	 * 
 	 * @param patientId
 	 * @return
 	 */
-	@RequestMapping(value="/newVisit", produces="application/json")
-	public @ResponseBody Visit getNewVisitObject(@PathVariable Long patientId) {
-		
-		// todo
-		
-		return null;
-		
+	@RequestMapping(value="/prepareNew", produces="application/json")
+	public @ResponseBody Visit prepareNewVisit(@ModelAttribute Patient patient) {
+		return visitService.prepareNewVisit(patient);
 	}
-
-
 
 }

@@ -1,12 +1,13 @@
 package pl.poznan.put.dentalsurgery.repository;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import pl.poznan.put.dentalsurgery.model.Patient;
 import pl.poznan.put.dentalsurgery.model.Visit;
 
 @Repository
@@ -38,8 +39,32 @@ public class VisitDaoImpl extends AbstractDao<Visit> implements VisitDao {
 	}
 	
 	@Override
-	public Collection<Visit> getAllVisits() {
+	public List<Visit> getAllVisits() {
 		return getAll();
 	}
+	
+	/**
+	 * Lista wizyt pacjenta w porządku malejącym
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Visit> getAllVisits(Patient patient) {
+		final Criteria criteria = this.sessionFactory.getCurrentSession()
+				.createCriteria(Visit.class);
+		criteria.addOrder(Order.desc("visitDate")).add(
+				Restrictions.eq("patient.patientId", patient.getPatientId()));
+		List<Visit> visits = criteria.list();
+		return visits;
+	}
 
+	@Override
+	public Visit getLastVisitFromDb(Patient patient) {
+		List<Visit> visits = this.getAllVisits(patient);
+		if (visits != null && visits.size() > 0)
+			return visits.get(0);
+		return null;
+	}
+
+	
+	
 }

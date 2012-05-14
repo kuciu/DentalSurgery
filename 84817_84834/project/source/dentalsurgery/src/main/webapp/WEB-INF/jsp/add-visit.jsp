@@ -472,13 +472,6 @@
 	};
 	
 	
-</head>
-<body>
-
-
-	<!-- takie moje do testowania postów ajaxowych -->
-	<div style="border: solid;">
-		<script type="text/javascript">
 	/**
 	 * Menadżer komponentów aplikacji. Wszystkie operacje zbiera do kupy.
 	 */
@@ -491,31 +484,9 @@
 		/** widżet z mapą uzębienia */
 		this.toothMapWidget = new ToothMapWidget(this);
 		
-			var visit = 
-			{
-				"teeth": [
-				          	{
-				          		"number" : 123
-				          	}
-				          
-				          ],
-				"comments": "wizyta A",
-				
-				"visitDate": "2010-03-04",
-				"activities": [
-				               	{  "activityId" : 1,
-				               		"description" : "visit activity1",
-				               		"price" : 2.50,
-				               		"vat" : 0.20
-				               	}
-				               
-				               ],
-				"patient": null,
-				"attachments": null
-			};
 		/** wrapper na obiekt wizyty */
 		this.visitWrapper = new VisitWrapper(patientId);
-				
+		
 		/** Wybranie nowego zęba */
 		this.selectTooth = function(toothNumber) {
 			if (self.currentToothNumber != null)
@@ -524,15 +495,6 @@
 			self.toothMapWidget.toggleSelected(self.currentToothNumber);
 		};
 		
-			$(document).ready(function(){
-				$("#postTest").click(function(){
-								
-					$.ajax({
-						type: "POST", url: "/dentalsurgery/patients/9/visits/save", 
-						data: JSON.stringify(visit),  contentType: 'multipart/form-data', dataType: "text", name: "json",
-						success: function(text) {
-							$("#destination").html(text);
-						}
 		/** inicjalizacja */
 		this.initialize = function() {
 			self.toothMapWidget.createTeethMapUi();
@@ -651,83 +613,14 @@
 			
 			<div class="ui-teeth-map" id="ui-teeth-map">
 				<h3>Zęby stałe</h3>
-			
-			
-				<div id="permanent-teeth-map">
-				
-					<!-- prawa (sic! ma być prawa, nie lewa) górna -->
-					<div class="tooth-top tooth-top-white" id="tooth18"><span class="tooth-number">18</span></div>
-					<div class="tooth-top tooth-top-red" id="tooth17"><span class="tooth-number">17</span></div>
-					<div class="tooth-top tooth-top-green" id="tooth16"><span class="tooth-number">16</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth15"><span class="tooth-number">15</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth14"><span class="tooth-number">14</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth13"><span class="tooth-number">13</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth12"><span class="tooth-number">12</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth11"><span class="tooth-number">11</span></div>
-					
-					<!-- lewa górna -->
-					<div class="tooth-top tooth-top-blue" id="tooth21"><span class="tooth-number">21</span></div>
-					<div class="tooth-top tooth-top-white" id="tooyh22"><span class="tooth-number">22</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth23"><span class="tooth-number">23</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth24"><span class="tooth-number">24</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth25"><span class="tooth-number">25</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth26"><span class="tooth-number">26</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth27"><span class="tooth-number">27</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth28"><span class="tooth-number">28</span></div>
-					
-					<!-- prawa dolna -->
-					<div class="tooth-bottom tooth-bottom-white" id="tooth48"><span class="tooth-number">48</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth47"><span class="tooth-number">47</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth46"><span class="tooth-number">46</span></div>
-					<div class="tooth-bottom tooth-bottom-red" id="tooth45"><span class="tooth-number">45</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth44"><span class="tooth-number">44</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth43"><span class="tooth-number">43</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth42"><span class="tooth-number">42</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth41"><span class="tooth-number">41</span></div>
-					
-					<!-- lewa dolna -->
-					<div class="tooth-bottom tooth-bottom-white" id="tooth31"><span class="tooth-number">31</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth32"><span class="tooth-number">32</span></div>
-					<div class="tooth-bottom tooth-bottom-green" id="tooth33"><span class="tooth-number">33</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth34"><span class="tooth-number">34</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth35"><span class="tooth-number">35</span></div>
-					<div class="tooth-bottom tooth-bottom-blue" id="tooth36"><span class="tooth-number">36</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth37"><span class="tooth-number">37</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth38"><span class="tooth-number">38</span></div>			
-					
+				<div class="permanent" id="ui-teeth-map-permanent">
+					<div class="top"></div>
+					<div class="bottom"></div>
 				</div>
 				<h3>Zęby mleczne</h3>
-			
-				<div id="milk-teeth-map">
-				
-					<!-- prawa (sic! ma być prawa, nie lewa) górna -->
-					<div class="tooth-top tooth-top-white" id="tooth55"><span class="tooth-number">55</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth54"><span class="tooth-number">54</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth53"><span class="tooth-number">53</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth52"><span class="tooth-number">52</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth51"><span class="tooth-number">51</span></div>
-					
-					<!-- lewa górna -->
-					<div class="tooth-top tooth-top-white" id="tooth61"><span class="tooth-number">61</span></div>
-					<div class="tooth-top tooth-top-white" id="tooyh62"><span class="tooth-number">62</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth63"><span class="tooth-number">63</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth64"><span class="tooth-number">64</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth65"><span class="tooth-number">65</span></div>
-					
-					<!-- prawa dolna -->
-					<div class="tooth-bottom tooth-bottom-white" id="tooth85"><span class="tooth-number">85</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth84"><span class="tooth-number">84</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth83"><span class="tooth-number">83</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth82"><span class="tooth-number">82</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth81"><span class="tooth-number">81</span></div>
-					
-					<!-- lewa dolna -->
-					<div class="tooth-bottom tooth-bottom-red" id="tooth71"><span class="tooth-number">71</span></div>
-					<div class="tooth-bottom tooth-bottom-red" id="tooth72"><span class="tooth-number">72</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth73"><span class="tooth-number">73</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth74"><span class="tooth-number">74</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth75"><span class="tooth-number">75</span></div>			
-				
+				<div class="deciduous" id="ui-teeth-map-deciduous">
+					<div class="top"></div>
+					<div class="bottom"></div>
 				</div>
 			</div>
 						
@@ -777,13 +670,6 @@
 					<li> Ząb: 24, powierzchnia: żująca, czynność: plomba</li>
 					<li> Ząb: 53, powierzchnia: żująca, czynność: plomba</li>
 				</ul>
-			</div>
-			
-			<div>
-				<h3>Załączniki</h3>
-				Plik: <input type="file" id="attachment" /><br/>
-				Opis: <input type="text" id="description" /><br/>
-				<input type="button" id="addAtachment" value="Dodaj"/> 
 			</div>
 			
 		</div>

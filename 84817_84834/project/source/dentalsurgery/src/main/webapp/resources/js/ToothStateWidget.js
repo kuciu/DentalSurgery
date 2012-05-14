@@ -19,6 +19,11 @@ ToothStateWidget = function(componentManager) {
 					'">'+state.description+'</option>');
 			$('#selected-tooth-state').append($newOption);
 		});
+		$('#selected-tooth-state').selectmenu({
+			style: 'popup',
+			menuWidth: '370',
+			width: '370'
+		});
 		
 	};
 	

@@ -17,13 +17,17 @@
 <link
 	href="<c:url value="/resources/jquery/css/cupertino/jquery-ui-1.8.20.custom.css" />"
 	rel="stylesheet" type="text/css" />
+<link
+	href="<c:url value="/resources/jquery/css/cupertino/jquery.ui.selectmenu.css" />"
+	rel="stylesheet" type="text/css" />	
 <script type="text/javascript"
 	src="<c:url value="/resources/jquery/js/jquery-1.7.2.min.js" />"></script>
 <script type="text/javascript"
 	src="<c:url value="/resources/jquery/js/jquery-ui-1.8.20.custom.min.js" />"></script>
-	
 <script type="text/javascript"
-	src="<c:url value="/resources/jquery/js/jquery-ui-1.8.20.custom.min.js" />"></script>
+	src="<c:url value="/resources/jquery/js/jquery.ui.selectmenu.js" />"></script>
+	
+	
 	
 <link href="<c:url value="/resources/css/visit.css" />" rel="stylesheet"
 	type="text/css" />
@@ -254,12 +258,14 @@
 					powierzchnia:
 					<span id="selected-tooth-surface">wszystkie</span>
 				</h3>
-				
-				Obecny stan:				
+
+				Obecny stan:
+					
 				<select name="selected-tooth-state" id="selected-tooth-state">
 					<option value="null" selected="selected">Zdrowy</option>
 				</select>
-				
+					
+
 			</div>
 			
 			<div id="modify-form-div">

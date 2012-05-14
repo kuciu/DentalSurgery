@@ -20,15 +20,6 @@ public class Visit {
 	private Set<VisitActivity> activities = new HashSet<VisitActivity>();
 	private String comments;
 	private Set<Tooth> teeth = new HashSet<Tooth>();
-	private Set<Attachment> attachments;
-
-	public Set<Attachment> getAttachments() {
-		return attachments;
-	}
-
-	public void setAttachments(final Set<Attachment> attachments) {
-		this.attachments = attachments;
-	}
 
 	public Visit() {
 	}

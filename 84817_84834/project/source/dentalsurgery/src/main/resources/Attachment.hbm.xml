@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="pl.poznan.put.dentalsurgery.model">
+
+	<class name="Attachment" table="atachments">
+		<id name="attachmentId" column="attachment_id">
+			<generator class="native" />
+		</id>
+		<many-to-one name="visit"
+			class="pl.poznan.put.dentalsurgery.model.Visit" fetch="select">
+			<column name="visit_id" not-null="true" />
+		</many-to-one>
+		<property name="fileName" column="file_name" />
+		<property name="description" column="description" />
+		<property name="file" column="file" type="binary"/>
+	</class>
+
+</hibernate-mapping>

@@ -27,6 +27,12 @@
 		</property>
 	</bean>
 
+	<!-- Upload plików -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- maksymalny rozmiar pliku w bajtach -->
+        <property name="maxUploadSize" value="5242880"/>
+    </bean>
+
 	<!-- Źródło danych - u nas baza danych MySQL -->
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">

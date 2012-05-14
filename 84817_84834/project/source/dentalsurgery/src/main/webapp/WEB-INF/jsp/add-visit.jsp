@@ -25,575 +25,25 @@
 <script type="text/javascript"
 	src="<c:url value="/resources/jquery/js/jquery-ui-1.8.20.custom.min.js" />"></script>
 	
-<script type="text/javascript">
-			
-	/**
-	 * Powiadomienie o sukcesie i wykonanie akcji
-	 */
-	function successMessage(title, text, callback) {
-		$("#success-message-text").html(text);
-		$("#success-message").dialog({
-			title: title,
-			resizable: false,
-			width:500,
-			modal: true,
-			buttons: {
-				Ok: function() { 
-					$( this ).dialog( "close" );
-					if (callback != null) {callback();}
-				}
-			}
-		});
-	}
-	
-	/**
-	 * Powiadomienie o błędzie
-	 */
-	function errorMessage(title, text) {
-		$("#error-message-text").html(text);
-		$("#error-message").dialog({
-			title: title,
-			resizable: false,
-			width:500,
-			modal: true,
-			buttons: {
-				Ok: function() { 
-					$( this ).dialog( "close" );
-				}
-			}
-		});
-	}
-		
-</script>
+<link href="<c:url value="/resources/css/visit.css" />" rel="stylesheet"
+	type="text/css" />
+<script type="text/javascript"
+	src="<c:url value="/resources/js/visit-common.js" />"></script>
+<script type="text/javascript"
+	src="<c:url value="/resources/js/DictionaryManager.js" />"></script>
+<script type="text/javascript"
+	src="<c:url value="/resources/js/VisitWrapper.js" />"></script>
+<script type="text/javascript"
+	src="<c:url value="/resources/js/ToothMapWidget.js" />"></script>
+<script type="text/javascript"
+	src="<c:url value="/resources/js/ToothPartWidget.js" />"></script>
+<script type="text/javascript"
+	src="<c:url value="/resources/js/ToothStateWidget.js" />"></script>
 
-<style type="text/css">
-	
-	#body-content{
-		border: solid;
-		border-width: 1px;
-		border-color: #80C2FF;
-	}
-	
-	#ui-teeth-map {
-		float: left;
-		padding: 10px;
-		width: 350px;
-		height: 300px;
-	
-	
-		border: solid;
-		border-width: 1px;
-		border-color: #80C2FF;
-	}
-	
-	#ui-teeth-map-permanent {
-		width: 355px;
-		height: 105px;
-	}
-	
-	#ui-teeth-map-deciduous {
-		margin-left: 63px;
-		width: 225px;
-		height: 105px;
-	}
-	
-	#selected-tooth-div {
-		float: right;
-		padding: 10px;
-		width: 400px;
-		height: 300px;
-	
-	
-		border: solid;
-		border-width: 1px;
-		border-color: #80C2FF;
-	}
-	
-	#selected-part-list {
-		width: 140px;
-		height: 150px;
-		border: solid;
-		border-width: 1px;
-		border-color: #80C2FF;
-		margin:auto;
-		list-style-type: none;
-	}
-	
-	#modify-form-div {
-		
-		float: left;
-		padding: 10px;
-		border: solid;
-		border-width: 1px;
-		border-color: #80C2FF;
-		width: 350px;
-	}
-	
-	#list-activities {
-		float: right;
-		padding: 10px;
-		border: solid;
-		border-width: 1px;
-		border-color: #80C2FF;
-		width: 400px;
-	}
-	
-	/* ************************** mapa zębów ********************************************* */
-	
-	/* obrazki zębów górnych */
-	.top .ui-tooth.white {
-		background-image: url('/dentalsurgery/resources/img/teeth/tooth-top-white.png');
-	}
-	
-	.top .ui-tooth.white.selected, .top .ui-tooth.white:hover {
-		background-image: url('/dentalsurgery/resources/img/teeth/tooth-top-light.png');
-	}
-	
-	.top .ui-tooth.red {
-		background-image: url('/dentalsurgery/resources/img/teeth/tooth-top-lightred.png');
-	}
-	
-	.top .ui-tooth.red.selected, .top .ui-tooth.red:hover {
-		background-image: url('/dentalsurgery/resources/img/teeth/tooth-top-darkred.png');
-	}
-	
-	.top .ui-tooth.green {
-		background-image: url('/dentalsurgery/resources/img/teeth/tooth-top-lightgreen.png');
-	}
-	
-	.top .ui-tooth.green.selected, .top .ui-tooth.green:hover {
-		background-image: url('/dentalsurgery/resources/img/teeth/tooth-top-darkgreen.png');
-	}
-	
-	.top .ui-tooth.blue {
-		background-image: url('/dentalsurgery/resources/img/teeth/tooth-top-lightblue.png');
-	}
-	
-	.top .ui-tooth.blue.selected, .top .ui-tooth.blue:hover {
-		background-image: url('/dentalsurgery/resources/img/teeth/tooth-top-darkblue.png');
-	}	
-	
-	/* obrazki zębów dolnych (odwrócone) */
-	
-	.bottom .ui-tooth.white {
-		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-white.png');
-	}
-	
-	.bottom .ui-tooth.white.selected, .bottom .ui-tooth.white:hover {
-		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-light.png');
-	}
-	
-	.bottom .ui-tooth.red {
-		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-lightred.png');
-	}
-	
-	.bottom .ui-tooth.red.selected, .bottom .ui-tooth.red:hover {
-		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-darkred.png');
-	}
-	
-	.bottom .ui-tooth.green {
-		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-lightgreen.png');
-	}
-	
-	.bottom .ui-tooth.green.selected, .bottom .ui-tooth.green:hover {
-		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-darkgreen.png');
-	}
-	
-	.bottom .ui-tooth.blue {
-		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-lightblue.png');
-	}
-	
-	.bottom .ui-tooth.blue.selected, .bottom .ui-tooth.blue:hover {
-		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-darkblue.png');
-	}	
-	
-	/* ząb górny */
-	.top .ui-tooth {
-		margin-left: 1px;		/* lekkie rozsunięcie zębów */
-		width: 20px;
-		height: 50px;
-		float: left;
-		cursor: pointer;
-		background-repeat: no-repeat;
-		background-position: top;
-	}
-	
-	/* pozycjonowanie numeru w zębie górnym*/
-	.top .ui-tooth .number {
-		position: relative;
-		top: 33px;
-		left: 4px;
-	}
-	
-	/* ząb dolny */
-	.bottom .ui-tooth {
-		margin-left: 1px;		/* lekkie rozsunięcie zębów */
-		width: 20px;
-		height: 50px;
-		float: left;
-		cursor: pointer;
-		background-repeat: no-repeat;
-		background-position: bottom;
-	}
-	
-	/* pozycjonowanie numeru w zębie dolnym */
-	.bottom .ui-tooth .number {
-		position: relative;
-		top: 3px;
-		left: 4px;
-	}
-	
-	/* odsunięcie lewej od prawej części szczęki */
-	.permanent * .ui-tooth:nth-child(9),
-	.deciduous * .ui-tooth:nth-child(6)
-	  {
-		margin-left: 10px;
-	}
-	
-	/* ***************************** Wybór części zęba *********************************** */
-
-	.ui-tooth-part {
-		cursor: pointer;
-	}
-
-	.ui-tooth-part.selected, .ui-tooth-part:hover {
-		font-weight: bolder;
-	}
-
-	.ui-tooth-part.white {
-		color: #80C2FF; 
-	}
-	
-	.ui-tooth-part.white.selected, .ui-tooth-part.white:hover {
-		color: #80C2FF;
-		background-color: #E4F6F6;
-	}
-	
-	.ui-tooth-part.blue {
-		color: #afafe4;
-	}
-	
-	.ui-tooth-part.blue.selected, .ui-tooth-part.blue:hover {
-		background-color: #3737a6;
-	}
-	
-	.ui-tooth-part.red {
-		color: #e4afaf;
-	}
-	
-	.ui-tooth-part.red.selected, .ui-tooth-part.red:hover {
-		background-color: #CB2828;
-	}
-	
-	.ui-tooth-part.green {
-		color: #ABE2AB;
-	}
-	
-	.ui-tooth-part.green.selected, .ui-tooth-part.green:hover {
-		background-color: #37A637;
-	}
-	
-	
-</style> 
 
 <script type="text/javascript">
 
-	/** numery zębów */
-	var TeethNumbers  = {
-		/////// zęby stałe
-		PERMANENT: {	
-			// prawa górna strona							// lewa górna strona
-			TOP: 	[ 18, 17, 16, 15, 14, 13, 12, 11,		21, 22, 23, 24, 25, 26, 27, 28 ], 
-			// prawa dolna strona							// lewa dolna strona
-			BOTTOM: [ 48, 47, 46, 45, 44, 43, 42, 41,		31, 32, 33, 34, 35, 36, 37, 38 ],
-		},
-		/////// zęby mleczne
-		DECIDUOUS: {
-						//prawa górna strona				// lewa górna strona
-						TOP: 	[ 55, 54, 53, 52, 51, 		61, 62, 63, 64, 65 ], 
-						// prawa dolna strona				// lewa dolna strona
-						BOTTOM: [ 85, 84, 83, 82, 81,		71, 72, 73, 74, 75 ]
-		}
-	};
 
-	/** dostępne kolory zębów */
-	var Colors = {
-			WHITE : 	{ value: 0, cssClass: "white" },
-			RED : 		{ value: 1, cssClass: "red"  },
-			GREEN : 	{ value: 2, cssClass: "green" },
-			BLUE : 		{ value: 3, cssClass: "blue"  },
-	};
-	
-	/** powierzchnie zęba */
-	var ToothParts = {
-			AREA_0 : { value: 0, stateField: "allToothState", description: "Cały ząb" },
-			AREA_1 : { value: 1, stateField: "area1State", description: "Pow. zewnętrzna" },
-			AREA_2 : { value: 2, stateField: "area2State", description: "Pow. wewnętrzna" },
-			AREA_3 : { value: 3, stateField: "area3State", description: "Pow. bliższa" },
-			AREA_4 : { value: 4, stateField: "area4State", description: "Pow. dalsza" },
-			AREA_5 : { value: 5, stateField: "area5State", description: "Pow. żująca" },
-			AREA_6 : { value: 6, stateField: "area6State", description: "Korzeń środkowy" },
-			AREA_7 : { value: 7, stateField: "area7State", description: "Korzeń bliższy" },
-			AREA_8 : { value: 8, stateField: "area8State", description: "Korzeń dalszy" }
-	};
-	
-	
-	/**
-	 * Klasa umożliwiająca dostęp do słowników
-	 */
-	 DictionaryManager = function() {
-		 var self = this;
-		 
-		 this.toothActivities = null;
-		 this.toothStates = null;
-		 this.visitActivities = null;
-		 
-		 /** inicjalizuje słowniki wartościami z serwera */
-		 this.loadDictionaries = function(callback) {
-			 $.ajax({
-					type: "GET", url: "/dentalsurgery/dict/getall", 
-					dataType: "json",
-					success: function(dictionaries) {
-						self.toothActivities = dictionaries.toothActivities;
-						self.toothStates =  dictionaries.toothStates;
-						self.visitActivities = dictionaries.visitActivities;
-						if (callback != null)
-							callback();
-					}
-				});	
-		 }; 
-	 };
-	
-	
-	/**
-	 * Widget z mapą uzębienia
-	 */
-	ToothMapWidget = function(componentManager) {
-		var self = this;
-		
-		/** rejestracja menedżera komponentów */
-		this.componentManager = componentManager;
-		
-		/** prefiks identyfikatorów zębów na mapie */
-		this.prefix = "tooth";
-		
-		/**
-		 * Tworzy mapę uzębienia w postaci graficznej
-		 */ 
-		this.createTeethMapUi = function() {
-			$.each(TeethNumbers.PERMANENT.TOP, function(_, num){
-				var $toothUi = $('<div class="ui-tooth white" id="'+self.prefix+num+'"><span class="number">'+num+'</span></div>');
-				$(".ui-teeth-map .permanent .top").append($toothUi);
-			});
-			$.each(TeethNumbers.PERMANENT.BOTTOM, function(_, num){
-				var $toothUi = $('<div class="ui-tooth white" id="'+self.prefix+num+'"><span class="number">'+num+'</span></div>');
-				$(".ui-teeth-map .permanent .bottom").append($toothUi);
-			});
-			$.each(TeethNumbers.DECIDUOUS.TOP, function(_, num){
-				var $toothUi = $('<div class="ui-tooth white" id="'+self.prefix+num+'"><span class="number">'+num+'</span></div>');
-				$(".ui-teeth-map .deciduous .top").append($toothUi);
-			});
-			$.each(TeethNumbers.DECIDUOUS.BOTTOM, function(_, num){
-				var $toothUi = $('<div class="ui-tooth white" id="'+self.prefix+num+'"><span class="number">'+num+'</span></div>');
-				$(".ui-teeth-map .deciduous .bottom").append($toothUi);
-			});
-		};
-		
-		/**
-		 * Zmienia kolor zęba
-		 * Przykład: .changeColor(28, Colors.WHITE)
-		 */
-		this.changeColor = function(toothNumber, newColor) {
-			$.each(Colors, function(_,color){
-				$('#tooth'+toothNumber).removeClass(color.cssClass);	
-			});
-			$('#tooth'+toothNumber).addClass(newColor.cssClass);
-		};
-		
-		/**
-		 * Zaznacza/odznacza ząb (graficzne podświetlenie) 
-		 * Przykład: .toggleSelected(28)
-		 */
-		this.toggleSelected = function(toothNumber) {
-			$('#tooth'+toothNumber).toggleClass('selected');
-		};
-		
-		/**
-		 * Obsługa zdarzeń związanych z interfejsem użytkownika
-		 */
-		this.registerEventHandlers = function() {
-			// kliknięcie na ząb
-			$('.ui-tooth').click(function(){
-				var toothNumber = this.id.substring(self.prefix.length,
-						self.prefix.length+2);
-				self.componentManager.selectTooth(toothNumber);
-			});
-		};
-		
-	};
-	
-	
-	/**
-	 * Wrapper na obiekt wizyty, przysłany JSONem
-	 */
-	VisitWrapper = function(patientId) {
-		var self = this;
-		
-		this.patientId = patientId;
-		
-		this.teeth = null;
-		this.visitObj = null;
-		
-		/** ściąga JSONa z nową wizytą */
-		this.prepareNewVisit = function(callback) {
-			$.ajax({
-				type: "GET", url: "/dentalsurgery/patients/"+self.patientId+"/visits/prepareNew", 
-				dataType: "json",
-				success: function(data) {
-					self.visitObj = data;
-					// przygotowanie tablicy obiektów zębów indeksowanej ich numerami
-					self.teeth = new Array();
-					for (var toothKey in self.visitObj.teeth) {
-						var tooth = self.visitObj.teeth[toothKey];
-						self.teeth[tooth.number] = tooth;
-					}		
-					callback(self.visitObj);
-				}
-			});	
-		};
-		
-		/** wysyla POSTem JSONa z utworzoną w interfejsie wizytą */
-		this.sendVisit = function(callback) {
-			$.ajax({
-				type: "POST", url: "/dentalsurgery/patients/"+self.patientId+"/visits/save", 
-				data: JSON.stringify(self.visitObj), contentType: "application/json", dataType: "text",
-				success: function(text) {
-					if (callback != null) {
-						callback(text);
-					}
-				}
-			});
-		};
-		
-		/** zwraca obiekt zęba o konkretnym numerze FDI */
-		this.getToothByNumber = function(number) {
-			for (var toothKey in self.visitObj.teeth) {
-				var tooth = self.visitObj.teeth[toothKey];
-				if (tooth.number == number) {
-					return tooth; 
-				}
-			}
-		};
-		
-		/** ustawia wartość komentarza do wizyty */
-		this.setComments = function(comments){
-			self.visitObj.comments = new String(comments);
-		};
-		
-		/** dodaje czynność do tablicy czynności */
-		this.addActivity = function(newActivity, activities) {
-			for (var key in activities) {
-				if (activities[key].activityId ==  newActivity.activityId) {
-					return;
-				}
-			}
-			activities.push(newActivity);
-		};
-
-		/** usuwa czynność z tablicy czynności */
-		this.removeActivity = function(activity, activities) {
-			for ( var i = 0; i < activities.length; i++) {
-				if (activities[i].activityId == activity.activityId) {
-					activities.splice(i,1);
-				}
-			}
-		};
-
-		/** dodaje czynność do wizyty */
-		this.addVisitActivity = function(newActivity) {
-			this.addActivity(newActivity, self.visitObj.activities);
-		};
-		
-		/** usuwa czynność z wizyty */
-		this.removeVisitActivity = function(activity) {
-			this.removeActivity(activity, self.visitObj.activities);
-		};
-		
-		/** dodaje czynność do zęba */
-		this.addToothActivity = function(number, newActivity) {
-			this.addActivity(newActivity, self.teeth[number].activities);
-		};
-		
-		/** usuwa czynność z zęba */
-		this.removeToothActivity = function(number, activity) {
-			this.removeActivity(activity, self.teeth[number].activities);
-		};
-		
-		/** zwraca stan zęba lub jego powierzchni */
-		this.getToothState = function(number, areaEnumObject) {
-			return self.teeth[number][areaEnumObject.stateField];
-		};
-		
-		/** ustawia stan zęba lub jego powierzchni */
-		this.setToothState = function(number, areaEnumObject, newState) {
-			self.teeth[number][areaEnumObject.stateField] = newState;
-		};
-		
-	};		
-	
-	/**
-	 * Widget odpowiedzialny za możliwość wyboru konkretnej części zęba
-	 */
-	 ToothPartWidget = function(componentManager) {
-		var self = this;
-		
-		/** rejestracja menedżera komponentów */
-		this.componentManager = componentManager;
-		
-		/** prefiks identyfikatorów powierzchni zęba na liście */
-		this.prefix = "tooth-part";
-		
-		/** tworzy listę części zęba w UI */
-		this.createListOfPartsUi = function(){
-			$.each(ToothParts, function(_,part){
-				$newElem = $('<li class="ui-tooth-part white" id="'+self.prefix+part.value+'">'+part.description+'</li>');
-				$('#selected-part-list').append($newElem);
-			});
-		};
-		
-		/**
-		 * Zmienia kolor pozycji na liście części zębów
-		 * Przykład wywołania: .changeColor(ToothParts.WHOLE_TEETH, Colors.WHITE)
-		 */
-		this.changeColor = function(toothPart, newColor) {
-			 $.each(Colors, function(_,color){
-				$('#'+self.prefix+toothPart.value).removeClass(color.cssClass);	
-			});
-			$('#'+self.prefix+toothPart.value).addClass(newColor.cssClass);
-		};
-		
-		/**
-		 * Zaznacza/odznacza powierzchnię zęba (graficzne podświetlenie) 
-		 * Przykład: .toggleSelected(ToothParts.AREA_0)
-		 */
-		this.toggleSelected = function(toothPart) {
-			var toothPartId = '#'+self.prefix+toothPart.value;
-			$(toothPartId).toggleClass('selected');
-		};
-		
-		/**
-		 * Obsługa zdarzeń związanych z interfejsem użytkownika
-		 */
-		this.registerEventHandlers = function() {
-			// kliknięcie na powierzchnię zęba
-			$('.ui-tooth-part').click(function(){
-				var toothPartValue = this.id.substring(self.prefix.length,
-						self.prefix.length+2);
-				self.componentManager.selectToothPart(ToothParts['AREA_'+toothPartValue]);
-			});
-		};
-	};
-	
 	/**
 	 * Menadżer komponentów aplikacji. Wszystkie operacje zbiera do kupy.
 	 */
@@ -609,6 +59,9 @@
 		
 		/** widżet z listą części zęba */
 		this.toothPartWidget = new ToothPartWidget(this);
+		
+		/** lista opcji ze stanami zęba/powierzchni */
+		this.toothStateWidget = new ToothStateWidget(this);
 		
 		/** wrapper na obiekt wizyty */
 		this.visitWrapper = new VisitWrapper(patientId);
@@ -642,9 +95,10 @@
 			self.toothPartWidget.registerEventHandlers();
 			
 			
-			
 			self.dictManager.loadDictionaries(function(){
-				
+				self.toothStateWidget.createToothStateUi(
+						self.dictManager.toothStates);
+				self.toothStateWidget.registerEventHandlers();
 				
 				$('#destination').append(JSON.stringify(self.dictManager.visitActivities)).append("<br/><br/>");
 				$('#destination').append(JSON.stringify(self.dictManager.toothActivities)).append("<br/><br/>");
@@ -712,7 +166,7 @@
 	};
 	
 	
-	manager = new ComponentManager(13);
+	manager = new ComponentManager(2);
 	
 	$(document).ready(function() {
 		manager.initialize();
@@ -801,12 +255,9 @@
 					<span id="selected-tooth-surface">wszystkie</span>
 				</h3>
 				
-				Obecny stan:
-				<select>
-					<option>stan1</option>
-					<option>stan2</option>
-					<option>stan3</option>
-					<option>stan4</option>
+				Obecny stan:				
+				<select name="selected-tooth-state" id="selected-tooth-state">
+					<option value="null" selected="selected">Zdrowy</option>
 				</select>
 				
 			</div>

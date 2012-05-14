@@ -1,0 +1,234 @@
+@CHARSET "UTF-8";
+
+#body-content {
+	border: solid;
+	border-width: 1px;
+	border-color: #80C2FF;
+}
+
+#ui-teeth-map {
+	float: left;
+	padding: 10px;
+	width: 350px;
+	height: 300px;
+	border: solid;
+	border-width: 1px;
+	border-color: #80C2FF;
+}
+
+#ui-teeth-map-permanent {
+	width: 355px;
+	height: 105px;
+}
+
+#ui-teeth-map-deciduous {
+	margin-left: 63px;
+	width: 225px;
+	height: 105px;
+}
+
+#selected-tooth-div {
+	float: right;
+	padding: 10px;
+	width: 400px;
+	height: 300px;
+	border: solid;
+	border-width: 1px;
+	border-color: #80C2FF;
+}
+
+#selected-part-list {
+	width: 140px;
+	height: 150px;
+	border: solid;
+	border-width: 1px;
+	border-color: #80C2FF;
+	margin: auto;
+	list-style-type: none;
+}
+
+#modify-form-div {
+	float: left;
+	padding: 10px;
+	border: solid;
+	border-width: 1px;
+	border-color: #80C2FF;
+	width: 350px;
+}
+
+#list-activities {
+	float: right;
+	padding: 10px;
+	border: solid;
+	border-width: 1px;
+	border-color: #80C2FF;
+	width: 400px;
+}
+
+/* ************************** mapa zębów ********************************************* */
+
+/* obrazki zębów górnych */
+.top .ui-tooth.white {
+	background-image:
+		url('/dentalsurgery/resources/img/teeth/tooth-top-white.png');
+}
+
+.top .ui-tooth.white.selected,.top .ui-tooth.white:hover {
+	background-image:
+		url('/dentalsurgery/resources/img/teeth/tooth-top-light.png');
+}
+
+.top .ui-tooth.red {
+	background-image:
+		url('/dentalsurgery/resources/img/teeth/tooth-top-lightred.png');
+}
+
+.top .ui-tooth.red.selected,.top .ui-tooth.red:hover {
+	background-image:
+		url('/dentalsurgery/resources/img/teeth/tooth-top-darkred.png');
+}
+
+.top .ui-tooth.green {
+	background-image:
+		url('/dentalsurgery/resources/img/teeth/tooth-top-lightgreen.png');
+}
+
+.top .ui-tooth.green.selected,.top .ui-tooth.green:hover {
+	background-image:
+		url('/dentalsurgery/resources/img/teeth/tooth-top-darkgreen.png');
+}
+
+.top .ui-tooth.blue {
+	background-image:
+		url('/dentalsurgery/resources/img/teeth/tooth-top-lightblue.png');
+}
+
+.top .ui-tooth.blue.selected,.top .ui-tooth.blue:hover {
+	background-image:
+		url('/dentalsurgery/resources/img/teeth/tooth-top-darkblue.png');
+}
+
+/* obrazki zębów dolnych (odwrócone) */
+.bottom .ui-tooth.white {
+	background-image:
+		url('/dentalsurgery/resources/img/teeth/tooth-bottom-white.png');
+}
+
+.bottom .ui-tooth.white.selected,.bottom .ui-tooth.white:hover {
+	background-image:
+		url('/dentalsurgery/resources/img/teeth/tooth-bottom-light.png');
+}
+
+.bottom .ui-tooth.red {
+	background-image:
+		url('/dentalsurgery/resources/img/teeth/tooth-bottom-lightred.png');
+}
+
+.bottom .ui-tooth.red.selected,.bottom .ui-tooth.red:hover {
+	background-image:
+		url('/dentalsurgery/resources/img/teeth/tooth-bottom-darkred.png');
+}
+
+.bottom .ui-tooth.green {
+	background-image:
+		url('/dentalsurgery/resources/img/teeth/tooth-bottom-lightgreen.png');
+}
+
+.bottom .ui-tooth.green.selected,.bottom .ui-tooth.green:hover {
+	background-image:
+		url('/dentalsurgery/resources/img/teeth/tooth-bottom-darkgreen.png');
+}
+
+.bottom .ui-tooth.blue {
+	background-image:
+		url('/dentalsurgery/resources/img/teeth/tooth-bottom-lightblue.png');
+}
+
+.bottom .ui-tooth.blue.selected,.bottom .ui-tooth.blue:hover {
+	background-image:
+		url('/dentalsurgery/resources/img/teeth/tooth-bottom-darkblue.png');
+}
+
+/* ząb górny */
+.top .ui-tooth {
+	margin-left: 1px; /* lekkie rozsunięcie zębów */
+	width: 20px;
+	height: 50px;
+	float: left;
+	cursor: pointer;
+	background-repeat: no-repeat;
+	background-position: top;
+}
+
+/* pozycjonowanie numeru w zębie górnym*/
+.top .ui-tooth .number {
+	position: relative;
+	top: 33px;
+	left: 4px;
+}
+
+/* ząb dolny */
+.bottom .ui-tooth {
+	margin-left: 1px; /* lekkie rozsunięcie zębów */
+	width: 20px;
+	height: 50px;
+	float: left;
+	cursor: pointer;
+	background-repeat: no-repeat;
+	background-position: bottom;
+}
+
+/* pozycjonowanie numeru w zębie dolnym */
+.bottom .ui-tooth .number {
+	position: relative;
+	top: 3px;
+	left: 4px;
+}
+
+/* odsunięcie lewej od prawej części szczęki */
+.permanent * .ui-tooth:nth-child(9),.deciduous * .ui-tooth:nth-child(6)
+	{
+	margin-left: 10px;
+}
+
+/* ***************************** Wybór części zęba *********************************** */
+.ui-tooth-part {
+	cursor: pointer;
+}
+
+.ui-tooth-part.selected,.ui-tooth-part:hover {
+	font-weight: bolder;
+}
+
+.ui-tooth-part.white {
+	color: #80C2FF;
+}
+
+.ui-tooth-part.white.selected,.ui-tooth-part.white:hover {
+	color: #80C2FF;
+	background-color: #E4F6F6;
+}
+
+.ui-tooth-part.blue {
+	color: #afafe4;
+}
+
+.ui-tooth-part.blue.selected,.ui-tooth-part.blue:hover {
+	background-color: #3737a6;
+}
+
+.ui-tooth-part.red {
+	color: #e4afaf;
+}
+
+.ui-tooth-part.red.selected,.ui-tooth-part.red:hover {
+	background-color: #CB2828;
+}
+
+.ui-tooth-part.green {
+	color: #ABE2AB;
+}
+
+.ui-tooth-part.green.selected,.ui-tooth-part.green:hover {
+	background-color: #37A637;
+}

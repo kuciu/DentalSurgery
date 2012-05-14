@@ -21,6 +21,16 @@ public class Visit {
 	private String comments;
 	private Set<Tooth> teeth = new HashSet<Tooth>();
 
+	private Set<Attachment> attachments;
+
+	public Set<Attachment> getAttachments() {
+		return attachments;
+	}
+
+	public void setAttachments(final Set<Attachment> attachments) {
+		this.attachments = attachments;
+	}
+
 	public Visit() {
 	}
 
@@ -30,7 +40,7 @@ public class Visit {
 
 	public void setTeeth(final Set<Tooth> teeth) {
 		this.teeth = teeth;
-		for (Tooth tooth : teeth) {
+		for (final Tooth tooth : teeth) {
 			tooth.setVisit(this);
 		}
 	}

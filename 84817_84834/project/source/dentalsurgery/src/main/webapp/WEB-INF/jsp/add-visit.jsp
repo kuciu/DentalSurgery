@@ -285,15 +285,43 @@
 	/** powierzchnie zęba */
 	var ToothPart = {
 			WHOLE_TOOTH : { value: 0, stateField: "allToothState", description: "Cały ząb" },
-			AREA_1 : { value: 1, stateField: "area1State", description: "Powierzchnia zewnętrzna" },
-			AREA_2 : { value: 2, stateField: "area2State", description: "Powierzchnia wewnętrzna" },
-			AREA_3 : { value: 3, stateField: "area3State", description: "Powierzchnia bliższa" },
-			AREA_4 : { value: 4, stateField: "area4State", description: "Powierzchnia dalsza" },
-			AREA_5 : { value: 5, stateField: "area5State", description: "Powierzchnia żująca" },
+			AREA_1 : { value: 1, stateField: "area1State", description: "Pow. zewnętrzna" },
+			AREA_2 : { value: 2, stateField: "area2State", description: "Pow. wewnętrzna" },
+			AREA_3 : { value: 3, stateField: "area3State", description: "Pow. bliższa" },
+			AREA_4 : { value: 4, stateField: "area4State", description: "Pow. dalsza" },
+			AREA_5 : { value: 5, stateField: "area5State", description: "Pow. żująca" },
 			AREA_6 : { value: 6, stateField: "area6State", description: "Korzeń środkowy" },
 			AREA_7 : { value: 7, stateField: "area7State", description: "Korzeń bliższy" },
 			AREA_8 : { value: 8, stateField: "area8State", description: "Korzeń dalszy" }
 	};
+	
+	
+	/**
+	 * Klasa umożliwiająca dostęp do słowników
+	 */
+	 DictionaryManager = function() {
+		 var self = this;
+		 
+		 this.toothActivities = null;
+		 this.toothStates = null;
+		 this.visitActivities = null;
+		 
+		 /** inicjalizuje słowniki wartościami z serwera */
+		 this.loadDictionaries = function(callback) {
+			 $.ajax({
+					type: "GET", url: "/dentalsurgery/dict/getall", 
+					dataType: "json",
+					success: function(dictionaries) {
+						self.toothActivities = dictionaries.toothActivities;
+						self.toothStates =  dictionaries.toothStates;
+						self.visitActivities = dictionaries.visitActivities;
+						if (callback != null)
+							callback();
+					}
+				});	
+		 }; 
+	 };
+	
 	
 	/**
 	 * Widget z mapą uzębienia
@@ -487,6 +515,9 @@
 		/** wrapper na obiekt wizyty */
 		this.visitWrapper = new VisitWrapper(patientId);
 		
+		/** wrapper na słowniki */
+		this.dictManager = new DictionaryManager();
+		
 		/** Wybranie nowego zęba */
 		this.selectTooth = function(toothNumber) {
 			if (self.currentToothNumber != null)
@@ -499,50 +530,56 @@
 		this.initialize = function() {
 			self.toothMapWidget.createTeethMapUi();
 			self.toothMapWidget.registerEventHandlers();
-			self.visitWrapper.prepareNewVisit(function(){
+			self.dictManager.loadDictionaries(function(){
+				$('#destination').append(JSON.stringify(self.dictManager.visitActivities)).append("<br/><br/>");
+				$('#destination').append(JSON.stringify(self.dictManager.toothActivities)).append("<br/><br/>");
+				$('#destination').append(JSON.stringify(self.dictManager.toothStates)).append("<br/><br/>");
 				
-				/* >>>>>>>>>>>>>>  TODO wywalić - PONIŻSZE INSTRUKCJE SŁUŻĄ DO TESTÓW */
-
-				var someActivity = {"activityId": 1};
-				var someActivity2 = {"activityId": 2};
-				var someState = {"toothStateId": 1};
-				var someState2 = {"toothStateId": 2};
-				
-				
-				$('#destination').html(JSON.stringify(self.visitWrapper.teeth[11]));
-				$('#addToothActivity').click(function(){
-					self.visitWrapper.addToothActivity(11, someActivity);
-					self.visitWrapper.addToothActivity(11, someActivity2);
-					$('#destination').html(JSON.stringify(self.visitWrapper.teeth[11]));
-				});
-				$('#removeToothActivity').click(function(){
-					self.visitWrapper.removeToothActivity(11, someActivity);
-					$('#destination').html(JSON.stringify(self.visitWrapper.teeth[11]));
-				});
-				$('#addToothState').click(function(){
-					self.visitWrapper.setToothState(11, ToothPart.AREA_5, someState);
-					self.visitWrapper.setToothState(11, ToothPart.AREA_5, someState2);
-					self.visitWrapper.setToothState(11, ToothPart.AREA_4, someState);
-					self.visitWrapper.setToothState(11, ToothPart.WHOLE_TOOTH, someState2);
-					$('#destination').html(JSON.stringify(self.visitWrapper.teeth[11]));
-				});
-				$('#clearToothState').click(function(){
-					self.visitWrapper.setToothState(11, ToothPart.AREA_5, null);
-					$('#destination').html(JSON.stringify(self.visitWrapper.teeth[11]));
-				});
-				
-				$('#postTest').click(function(){
-					self.visitWrapper.setComments("Komentarz do wizyty!");
-					self.visitWrapper.addVisitActivity({"activityId": 1});
-					$('#destination').html(JSON.stringify(self.visitWrapper.visitObj));
-					$('#destination').append("<br/><br/>");
-					self.visitWrapper.sendVisit(function(text){
-						$('#destination').append(text);	
-					});
-				});
-				
-				/* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< */
+				self.visitWrapper.prepareNewVisit(function(){
 					
+					/* >>>>>>>>>>>>>>  TODO wywalić - PONIŻSZE INSTRUKCJE SŁUŻĄ DO TESTÓW */
+	
+					var someActivity = {"activityId": 1};
+					var someActivity2 = {"activityId": 2};
+					var someState = {"toothStateId": 1};
+					var someState2 = {"toothStateId": 2};
+					
+					
+					$('#destination').append(JSON.stringify(self.visitWrapper.teeth[11]));
+					$('#addToothActivity').click(function(){
+						self.visitWrapper.addToothActivity(11, someActivity);
+						self.visitWrapper.addToothActivity(11, someActivity2);
+						$('#destination').html(JSON.stringify(self.visitWrapper.teeth[11]));
+					});
+					$('#removeToothActivity').click(function(){
+						self.visitWrapper.removeToothActivity(11, someActivity);
+						$('#destination').html(JSON.stringify(self.visitWrapper.teeth[11]));
+					});
+					$('#addToothState').click(function(){
+						self.visitWrapper.setToothState(11, ToothPart.AREA_5, someState);
+						self.visitWrapper.setToothState(11, ToothPart.AREA_5, someState2);
+						self.visitWrapper.setToothState(11, ToothPart.AREA_4, someState);
+						self.visitWrapper.setToothState(11, ToothPart.WHOLE_TOOTH, someState2);
+						$('#destination').html(JSON.stringify(self.visitWrapper.teeth[11]));
+					});
+					$('#clearToothState').click(function(){
+						self.visitWrapper.setToothState(11, ToothPart.AREA_5, null);
+						$('#destination').html(JSON.stringify(self.visitWrapper.teeth[11]));
+					});
+					
+					$('#postTest').click(function(){
+						self.visitWrapper.setComments("Komentarz do wizyty!");
+						self.visitWrapper.addVisitActivity({"activityId": 1});
+						$('#destination').html(JSON.stringify(self.visitWrapper.visitObj));
+						$('#destination').append("<br/><br/>");
+						self.visitWrapper.sendVisit(function(text){
+							$('#destination').append(text);	
+						});
+					});
+					
+					/* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< */
+						
+				});
 			});
 		};
 	};

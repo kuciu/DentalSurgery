@@ -10,6 +10,7 @@ drop table if exists tooth_state_dict;
 drop table if exists tooths;
 drop table if exists tooth_activity_dict;
 drop table if exists tooth_activities;
+drop table if exists attachments;
 
 create table phone_numbers(
     phone_id int not null auto_increment primary key,
@@ -92,4 +93,12 @@ create table tooth_activity_dict (
 create table tooth_activities (
     tooth_id int not null,
     ta_dict_id int not null
+);
+
+create table attachments (
+    attachment_id int not null auto_increment primary key,
+    visit_id int not null,
+    file_name varchar(300) not null,
+    description varchar(1000) not null,
+    file longblob not null
 );

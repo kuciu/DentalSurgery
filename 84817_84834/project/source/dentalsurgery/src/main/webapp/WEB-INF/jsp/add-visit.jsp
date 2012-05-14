@@ -109,13 +109,14 @@
 		border-color: #80C2FF;
 	}
 	
-	#selected-tooth-map {
+	#selected-part-list {
 		width: 140px;
-		height: 100px;
+		height: 150px;
 		border: solid;
 		border-width: 1px;
 		border-color: #80C2FF;
 		margin:auto;
+		list-style-type: none;
 	}
 	
 	#modify-form-div {
@@ -206,8 +207,6 @@
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-darkblue.png');
 	}	
 	
-	
-	
 	/* ząb górny */
 	.top .ui-tooth {
 		margin-left: 1px;		/* lekkie rozsunięcie zębów */
@@ -251,6 +250,49 @@
 		margin-left: 10px;
 	}
 	
+	/* ***************************** Wybór części zęba *********************************** */
+
+	.ui-tooth-part {
+		cursor: pointer;
+	}
+
+	.ui-tooth-part.selected, .ui-tooth-part:hover {
+		font-weight: bolder;
+	}
+
+	.ui-tooth-part.white {
+		color: #80C2FF; 
+	}
+	
+	.ui-tooth-part.white.selected, .ui-tooth-part.white:hover {
+		color: #80C2FF;
+		background-color: #E4F6F6;
+	}
+	
+	.ui-tooth-part.blue {
+		color: #afafe4;
+	}
+	
+	.ui-tooth-part.blue.selected, .ui-tooth-part.blue:hover {
+		background-color: #3737a6;
+	}
+	
+	.ui-tooth-part.red {
+		color: #e4afaf;
+	}
+	
+	.ui-tooth-part.red.selected, .ui-tooth-part.red:hover {
+		background-color: #CB2828;
+	}
+	
+	.ui-tooth-part.green {
+		color: #ABE2AB;
+	}
+	
+	.ui-tooth-part.green.selected, .ui-tooth-part.green:hover {
+		background-color: #37A637;
+	}
+	
 	
 </style> 
 
@@ -277,14 +319,14 @@
 	/** dostępne kolory zębów */
 	var Colors = {
 			WHITE : 	{ value: 0, cssClass: "white" },
-			RED : 		{ value: 1, cssClass: "red" },
+			RED : 		{ value: 1, cssClass: "red"  },
 			GREEN : 	{ value: 2, cssClass: "green" },
-			BLUE : 		{ value: 3, cssClass: "blue" },
+			BLUE : 		{ value: 3, cssClass: "blue"  },
 	};
 	
 	/** powierzchnie zęba */
-	var ToothPart = {
-			WHOLE_TOOTH : { value: 0, stateField: "allToothState", description: "Cały ząb" },
+	var ToothParts = {
+			AREA_0 : { value: 0, stateField: "allToothState", description: "Cały ząb" },
 			AREA_1 : { value: 1, stateField: "area1State", description: "Pow. zewnętrzna" },
 			AREA_2 : { value: 2, stateField: "area2State", description: "Pow. wewnętrzna" },
 			AREA_3 : { value: 3, stateField: "area3State", description: "Pow. bliższa" },
@@ -365,7 +407,7 @@
 			$.each(Colors, function(_,color){
 				$('#tooth'+toothNumber).removeClass(color.cssClass);	
 			});
-			$('#tooth'+toothNumber).addClass(newColor.cssClass)
+			$('#tooth'+toothNumber).addClass(newColor.cssClass);
 		};
 		
 		/**
@@ -497,8 +539,60 @@
 			self.teeth[number][areaEnumObject.stateField] = newState;
 		};
 		
-	};
+	};		
 	
+	/**
+	 * Widget odpowiedzialny za możliwość wyboru konkretnej części zęba
+	 */
+	 ToothPartWidget = function(componentManager) {
+		var self = this;
+		
+		/** rejestracja menedżera komponentów */
+		this.componentManager = componentManager;
+		
+		/** prefiks identyfikatorów powierzchni zęba na liście */
+		this.prefix = "tooth-part";
+		
+		/** tworzy listę części zęba w UI */
+		this.createListOfPartsUi = function(){
+			$.each(ToothParts, function(_,part){
+				$newElem = $('<li class="ui-tooth-part white" id="'+self.prefix+part.value+'">'+part.description+'</li>');
+				$('#selected-part-list').append($newElem);
+			});
+		};
+		
+		/**
+		 * Zmienia kolor pozycji na liście części zębów
+		 * Przykład wywołania: .changeColor(ToothParts.WHOLE_TEETH, Colors.WHITE)
+		 */
+		this.changeColor = function(toothPart, newColor) {
+			 $.each(Colors, function(_,color){
+				$('#'+self.prefix+toothPart.value).removeClass(color.cssClass);	
+			});
+			$('#'+self.prefix+toothPart.value).addClass(newColor.cssClass);
+		};
+		
+		/**
+		 * Zaznacza/odznacza powierzchnię zęba (graficzne podświetlenie) 
+		 * Przykład: .toggleSelected(ToothParts.AREA_0)
+		 */
+		this.toggleSelected = function(toothPart) {
+			var toothPartId = '#'+self.prefix+toothPart.value;
+			$(toothPartId).toggleClass('selected');
+		};
+		
+		/**
+		 * Obsługa zdarzeń związanych z interfejsem użytkownika
+		 */
+		this.registerEventHandlers = function() {
+			// kliknięcie na powierzchnię zęba
+			$('.ui-tooth-part').click(function(){
+				var toothPartValue = this.id.substring(self.prefix.length,
+						self.prefix.length+2);
+				self.componentManager.selectToothPart(ToothParts['AREA_'+toothPartValue]);
+			});
+		};
+	};
 	
 	/**
 	 * Menadżer komponentów aplikacji. Wszystkie operacje zbiera do kupy.
@@ -508,15 +602,21 @@
 		
 		this.patientId = patientId;
 		this.currentToothNumber = null;
+		this.currentToothPart = null;
 		
 		/** widżet z mapą uzębienia */
 		this.toothMapWidget = new ToothMapWidget(this);
+		
+		/** widżet z listą części zęba */
+		this.toothPartWidget = new ToothPartWidget(this);
 		
 		/** wrapper na obiekt wizyty */
 		this.visitWrapper = new VisitWrapper(patientId);
 		
 		/** wrapper na słowniki */
 		this.dictManager = new DictionaryManager();
+		
+		
 		
 		/** Wybranie nowego zęba */
 		this.selectTooth = function(toothNumber) {
@@ -526,11 +626,26 @@
 			self.toothMapWidget.toggleSelected(self.currentToothNumber);
 		};
 		
+		/** Wybranie nowej powierzchni */
+		this.selectToothPart = function(toothPart) {
+			if (self.currentToothPart != null)
+				self.toothPartWidget.toggleSelected(self.currentToothPart);
+			self.currentToothPart = toothPart;
+			self.toothPartWidget.toggleSelected(self.currentToothPart);
+		};
+		
 		/** inicjalizacja */
 		this.initialize = function() {
 			self.toothMapWidget.createTeethMapUi();
 			self.toothMapWidget.registerEventHandlers();
+			self.toothPartWidget.createListOfPartsUi();
+			self.toothPartWidget.registerEventHandlers();
+			
+			
+			
 			self.dictManager.loadDictionaries(function(){
+				
+				
 				$('#destination').append(JSON.stringify(self.dictManager.visitActivities)).append("<br/><br/>");
 				$('#destination').append(JSON.stringify(self.dictManager.toothActivities)).append("<br/><br/>");
 				$('#destination').append(JSON.stringify(self.dictManager.toothStates)).append("<br/><br/>");
@@ -539,6 +654,18 @@
 					
 					/* >>>>>>>>>>>>>>  TODO wywalić - PONIŻSZE INSTRUKCJE SŁUŻĄ DO TESTÓW */
 	
+					
+					self.toothMapWidget.changeColor(11, Colors.BLUE);
+					self.toothMapWidget.changeColor(12, Colors.WHITE);
+					self.toothMapWidget.changeColor(13, Colors.RED);
+					self.toothMapWidget.changeColor(14, Colors.GREEN);
+					
+					self.toothPartWidget.changeColor(ToothParts.AREA_0, Colors.RED);
+					self.toothPartWidget.changeColor(ToothParts.AREA_1, Colors.WHITE);
+					self.toothPartWidget.changeColor(ToothParts.AREA_3, Colors.GREEN);
+					self.toothPartWidget.changeColor(ToothParts.AREA_4, Colors.BLUE);
+					
+					
 					var someActivity = {"activityId": 1};
 					var someActivity2 = {"activityId": 2};
 					var someState = {"toothStateId": 1};
@@ -556,14 +683,14 @@
 						$('#destination').html(JSON.stringify(self.visitWrapper.teeth[11]));
 					});
 					$('#addToothState').click(function(){
-						self.visitWrapper.setToothState(11, ToothPart.AREA_5, someState);
-						self.visitWrapper.setToothState(11, ToothPart.AREA_5, someState2);
-						self.visitWrapper.setToothState(11, ToothPart.AREA_4, someState);
-						self.visitWrapper.setToothState(11, ToothPart.WHOLE_TOOTH, someState2);
+						self.visitWrapper.setToothState(11, ToothParts.AREA_5, someState);
+						self.visitWrapper.setToothState(11, ToothParts.AREA_5, someState2);
+						self.visitWrapper.setToothState(11, ToothParts.AREA_4, someState);
+						self.visitWrapper.setToothState(11, ToothParts.AREA_0, someState2);
 						$('#destination').html(JSON.stringify(self.visitWrapper.teeth[11]));
 					});
 					$('#clearToothState').click(function(){
-						self.visitWrapper.setToothState(11, ToothPart.AREA_5, null);
+						self.visitWrapper.setToothState(11, ToothParts.AREA_5, null);
 						$('#destination').html(JSON.stringify(self.visitWrapper.teeth[11]));
 					});
 					
@@ -663,13 +790,10 @@
 						
 			<div id="selected-tooth-div">
 				
-				<h3>Wybierz ząb lub jego powierzchnię</h3>
+				<h3>Powierzchnia zęba</h3>
 				
-				Połącz powierzchnie:
-					<input type="checkbox" id="is-whole-tooth-selected"/>
-				<div id="selected-tooth-map">
-					
-				</div>
+				<ul class="selected-part-list" id="selected-part-list"></ul> 
+				
 				
 				<h3>Wybrany ząb:
 					<span id="selected-tooth-number">12</span>,

@@ -2,8 +2,7 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
            http://www.springframework.org/schema/aop 
@@ -15,11 +14,12 @@
 
 	<!-- definicja kontekstu dla aplikacji dentalsurgery -->
 
-	<context:component-scan base-package="pl.poznan.put.dentalsurgery.repository pl.poznan.put.dentalsurgery.service" />
-	
-  	<tx:annotation-driven/>
-  	
-  	<!-- Ustawienia bazy danych -->
+	<context:component-scan
+		base-package="pl.poznan.put.dentalsurgery.repository pl.poznan.put.dentalsurgery.service" />
+
+	<tx:annotation-driven />
+
+	<!-- Ustawienia bazy danych -->
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location">
@@ -49,7 +49,8 @@
 		</property>
 		<property name="mappingResources">
 			<list>
-				<value>SimpleEntity.hbm.xml</value>
+				<value>Attachment.hbm.xml</value>
+
 				<value>Patient.hbm.xml</value>
 				<value>PhoneNumber.hbm.xml</value>
 				<value>Illness.hbm.xml</value>
@@ -63,7 +64,7 @@
 		</property>
 	</bean>
 
-	<!-- Manager transakcji w warstwie biznesowej --> 
+	<!-- Manager transakcji w warstwie biznesowej -->
 
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">

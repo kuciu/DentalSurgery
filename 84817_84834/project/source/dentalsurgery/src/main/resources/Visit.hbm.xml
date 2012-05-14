@@ -27,6 +27,12 @@
 			</key>
 			<one-to-many class="pl.poznan.put.dentalsurgery.model.Tooth" />
 		</set>
+		<set name="attachments" table="attachments" inverse="true" lazy="false" fetch="select" cascade="all">
+			<key>
+				<column name="visit_id" not-null="true"/>
+			</key>
+			<one-to-many  class="pl.poznan.put.dentalsurgery.model.Attachment"/>
+		</set>
 	</class>
 
 </hibernate-mapping>

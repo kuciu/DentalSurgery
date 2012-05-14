@@ -52,6 +52,7 @@
 		</property>
 		<property name="mappingResources">
 			<list>
+				<value>Attachment.hbm.xml</value>
 				<value>Patient.hbm.xml</value>
 				<value>PhoneNumber.hbm.xml</value>
 				<value>Illness.hbm.xml</value>

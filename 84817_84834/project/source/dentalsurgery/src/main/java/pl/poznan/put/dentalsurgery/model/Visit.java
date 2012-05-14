@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.codehaus.jackson.annotate.JsonBackReference;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -23,6 +24,7 @@ public class Visit {
 
 	private Set<Attachment> attachments;
 
+	@JsonIgnore
 	public Set<Attachment> getAttachments() {
 		return attachments;
 	}

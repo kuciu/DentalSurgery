@@ -5,7 +5,7 @@
 
 <hibernate-mapping package="pl.poznan.put.dentalsurgery.model">
 
-	<class name="Attachment" table="atachments">
+	<class name="Attachment" table="attachments">
 		<id name="attachmentId" column="attachment_id">
 			<generator class="native" />
 		</id>

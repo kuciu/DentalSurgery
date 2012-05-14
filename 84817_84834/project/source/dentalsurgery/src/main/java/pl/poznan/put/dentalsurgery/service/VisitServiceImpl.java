@@ -220,4 +220,10 @@ public class VisitServiceImpl implements VisitService {
 		
 		return newVisit;
 	}
+
+	@Override
+	@Transactional
+	public void removeVisit(Visit visit) {
+		visitDao.removeVisit(visit);
+	}
 }

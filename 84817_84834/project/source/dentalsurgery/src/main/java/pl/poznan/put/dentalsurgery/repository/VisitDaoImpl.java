@@ -29,6 +29,11 @@ public class VisitDaoImpl extends AbstractDao<Visit> implements VisitDao {
 		sessionFactory.getCurrentSession().update(visitFromDb);		
 	}
 
+	@Override
+	public void removeVisit(final Visit visitFromDb) {
+		sessionFactory.getCurrentSession().delete(visitFromDb);
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Visit> getAll() {

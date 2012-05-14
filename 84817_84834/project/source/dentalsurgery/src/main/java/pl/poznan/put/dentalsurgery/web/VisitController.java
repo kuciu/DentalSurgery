@@ -82,10 +82,11 @@ public class VisitController {
 	 * @return
 	 */
 	@RequestMapping(value="/save", method=RequestMethod.POST, consumes="application/json")
-	public @ResponseBody String saveVisit(@RequestBody Visit visit, @ModelAttribute Patient patient) {
+	public @ResponseBody Visit saveVisit(@RequestBody Visit visit, @ModelAttribute Patient patient) {
 		visit.setPatient(patient);
-		visitService.saveDeserializedVisit(visit);
-		return "OK";
+		Long visitId = visitService.saveDeserializedVisit(visit);
+		visitService.getVisidById(visitId);
+		return visit;
 	}
 	
 	/**
@@ -94,8 +95,10 @@ public class VisitController {
 	 * @return
 	 */
 	@RequestMapping(value="/{visitId}")
-	public @ResponseBody Visit getVisit(@PathVariable Long visitId) {
-		return visitService.getVisidById(visitId);
+	public @ResponseBody Visit getVisit(@PathVariable Long visitId, @ModelAttribute Patient patient) {
+		Visit visit = visitService.getVisidById(visitId);
+		// TODO sprawdzić, czy wizyta należy do pacjenta!
+		return visit;
 	}
 	
 	/**
@@ -108,6 +111,29 @@ public class VisitController {
 	@RequestMapping(value="/prepareNew", produces="application/json")
 	public @ResponseBody Visit prepareNewVisit(@ModelAttribute Patient patient) {
 		return visitService.prepareNewVisit(patient);
+	}
+	
+	/**
+	 * Usuwa wizytę z bazy
+	 * @param visitId
+	 * @return
+	 */
+	@RequestMapping(value="/{visitId}/delete", method=RequestMethod.GET)
+	public String deleteVisit(@PathVariable Long visitId, @ModelAttribute Patient patient, Model model) {
+		Visit visit = visitService.getVisidById(visitId);
+		if (visit == null) {
+			model.addAttribute("message", "Nie ma takiej wizyty.");
+			return "error";
+		}
+		if (visit.getPatient() == null
+				|| !patient.getPatientId().equals(
+						visit.getPatient().getPatientId())) {
+			model.addAttribute("message", "Wizyta nie należy do podanego pacjenta.");
+			return "error";
+		}
+		visitService.removeVisit(visit);
+		model.addAttribute("message", "Wizyta została usunięta.");
+		return "alert";
 	}
 
 }

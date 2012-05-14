@@ -13,4 +13,6 @@ public interface VisitService {
 	
 	Visit prepareNewVisit(Patient patient);
 
+	void removeVisit(Visit visit);
+	
 }

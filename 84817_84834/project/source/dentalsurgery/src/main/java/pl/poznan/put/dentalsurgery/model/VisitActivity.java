@@ -1,19 +1,19 @@
 package pl.poznan.put.dentalsurgery.model;
 
 public class VisitActivity {
-	private long activityId;
+	private Long activityId;
 	private String description;
-	private double price;
-	private double vat;
+	private Double price;
+	private Double vat;
 
 	public VisitActivity() {
 	}
 
-	public long getActivityId() {
+	public Long getActivityId() {
 		return activityId;
 	}
 
-	public void setActivityId(final long activityId) {
+	public void setActivityId(final Long activityId) {
 		this.activityId = activityId;
 	}
 
@@ -25,19 +25,19 @@ public class VisitActivity {
 		this.description = description;
 	}
 
-	public double getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 
-	public void setPrice(final double price) {
+	public void setPrice(final Double price) {
 		this.price = price;
 	}
 
-	public double getVat() {
+	public Double getVat() {
 		return vat;
 	}
 
-	public void setVat(final double vat) {
+	public void setVat(final Double vat) {
 		this.vat = vat;
 	}
 }

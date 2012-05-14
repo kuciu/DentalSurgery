@@ -377,7 +377,7 @@
 		/** ściąga JSONa z nową wizytą */
 		this.prepareNewVisit = function(callback) {
 			$.ajax({
-				type: "GET", url: "/dentalsurgery/patients/"+patientId+"/visits/prepareNew", 
+				type: "GET", url: "/dentalsurgery/patients/"+self.patientId+"/visits/prepareNew", 
 				dataType: "json",
 				success: function(data) {
 					self.visitObj = data;
@@ -392,15 +392,18 @@
 			});	
 		};
 		
-		/*
-		$.ajax({
-			type: "POST", url: "/dentalsurgery/patients/2/visits/save", 
-			data: JSON.stringify(visit), contentType: "application/json", dataType: "text",
-			success: function(text) {
-				$("#destination").html(text);
-			}
-		});
-		*/
+		/** wysyla POSTem JSONa z utworzoną w interfejsie wizytą */
+		this.sendVisit = function(callback) {
+			$.ajax({
+				type: "POST", url: "/dentalsurgery/patients/"+self.patientId+"/visits/save", 
+				data: JSON.stringify(self.visitObj), contentType: "application/json", dataType: "text",
+				success: function(text) {
+					if (callback != null) {
+						callback(text);
+					}
+				}
+			});
+		};
 		
 		/** zwraca obiekt zęba o konkretnym numerze FDI */
 		this.getToothByNumber = function(number) {
@@ -456,9 +459,14 @@
 			this.removeActivity(activity, self.teeth[number].activities);
 		};
 		
-		/** zwraca stan zęba lub jego części */
-		this.toothState = function(number, areaEnumObject) {
+		/** zwraca stan zęba lub jego powierzchni */
+		this.getToothState = function(number, areaEnumObject) {
 			return self.teeth[number][areaEnumObject.stateField];
+		};
+		
+		/** ustawia stan zęba lub jego powierzchni */
+		this.setToothState = function(number, areaEnumObject, newState) {
+			self.teeth[number][areaEnumObject.stateField] = newState;
 		};
 		
 	};
@@ -471,7 +479,6 @@
 		var self = this;
 		
 		this.patientId = patientId;
-		
 		this.currentToothNumber = null;
 		
 		/** widżet z mapą uzębienia */
@@ -480,20 +487,63 @@
 		/** wrapper na obiekt wizyty */
 		this.visitWrapper = new VisitWrapper(patientId);
 		
-		/** inicjalizacja */
-		this.initialize = function() {
-			self.toothMapWidget.createTeethMapUi();
-			self.toothMapWidget.registerEventHandlers();
-			self.visitWrapper.prepareNewVisit(function(){});
-		};
-		
 		/** Wybranie nowego zęba */
 		this.selectTooth = function(toothNumber) {
 			if (self.currentToothNumber != null)
 				self.toothMapWidget.toggleSelected(self.currentToothNumber);
 			self.currentToothNumber = toothNumber;
 			self.toothMapWidget.toggleSelected(self.currentToothNumber);
-			alert(JSON.stringify(self.visitWrapper.teeth[toothNumber]));
+		};
+		
+		/** inicjalizacja */
+		this.initialize = function() {
+			self.toothMapWidget.createTeethMapUi();
+			self.toothMapWidget.registerEventHandlers();
+			self.visitWrapper.prepareNewVisit(function(){
+				
+				/* >>>>>>>>>>>>>>  TODO wywalić - PONIŻSZE INSTRUKCJE SŁUŻĄ DO TESTÓW */
+
+				var someActivity = {"activityId": 1};
+				var someActivity2 = {"activityId": 2};
+				var someState = {"toothStateId": 1};
+				var someState2 = {"toothStateId": 2};
+				
+				
+				$('#destination').html(JSON.stringify(self.visitWrapper.teeth[11]));
+				$('#addToothActivity').click(function(){
+					self.visitWrapper.addToothActivity(11, someActivity);
+					self.visitWrapper.addToothActivity(11, someActivity2);
+					$('#destination').html(JSON.stringify(self.visitWrapper.teeth[11]));
+				});
+				$('#removeToothActivity').click(function(){
+					self.visitWrapper.removeToothActivity(11, someActivity);
+					$('#destination').html(JSON.stringify(self.visitWrapper.teeth[11]));
+				});
+				$('#addToothState').click(function(){
+					self.visitWrapper.setToothState(11, ToothPart.AREA_5, someState);
+					self.visitWrapper.setToothState(11, ToothPart.AREA_5, someState2);
+					self.visitWrapper.setToothState(11, ToothPart.AREA_4, someState);
+					self.visitWrapper.setToothState(11, ToothPart.WHOLE_TOOTH, someState2);
+					$('#destination').html(JSON.stringify(self.visitWrapper.teeth[11]));
+				});
+				$('#clearToothState').click(function(){
+					self.visitWrapper.setToothState(11, ToothPart.AREA_5, null);
+					$('#destination').html(JSON.stringify(self.visitWrapper.teeth[11]));
+				});
+				
+				$('#postTest').click(function(){
+					self.visitWrapper.setComments("Komentarz do wizyty!");
+					self.visitWrapper.addVisitActivity({"activityId": 1});
+					$('#destination').html(JSON.stringify(self.visitWrapper.visitObj));
+					$('#destination').append("<br/><br/>");
+					self.visitWrapper.sendVisit(function(text){
+						$('#destination').append(text);	
+					});
+				});
+				
+				/* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< */
+					
+			});
 		};
 	};
 	
@@ -509,16 +559,21 @@
 </head>
 <body>
 
-
-	<!-- takie moje do testowania postów ajaxowych
-			spokojnie zaraz to wyrzucę
+	<!--  >>>>>>>>>>>>>>  TODO wywalić - PONIŻSZE INSTRUKCJE SŁUŻĄ DO TESTÓW
 	 -->
 	
 	<div style="border: solid;">
 		<button id="postTest">send</button>
+		<button id="addToothActivity">add tooth activity</button>
+		<button id="removeToothActivity">remove tooth activity</button>
+		<button id="addToothState">add tooth state</button>
+		<button id="clearToothState">clear tooth state</button>
+		
+		<br />
+		
 		<span id="destination"></span>
 	</div>
-
+	<!-- <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< -->
 
 	<!-- Okno dialogowe z pytaniem o potwierdzenie wykonania operacji -->
 	<div id="dialog-confirm" style="display: none">

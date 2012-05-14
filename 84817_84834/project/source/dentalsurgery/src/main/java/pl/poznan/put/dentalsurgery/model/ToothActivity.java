@@ -1,20 +1,20 @@
 package pl.poznan.put.dentalsurgery.model;
 
 public class ToothActivity {
-	private long activityId;
+	private Long activityId;
 	private String description;
-	private double price;
-	private double vat;
-	private boolean allTooth;
+	private Double price;
+	private Double vat;
+	private Boolean allTooth;
 
 	public ToothActivity() {
 	}
 
-	public long getActivityId() {
+	public Long getActivityId() {
 		return activityId;
 	}
 
-	public void setActivityId(final long toothActivityId) {
+	public void setActivityId(final Long toothActivityId) {
 		this.activityId = toothActivityId;
 	}
 
@@ -26,27 +26,27 @@ public class ToothActivity {
 		this.description = description;
 	}
 
-	public double getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 
-	public void setPrice(final double price) {
+	public void setPrice(final Double price) {
 		this.price = price;
 	}
 
-	public double getVat() {
+	public Double getVat() {
 		return vat;
 	}
 
-	public void setVat(final double vat) {
+	public void setVat(final Double vat) {
 		this.vat = vat;
 	}
 
-	public boolean isAllTooth() {
+	public Boolean isAllTooth() {
 		return allTooth;
 	}
 
-	public void setAllTooth(final boolean allTooth) {
+	public void setAllTooth(final Boolean allTooth) {
 		this.allTooth = allTooth;
 	}
 }

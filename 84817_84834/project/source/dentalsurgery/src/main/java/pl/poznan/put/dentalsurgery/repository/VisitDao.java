@@ -13,6 +13,8 @@ public interface VisitDao {
 
 	void updateVisit(Visit visitFromDb);
 
+	void removeVisit(Visit visitFromDb);
+	
 	List<Visit> getAllVisits();
 	
 	List<Visit> getAllVisits(Patient patient);

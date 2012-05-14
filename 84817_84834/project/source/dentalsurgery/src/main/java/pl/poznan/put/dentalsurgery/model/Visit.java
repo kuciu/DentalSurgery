@@ -1,15 +1,25 @@
 package pl.poznan.put.dentalsurgery.model;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
+
+import org.codehaus.jackson.annotate.JsonBackReference;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import pl.poznan.put.dentalsurgery.components.DateDeserializer;
+import pl.poznan.put.dentalsurgery.components.DateSerializer;
 
 public class Visit {
 	private Long visitId;
 	private Patient patient;
+	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	private Date visitDate;
-	private Set<VisitActivity> activities;
+	private Set<VisitActivity> activities = new HashSet<VisitActivity>();
 	private String comments;
-	private Set<Tooth> teeth;
+	private Set<Tooth> teeth = new HashSet<Tooth>();
 
 	public Visit() {
 	}
@@ -20,6 +30,9 @@ public class Visit {
 
 	public void setTeeth(final Set<Tooth> teeth) {
 		this.teeth = teeth;
+		for (Tooth tooth : teeth) {
+			tooth.setVisit(this);
+		}
 	}
 
 	public String getComments() {
@@ -30,6 +43,7 @@ public class Visit {
 		this.comments = comments;
 	}
 
+	@JsonBackReference
 	public Patient getPatient() {
 		return patient;
 	}
@@ -50,10 +64,12 @@ public class Visit {
 		this.visitId = visitId;
 	}
 
+	@JsonSerialize(using = DateSerializer.class)
 	public Date getVisitDate() {
 		return visitDate;
 	}
 
+	@JsonDeserialize(using = DateDeserializer.class)
 	public void setVisitDate(final Date visitDate) {
 		this.visitDate = visitDate;
 	}

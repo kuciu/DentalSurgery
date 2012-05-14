@@ -1,14 +1,17 @@
 package pl.poznan.put.dentalsurgery.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
+import org.codehaus.jackson.annotate.JsonBackReference;
+
 public class Tooth {
-	private long toothId;
-	private int number;
+	private Long toothId;
+	private Integer number;
 
 	private Visit visit;
 
-	private Set<ToothActivity> activities;
+	private Set<ToothActivity> activities = new HashSet<ToothActivity>();
 
 	private ToothState allToothState;
 
@@ -31,19 +34,19 @@ public class Tooth {
 		this.visit = visit;
 	}
 
-	public long getToothId() {
+	public Long getToothId() {
 		return toothId;
 	}
 
-	public void setToothId(final long toothId) {
+	public void setToothId(final Long toothId) {
 		this.toothId = toothId;
 	}
 
-	public int getNumber() {
+	public Integer getNumber() {
 		return number;
 	}
 
-	public void setNumber(final int number) {
+	public void setNumber(final Integer number) {
 		this.number = number;
 	}
 
@@ -119,6 +122,7 @@ public class Tooth {
 		this.area8State = area8State;
 	}
 
+	@JsonBackReference
 	public Visit getVisit() {
 		return visit;
 	}

@@ -71,7 +71,7 @@ public class VisitActivityDictDaoImplTest extends
 		visitActivity = visitActivityDictDao.getVisitActivityById(id);
 		visitActivity.setDescription("NewTestDesc");
 		visitActivity.setPrice(150.50);
-		visitActivity.setVat(0);
+		visitActivity.setVat((double) 0);
 
 		visitActivityDictDao.updateVisitActivity(visitActivity);
 		final VisitActivity visitActivityFromDb = visitActivityDictDao

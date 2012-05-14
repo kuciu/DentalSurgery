@@ -71,7 +71,7 @@ public class ToothActivityDictDaoImplTest extends
 		toothActivity = toothActivityDictDao.getToothActivityById(id);
 		toothActivity.setDescription("NewTestDesc");
 		toothActivity.setPrice(150.50);
-		toothActivity.setVat(0);
+		toothActivity.setVat((double) 0);
 		toothActivity.setAllTooth(false);
 
 		toothActivityDictDao.updateToothActivity(toothActivity);

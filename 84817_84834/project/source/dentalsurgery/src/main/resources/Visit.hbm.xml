@@ -10,7 +10,7 @@
 			<generator class="native" />
 		</id>
 		<property name="visitDate" column="date" />
-		<set name="activities" table="visit_activities" cascade="all" lazy="false">
+		<set name="activities" table="visit_activities" lazy="false">
 			<key column="visit_id" />
 			<many-to-many column="va_dict_id"
 				class="pl.poznan.put.dentalsurgery.model.VisitActivity" />
@@ -26,6 +26,12 @@
 				<column name="visit_id" not-null="true" />
 			</key>
 			<one-to-many class="pl.poznan.put.dentalsurgery.model.Tooth" />
+		</set>
+		<set name="attachments" table="attachments" inverse="true" lazy="false" fetch="select" cascade="all">
+			<key>
+				<column name="visit_id" not-null="true"/>
+			</key>
+			<one-to-many  class="pl.poznan.put.dentalsurgery.model.Attachment"/>
 		</set>
 	</class>
 

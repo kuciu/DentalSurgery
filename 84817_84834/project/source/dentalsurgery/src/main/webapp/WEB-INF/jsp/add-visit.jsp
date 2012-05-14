@@ -74,7 +74,7 @@
 		border-color: #80C2FF;
 	}
 	
-	#teeth-maps-div {
+	#ui-teeth-map {
 		float: left;
 		padding: 10px;
 		width: 350px;
@@ -86,16 +86,15 @@
 		border-color: #80C2FF;
 	}
 	
-	#permanent-teeth-map {
+	#ui-teeth-map-permanent {
 		width: 355px;
 		height: 105px;
-		
 	}
-	#milk-teeth-map {
+	
+	#ui-teeth-map-deciduous {
 		margin-left: 63px;
 		width: 225px;
 		height: 105px;
-		
 	}
 	
 	#selected-tooth-div {
@@ -141,73 +140,76 @@
 	/* ************************** mapa zębów ********************************************* */
 	
 	/* obrazki zębów górnych */
-	.tooth-top-white {
+	.top .ui-tooth.white {
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-top-white.png');
 	}
 	
-	.tooth-top-white-selected, .tooth-top-white:hover {
+	.top .ui-tooth.white.selected, .top .ui-tooth.white:hover {
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-top-light.png');
 	}
 	
-	.tooth-top-red {
+	.top .ui-tooth.red {
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-top-lightred.png');
 	}
 	
-	.tooth-top-red-selected, .tooth-top-red:hover {
+	.top .ui-tooth.red.selected, .top .ui-tooth.red:hover {
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-top-darkred.png');
 	}
 	
-	.tooth-top-green {
+	.top .ui-tooth.green {
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-top-lightgreen.png');
 	}
 	
-	.tooth-top-green-selected, .tooth-top-green:hover {
+	.top .ui-tooth.green.selected, .top .ui-tooth.green:hover {
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-top-darkgreen.png');
 	}
 	
-	.tooth-top-blue {
+	.top .ui-tooth.blue {
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-top-lightblue.png');
 	}
 	
-	.tooth-top-blue-selected, .tooth-top-blue:hover {
+	.top .ui-tooth.blue.selected, .top .ui-tooth.blue:hover {
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-top-darkblue.png');
 	}	
 	
 	/* obrazki zębów dolnych (odwrócone) */
-	.tooth-bottom-white {
+	
+	.bottom .ui-tooth.white {
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-white.png');
 	}
 	
-	.tooth-bottom-white-selected, .tooth-bottom-white:hover {
+	.bottom .ui-tooth.white.selected, .bottom .ui-tooth.white:hover {
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-light.png');
 	}
 	
-	.tooth-bottom-red {
+	.bottom .ui-tooth.red {
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-lightred.png');
 	}
 	
-	.tooth-bottom-red-selected, .tooth-bottom-red:hover {
+	.bottom .ui-tooth.red.selected, .bottom .ui-tooth.red:hover {
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-darkred.png');
 	}
 	
-	.tooth-bottom-green {
+	.bottom .ui-tooth.green {
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-lightgreen.png');
 	}
 	
-	.tooth-bottom-green-selected, .tooth-bottom-green:hover {
+	.bottom .ui-tooth.green.selected, .bottom .ui-tooth.green:hover {
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-darkgreen.png');
 	}
 	
-	.tooth-bottom-blue {
+	.bottom .ui-tooth.blue {
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-lightblue.png');
 	}
 	
-	.tooth-bottom-blue-selected, .tooth-bottom-blue:hover {
+	.bottom .ui-tooth.blue.selected, .bottom .ui-tooth.blue:hover {
 		background-image: url('/dentalsurgery/resources/img/teeth/tooth-bottom-darkblue.png');
 	}	
 	
-	/* zęby górne */
-	.tooth-top {
+	
+	
+	/* ząb górny */
+	.top .ui-tooth {
 		margin-left: 1px;		/* lekkie rozsunięcie zębów */
 		width: 20px;
 		height: 50px;
@@ -217,17 +219,15 @@
 		background-position: top;
 	}
 	
-
-	
-	/* pozycjonowanie numeru */
-	.tooth-top .tooth-number {
+	/* pozycjonowanie numeru w zębie górnym*/
+	.top .ui-tooth .number {
 		position: relative;
 		top: 33px;
 		left: 4px;
 	}
 	
-	/* zęby dolne */
-	.tooth-bottom {
+	/* ząb dolny */
+	.bottom .ui-tooth {
 		margin-left: 1px;		/* lekkie rozsunięcie zębów */
 		width: 20px;
 		height: 50px;
@@ -237,18 +237,17 @@
 		background-position: bottom;
 	}
 	
-	/* pozycjonowanie numeru */
-	.tooth-bottom .tooth-number {
+	/* pozycjonowanie numeru w zębie dolnym */
+	.bottom .ui-tooth .number {
 		position: relative;
 		top: 3px;
 		left: 4px;
 	}
 	
 	/* odsunięcie lewej od prawej części szczęki */
-	#permanent-teeth-map .tooth-top:nth-child(9),
-	#permanent-teeth-map .tooth-bottom:nth-child(25),
-	#milk-teeth-map .tooth-top:nth-child(6),
-	#milk-teeth-map .tooth-bottom:nth-child(16)  {
+	.permanent * .ui-tooth:nth-child(9),
+	.deciduous * .ui-tooth:nth-child(6)
+	  {
 		margin-left: 10px;
 	}
 	
@@ -257,54 +256,252 @@
 
 <script type="text/javascript">
 
-	/* identyfikator aktualnego zęba */
-	var currentId = null;
+	/** numery zębów */
+	var TeethNumbers  = {
+		/////// zęby stałe
+		PERMANENT: {	
+			// prawa górna strona							// lewa górna strona
+			TOP: 	[ 18, 17, 16, 15, 14, 13, 12, 11,		21, 22, 23, 24, 25, 26, 27, 28 ], 
+			// prawa dolna strona							// lewa dolna strona
+			BOTTOM: [ 48, 47, 46, 45, 44, 43, 42, 41,		31, 32, 33, 34, 35, 36, 37, 38 ],
+		},
+		/////// zęby mleczne
+		DECIDUOUS: {
+						//prawa górna strona				// lewa górna strona
+						TOP: 	[ 55, 54, 53, 52, 51, 		61, 62, 63, 64, 65 ], 
+						// prawa dolna strona				// lewa dolna strona
+						BOTTOM: [ 85, 84, 83, 82, 81,		71, 72, 73, 74, 75 ]
+		}
+	};
 
-	/* dostępne kolory zębów */
-	var toothColors = ["white", "red", "green", "blue"];
+	/** dostępne kolory zębów */
+	var Colors = {
+			WHITE : 	{ value: 0, cssClass: "white" },
+			RED : 		{ value: 1, cssClass: "red" },
+			GREEN : 	{ value: 2, cssClass: "green" },
+			BLUE : 		{ value: 3, cssClass: "blue" },
+	};
 	
-	/* tabelka z nazwami zębów */
-	var teethNames = [
-	    
-		                  
-	];
+	/** powierzchnie zęba */
+	var ToothPart = {
+			WHOLE_TOOTH : { value: 0, stateField: "allToothState", description: "Cały ząb" },
+			AREA_1 : { value: 1, stateField: "area1State", description: "Powierzchnia zewnętrzna" },
+			AREA_2 : { value: 2, stateField: "area2State", description: "Powierzchnia wewnętrzna" },
+			AREA_3 : { value: 3, stateField: "area3State", description: "Powierzchnia bliższa" },
+			AREA_4 : { value: 4, stateField: "area4State", description: "Powierzchnia dalsza" },
+			AREA_5 : { value: 5, stateField: "area5State", description: "Powierzchnia żująca" },
+			AREA_6 : { value: 6, stateField: "area6State", description: "Korzeń środkowy" },
+			AREA_7 : { value: 7, stateField: "area7State", description: "Korzeń bliższy" },
+			AREA_8 : { value: 8, stateField: "area8State", description: "Korzeń dalszy" }
+	};
 	
 	/**
-	 * Zwraca numer aktualnego zęba w notacji FDI
+	 * Widget z mapą uzębienia
 	 */
-	function currentToothNumber() {
-		if (currentId == null) return null;
-		else return currentId.substring(5,7);
-	}
-	
-	$(document).ready(function() {
+	ToothMapWidget = function(componentManager) {
+		var self = this;
+		
+		/** rejestracja menedżera komponentów */
+		this.componentManager = componentManager;
+		
+		/** prefiks identyfikatorów zębów na mapie */
+		this.prefix = "tooth";
 		
 		/**
-		 * Kliknięcię na ząb na mapie
-		 */
-		$.each(['top','bottom'], function(_,side) {
-			
-			$('.tooth-'+side).click(function(){
-				thisId = this.id;
-				if (thisId != currentId) { 
-						$.each(toothColors, function(index,value) {
-							
-							if (currentId != null) {
-								$.each(['top','bottom'], function(_,side) {
-									$("#"+currentId).removeClass('tooth-'+side+'-'+value+'-selected');
-								});
-							}
-							
-							if ($('#'+thisId).hasClass('tooth-'+side+'-'+value)) {
-								$('#'+thisId).addClass('tooth-'+side+'-'+value+'-selected');
-							}
-						});	
-					
-				}
-				currentId = thisId;
+		 * Tworzy mapę uzębienia w postaci graficznej
+		 */ 
+		this.createTeethMapUi = function() {
+			$.each(TeethNumbers.PERMANENT.TOP, function(_, num){
+				var $toothUi = $('<div class="ui-tooth white" id="'+self.prefix+num+'"><span class="number">'+num+'</span></div>');
+				$(".ui-teeth-map .permanent .top").append($toothUi);
 			});
-		});
+			$.each(TeethNumbers.PERMANENT.BOTTOM, function(_, num){
+				var $toothUi = $('<div class="ui-tooth white" id="'+self.prefix+num+'"><span class="number">'+num+'</span></div>');
+				$(".ui-teeth-map .permanent .bottom").append($toothUi);
+			});
+			$.each(TeethNumbers.DECIDUOUS.TOP, function(_, num){
+				var $toothUi = $('<div class="ui-tooth white" id="'+self.prefix+num+'"><span class="number">'+num+'</span></div>');
+				$(".ui-teeth-map .deciduous .top").append($toothUi);
+			});
+			$.each(TeethNumbers.DECIDUOUS.BOTTOM, function(_, num){
+				var $toothUi = $('<div class="ui-tooth white" id="'+self.prefix+num+'"><span class="number">'+num+'</span></div>');
+				$(".ui-teeth-map .deciduous .bottom").append($toothUi);
+			});
+		};
 		
+		/**
+		 * Zmienia kolor zęba
+		 * Przykład: .changeColor(28, Colors.WHITE)
+		 */
+		this.changeColor = function(toothNumber, newColor) {
+			$.each(Colors, function(_,color){
+				$('#tooth'+toothNumber).removeClass(color.cssClass);	
+			});
+			$('#tooth'+toothNumber).addClass(newColor.cssClass)
+		};
+		
+		/**
+		 * Zaznacza/odznacza ząb (graficzne podświetlenie) 
+		 * Przykład: .toggleSelected(28)
+		 */
+		this.toggleSelected = function(toothNumber) {
+			$('#tooth'+toothNumber).toggleClass('selected');
+		};
+		
+		/**
+		 * Obsługa zdarzeń związanych z interfejsem użytkownika
+		 */
+		this.registerEventHandlers = function() {
+			// kliknięcie na ząb
+			$('.ui-tooth').click(function(){
+				var toothNumber = this.id.substring(self.prefix.length,
+						self.prefix.length+2);
+				self.componentManager.selectTooth(toothNumber);
+			});
+		};
+		
+	};
+	
+	
+	/**
+	 * Wrapper na obiekt wizyty, przysłany JSONem
+	 */
+	VisitWrapper = function(patientId) {
+		var self = this;
+		
+		this.patientId = patientId;
+		
+		this.teeth = null;
+		this.visitObj = null;
+		
+		/** ściąga JSONa z nową wizytą */
+		this.prepareNewVisit = function(callback) {
+			$.ajax({
+				type: "GET", url: "/dentalsurgery/patients/"+patientId+"/visits/prepareNew", 
+				dataType: "json",
+				success: function(data) {
+					self.visitObj = data;
+					// przygotowanie tablicy obiektów zębów indeksowanej ich numerami
+					self.teeth = new Array();
+					for (var toothKey in self.visitObj.teeth) {
+						var tooth = self.visitObj.teeth[toothKey];
+						self.teeth[tooth.number] = tooth;
+					}		
+					callback(self.visitObj);
+				}
+			});	
+		};
+		
+		/*
+		$.ajax({
+			type: "POST", url: "/dentalsurgery/patients/2/visits/save", 
+			data: JSON.stringify(visit), contentType: "application/json", dataType: "text",
+			success: function(text) {
+				$("#destination").html(text);
+			}
+		});
+		*/
+		
+		/** zwraca obiekt zęba o konkretnym numerze FDI */
+		this.getToothByNumber = function(number) {
+			for (var toothKey in self.visitObj.teeth) {
+				var tooth = self.visitObj.teeth[toothKey];
+				if (tooth.number == number) {
+					return tooth; 
+				}
+			}
+		};
+		
+		/** ustawia wartość komentarza do wizyty */
+		this.setComments = function(comments){
+			self.visitObj.comments = new String(comments);
+		};
+		
+		/** dodaje czynność do tablicy czynności */
+		this.addActivity = function(newActivity, activities) {
+			for (var key in activities) {
+				if (activities[key].activityId ==  newActivity.activityId) {
+					return;
+				}
+			}
+			activities.push(newActivity);
+		};
+
+		/** usuwa czynność z tablicy czynności */
+		this.removeActivity = function(activity, activities) {
+			for ( var i = 0; i < activities.length; i++) {
+				if (activities[i].activityId == activity.activityId) {
+					activities.splice(i,1);
+				}
+			}
+		};
+
+		/** dodaje czynność do wizyty */
+		this.addVisitActivity = function(newActivity) {
+			this.addActivity(newActivity, self.visitObj.activities);
+		};
+		
+		/** usuwa czynność z wizyty */
+		this.removeVisitActivity = function(activity) {
+			this.removeActivity(activity, self.visitObj.activities);
+		};
+		
+		/** dodaje czynność do zęba */
+		this.addToothActivity = function(number, newActivity) {
+			this.addActivity(newActivity, self.teeth[number].activities);
+		};
+		
+		/** usuwa czynność z zęba */
+		this.removeToothActivity = function(number, activity) {
+			this.removeActivity(activity, self.teeth[number].activities);
+		};
+		
+		/** zwraca stan zęba lub jego części */
+		this.toothState = function(number, areaEnumObject) {
+			return self.teeth[number][areaEnumObject.stateField];
+		};
+		
+	};
+	
+	
+	/**
+	 * Menadżer komponentów aplikacji. Wszystkie operacje zbiera do kupy.
+	 */
+	ComponentManager = function(patientId) {
+		var self = this;
+		
+		this.patientId = patientId;
+		
+		this.currentToothNumber = null;
+		
+		/** widżet z mapą uzębienia */
+		this.toothMapWidget = new ToothMapWidget(this);
+		
+		/** wrapper na obiekt wizyty */
+		this.visitWrapper = new VisitWrapper(patientId);
+		
+		/** inicjalizacja */
+		this.initialize = function() {
+			self.toothMapWidget.createTeethMapUi();
+			self.toothMapWidget.registerEventHandlers();
+			self.visitWrapper.prepareNewVisit(function(){});
+		};
+		
+		/** Wybranie nowego zęba */
+		this.selectTooth = function(toothNumber) {
+			if (self.currentToothNumber != null)
+				self.toothMapWidget.toggleSelected(self.currentToothNumber);
+			self.currentToothNumber = toothNumber;
+			self.toothMapWidget.toggleSelected(self.currentToothNumber);
+			alert(JSON.stringify(self.visitWrapper.teeth[toothNumber]));
+		};
+	};
+	
+	
+	manager = new ComponentManager(2);
+	
+	$(document).ready(function() {
+		manager.initialize();
 	});
 
 </script>
@@ -313,48 +510,11 @@
 <body>
 
 
-	<!-- takie moje do testowania postów ajaxowych -->
-	<div style="border: solid; display: none">
-		<script type="text/javascript">
-		
-			var visit = 
-			{
-				"teeth": [
-				          	{
-				          		"number" : 123
-				          	}
-				          
-				          ],
-				"comments": "wizyta A",
-				
-				"visitDate": "03-04-2010",
-				"activities": [
-				               	{  "activityId" : 1,
-				               		"description" : "visit activity1",
-				               		"price" : 2.50,
-				               		"vat" : 0.20
-				               	}
-				               
-				               ]
-			};
-		
-		
-			$(document).ready(function(){
-				$("#postTest").click(function(){
-								
-					$.ajax({
-						type: "POST", url: "/dentalsurgery/patients/2/visits/save", 
-						data: JSON.stringify(visit), contentType: "application/json", dataType: "text",
-						success: function(text) {
-							$("#destination").html(text);
-						}
-					});
-					
-				});
-				
-			});
-		
-		</script>
+	<!-- takie moje do testowania postów ajaxowych
+			spokojnie zaraz to wyrzucę
+	 -->
+	
+	<div style="border: solid;">
 		<button id="postTest">send</button>
 		<span id="destination"></span>
 	</div>
@@ -395,90 +555,20 @@
 			
 			<h1>Nowa wizyta: <c:out	value="${patient.surname}" /> <c:out value="${patient.name}" /></title></h1>		
 			
-			<div id="teeth-maps-div">
+			
+			<div class="ui-teeth-map" id="ui-teeth-map">
 				<h3>Zęby stałe</h3>
-			
-			
-				<div id="permanent-teeth-map">
-				
-					<!-- prawa (sic! ma być prawa, nie lewa) górna -->
-					<div class="tooth-top tooth-top-white" id="tooth18"><span class="tooth-number">18</span></div>
-					<div class="tooth-top tooth-top-red" id="tooth17"><span class="tooth-number">17</span></div>
-					<div class="tooth-top tooth-top-green" id="tooth16"><span class="tooth-number">16</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth15"><span class="tooth-number">15</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth14"><span class="tooth-number">14</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth13"><span class="tooth-number">13</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth12"><span class="tooth-number">12</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth11"><span class="tooth-number">11</span></div>
-					
-					<!-- lewa górna -->
-					<div class="tooth-top tooth-top-blue" id="tooth21"><span class="tooth-number">21</span></div>
-					<div class="tooth-top tooth-top-white" id="tooyh22"><span class="tooth-number">22</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth23"><span class="tooth-number">23</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth24"><span class="tooth-number">24</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth25"><span class="tooth-number">25</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth26"><span class="tooth-number">26</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth27"><span class="tooth-number">27</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth28"><span class="tooth-number">28</span></div>
-					
-					<!-- prawa dolna -->
-					<div class="tooth-bottom tooth-bottom-white" id="tooth48"><span class="tooth-number">48</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth47"><span class="tooth-number">47</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth46"><span class="tooth-number">46</span></div>
-					<div class="tooth-bottom tooth-bottom-red" id="tooth45"><span class="tooth-number">45</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth44"><span class="tooth-number">44</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth43"><span class="tooth-number">43</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth42"><span class="tooth-number">42</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth41"><span class="tooth-number">41</span></div>
-					
-					<!-- lewa dolna -->
-					<div class="tooth-bottom tooth-bottom-white" id="tooth31"><span class="tooth-number">31</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth32"><span class="tooth-number">32</span></div>
-					<div class="tooth-bottom tooth-bottom-green" id="tooth33"><span class="tooth-number">33</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth34"><span class="tooth-number">34</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth35"><span class="tooth-number">35</span></div>
-					<div class="tooth-bottom tooth-bottom-blue" id="tooth36"><span class="tooth-number">36</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth37"><span class="tooth-number">37</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth38"><span class="tooth-number">38</span></div>			
-					
+				<div class="permanent" id="ui-teeth-map-permanent">
+					<div class="top"></div>
+					<div class="bottom"></div>
 				</div>
-				
 				<h3>Zęby mleczne</h3>
-			
-				<div id="milk-teeth-map">
-				
-					<!-- prawa (sic! ma być prawa, nie lewa) górna -->
-					<div class="tooth-top tooth-top-white" id="tooth55"><span class="tooth-number">55</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth54"><span class="tooth-number">54</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth53"><span class="tooth-number">53</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth52"><span class="tooth-number">52</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth51"><span class="tooth-number">51</span></div>
-					
-					<!-- lewa górna -->
-					<div class="tooth-top tooth-top-white" id="tooth61"><span class="tooth-number">61</span></div>
-					<div class="tooth-top tooth-top-white" id="tooyh62"><span class="tooth-number">62</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth63"><span class="tooth-number">63</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth64"><span class="tooth-number">64</span></div>
-					<div class="tooth-top tooth-top-white" id="tooth65"><span class="tooth-number">65</span></div>
-					
-					<!-- prawa dolna -->
-					<div class="tooth-bottom tooth-bottom-white" id="tooth85"><span class="tooth-number">85</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth84"><span class="tooth-number">84</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth83"><span class="tooth-number">83</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth82"><span class="tooth-number">82</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth81"><span class="tooth-number">81</span></div>
-					
-					<!-- lewa dolna -->
-					<div class="tooth-bottom tooth-bottom-red" id="tooth71"><span class="tooth-number">71</span></div>
-					<div class="tooth-bottom tooth-bottom-red" id="tooth72"><span class="tooth-number">72</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth73"><span class="tooth-number">73</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth74"><span class="tooth-number">74</span></div>
-					<div class="tooth-bottom tooth-bottom-white" id="tooth75"><span class="tooth-number">75</span></div>			
-				
+				<div class="deciduous" id="ui-teeth-map-deciduous">
+					<div class="top"></div>
+					<div class="bottom"></div>
 				</div>
-			
 			</div>
-			
+						
 			<div id="selected-tooth-div">
 				
 				<h3>Wybierz ząb lub jego powierzchnię</h3>

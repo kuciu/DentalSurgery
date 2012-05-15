@@ -81,15 +81,94 @@
 				self.toothMapWidget.toggleSelected(self.currentToothNumber);
 			self.currentToothNumber = toothNumber;
 			self.toothMapWidget.toggleSelected(self.currentToothNumber);
+			
+			// wybieramy pierwszą powierzchnię, na której coś jest
+			var areaState = null
+			for (var areaKey in ToothParts) {
+				areaState = self.visitWrapper.getToothState(
+						self.currentToothNumber, ToothParts[areaKey]);
+				if (areaState != null) {
+					self.selectToothPart(ToothParts[areaKey]);
+					break;
+				}
+			}
+			// jeśli nic nie jest ustawione, wybieramy cały ząb
+			if (areaState == null) {
+				self.selectToothPart(ToothParts.AREA_0);
+			}
 		};
 		
 		/** Wybranie nowej powierzchni */
 		this.selectToothPart = function(toothPart) {
+			if (self.currentToothNumber == null) {
+				errorMessage("Wybierz ząb", "Musisz wybrać ząb przed wybraniem jego powierzchni!");
+				return;
+			}
 			if (self.currentToothPart != null)
 				self.toothPartWidget.toggleSelected(self.currentToothPart);
 			self.currentToothPart = toothPart;
 			self.toothPartWidget.toggleSelected(self.currentToothPart);
+			
+			var toothState = self.visitWrapper.
+				getToothState(self.currentToothNumber, self.currentToothPart);
+			// odczytanie stanu
+			self.toothStateWidget.selectState(toothState);
+			if (toothPart == ToothParts.AREA_0) {
+				self.toothStateWidget.enableWholeToothStates();
+			} else {
+				self.toothStateWidget.disableWholeToothStates();	
+			}
+			self.updateToothPartsColors();
 		};
+		
+		/** Wybranie nowego stanu przez użytkownika */
+		this.changeState = function(toothState) {
+			if (self.currentToothNumber != null && 
+					self.currentToothPart != null) {
+				// zapisanie stanu
+				self.visitWrapper.setToothState(self.currentToothNumber,
+						self.currentToothPart, toothState);
+				self.updateToothMapColors();
+				self.updateToothPartsColors();
+			} else {
+				errorMessage("Wybierz ząb i powierzchnię", "Musisz wybrać ząb oraz jego powierzchnię, aby zmienić jego stan!");
+				self.toothStateWidget.selectState(null);
+				return;
+			}
+		};
+		
+		/** aktualizuje kolory zębów na mapie */
+		this.updateToothMapColors = function() {
+			for (var teethType in TeethNumbers) {
+				for (var teethSide in TeethNumbers[teethType]) {
+					for (var toothNumberKey in TeethNumbers[teethType][teethSide]) {
+						var toothNumber = TeethNumbers[teethType][teethSide][toothNumberKey];
+						var hasToothState = self.visitWrapper.hasToothState(toothNumber); 
+						if (hasToothState) {
+							self.toothMapWidget.changeColor(toothNumber, Colors.RED);
+						} else {
+							self.toothMapWidget.changeColor(toothNumber, Colors.WHITE);
+						}
+					}
+				}
+			}
+		};
+		
+		/** aktualizuje kolory powierzchni zęba na liście */
+		this.updateToothPartsColors = function() {
+			if (self.currentToothNumber != null) {
+				for (var areaKey in ToothParts) {
+					var areaState = self.visitWrapper.getToothState(self.currentToothNumber, ToothParts[areaKey]);
+					if (areaState != null) {
+						self.toothPartWidget.changeColor(ToothParts[areaKey], Colors.RED);
+					} else {
+						self.toothPartWidget.changeColor(ToothParts[areaKey], Colors.WHITE);
+					}
+
+				}
+			}
+		};
+		
 		
 		/** inicjalizacja */
 		this.initialize = function() {
@@ -111,17 +190,8 @@
 				self.visitWrapper.prepareNewVisit(function(){
 					
 					/* >>>>>>>>>>>>>>  TODO wywalić - PONIŻSZE INSTRUKCJE SŁUŻĄ DO TESTÓW */
-	
-					
-					self.toothMapWidget.changeColor(11, Colors.BLUE);
-					self.toothMapWidget.changeColor(12, Colors.WHITE);
-					self.toothMapWidget.changeColor(13, Colors.RED);
-					self.toothMapWidget.changeColor(14, Colors.GREEN);
-					
-					self.toothPartWidget.changeColor(ToothParts.AREA_0, Colors.RED);
-					self.toothPartWidget.changeColor(ToothParts.AREA_1, Colors.WHITE);
-					self.toothPartWidget.changeColor(ToothParts.AREA_3, Colors.GREEN);
-					self.toothPartWidget.changeColor(ToothParts.AREA_4, Colors.BLUE);
+					self.updateToothMapColors();
+					self.updateToothPartsColors();
 					
 					
 					var someActivity = {"activityId": 1};

@@ -39,7 +39,7 @@
 
 #selected-part-list {
 	width: 140px;
-	height: 150px;
+	height: 160px;
 	border: solid;
 	border-width: 1px;
 	border-color: #80C2FF;
@@ -210,25 +210,28 @@
 }
 
 .ui-tooth-part.blue {
-	color: #afafe4;
+	color: #3737a6;
 }
 
 .ui-tooth-part.blue.selected,.ui-tooth-part.blue:hover {
 	background-color: #3737a6;
+	color: #afafe4;
 }
 
 .ui-tooth-part.red {
-	color: #e4afaf;
+	color: #CB2828;
 }
 
 .ui-tooth-part.red.selected,.ui-tooth-part.red:hover {
 	background-color: #CB2828;
+	color: #e4afaf;
 }
 
 .ui-tooth-part.green {
-	color: #ABE2AB;
+	color: #37A637;
 }
 
 .ui-tooth-part.green.selected,.ui-tooth-part.green:hover {
 	background-color: #37A637;
+	color: #ABE2AB;
 }

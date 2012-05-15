@@ -111,4 +111,17 @@ VisitWrapper = function(patientId) {
 		self.teeth[number][areaEnumObject.stateField] = newState;
 	};
 
+	/** zwraca wartość prawdę/fałsz w zależności od tego,
+	 * czy dany ząb ma jakikolwiek ustalony stan
+	 */
+	this.hasToothState = function(toothNumber) {
+		for (var areaKey in ToothParts) {
+			var toothArea = ToothParts[areaKey];
+			if (self.getToothState(toothNumber, toothArea) != null) {
+				return true;
+			}
+		}
+		return false;
+	};
+	
 };

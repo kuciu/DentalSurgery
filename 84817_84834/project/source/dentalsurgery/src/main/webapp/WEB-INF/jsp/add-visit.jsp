@@ -268,7 +268,7 @@
 	};
 	
 	
-	manager = new ComponentManager(2);
+	manager = new ComponentManager(15);
 	
 	$(document).ready(function() {
 		manager.initialize();

@@ -6,4 +6,5 @@ public interface AttachmentService {
 
 	Long save(Attachment attachment);
 
+	Attachment getById(long attachmentId);
 }

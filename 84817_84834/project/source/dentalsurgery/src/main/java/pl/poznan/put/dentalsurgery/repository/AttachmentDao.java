@@ -6,4 +6,6 @@ public interface AttachmentDao {
 
 	Long addAttachment(Attachment attachment);
 
+	Attachment getById(long attachmentId);
+
 }

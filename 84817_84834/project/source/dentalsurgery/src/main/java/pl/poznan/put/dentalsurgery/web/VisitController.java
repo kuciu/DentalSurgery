@@ -219,6 +219,12 @@ public class VisitController {
 
 	}
 
+	@RequestMapping(value = "/{visitId}/show", method = RequestMethod.GET)
+	public String showVisit(@PathVariable("visitId") final Long visitId,
+			final HttpServletResponse response) {
+		return "visit";
+	}
+
 	private Attachment createAttachment(final UploadItem uploadItem,
 			final Visit visit) {
 		final Attachment attachment = new Attachment();

@@ -43,7 +43,8 @@
 	src="<c:url value="/resources/js/ToothPartWidget.js" />"></script>
 <script type="text/javascript"
 	src="<c:url value="/resources/js/ToothStateWidget.js" />"></script>
-
+<script type="text/javascript"
+	src="<c:url value="/resources/js/ToothActivityWidget.js" />"></script>
 
 <script type="text/javascript">
 
@@ -66,6 +67,9 @@
 		
 		/** lista opcji ze stanami zęba/powierzchni */
 		this.toothStateWidget = new ToothStateWidget(this);
+		
+		/** lista opcji z czynnościami zęba/powierzchni */
+		this.toothActivityWidget = new ToothActivityWidget(this);
 		
 		/** wrapper na obiekt wizyty */
 		this.visitWrapper = new VisitWrapper(patientId);
@@ -164,11 +168,9 @@
 					} else {
 						self.toothPartWidget.changeColor(ToothParts[areaKey], Colors.WHITE);
 					}
-
 				}
 			}
 		};
-		
 		
 		/** inicjalizacja */
 		this.initialize = function() {
@@ -181,7 +183,9 @@
 			self.dictManager.loadDictionaries(function(){
 				self.toothStateWidget.createToothStateUi(
 						self.dictManager.toothStates);
-				self.toothStateWidget.registerEventHandlers();
+				self.toothActivityWidget.createToothActivityUi(
+						self.dictManager.toothActivities);
+				
 				
 				$('#destination').append(JSON.stringify(self.dictManager.visitActivities)).append("<br/><br/>");
 				$('#destination').append(JSON.stringify(self.dictManager.toothActivities)).append("<br/><br/>");
@@ -340,14 +344,11 @@
 			
 			<div id="modify-form-div">
 				<h3>Dodaj czynność związaną z wybranym zębem</h3>
-				<select>
-					<option>Czynność 1, cena: 500 zł</option>
-					<option>Czynność 2, cena: 500 zł</option>
-					<option>Czynność 3, cena: 500 zł</option>
-					<option>Czynność 4, cena: 500 zł</option>
-					<option>Czynność 5, cena: 500 zł</option>
+				
+				<select name="selected-tooth-activity" id="selected-tooth-activity">
 				</select>
-				<button value="Dodaj" title="Dodaj">Dodaj czynność</button>
+				
+				<button id="add-tooth-activity-button">&gt;&gt;</button>
 			</div>
 			
 			<div id="list-activities">

@@ -85,7 +85,7 @@
 				self.toothMapWidget.toggleSelected(self.currentToothNumber);
 			self.currentToothNumber = toothNumber;
 			self.toothMapWidget.toggleSelected(self.currentToothNumber);
-			
+			$('#selected-tooth-number').text(self.currentToothNumber);
 			// wybieramy pierwszą powierzchnię, na której coś jest
 			var areaState = null
 			for (var areaKey in ToothParts) {
@@ -120,8 +120,9 @@
 			if (toothPart == ToothParts.AREA_0) {
 				self.toothStateWidget.enableWholeToothStates();
 			} else {
-				self.toothStateWidget.disableWholeToothStates();	
+				self.toothStateWidget.disableWholeToothStates();
 			}
+			$('#selected-tooth-area').text(self.currentToothPart.description);
 			self.updateToothPartsColors();
 		};
 		
@@ -132,11 +133,25 @@
 				// zapisanie stanu
 				self.visitWrapper.setToothState(self.currentToothNumber,
 						self.currentToothPart, toothState);
+				// aktualizacja kolorów
 				self.updateToothMapColors();
 				self.updateToothPartsColors();
 			} else {
 				errorMessage("Wybierz ząb i powierzchnię", "Musisz wybrać ząb oraz jego powierzchnię, aby zmienić jego stan!");
 				self.toothStateWidget.selectState(null);
+				return;
+			}
+		};
+		
+		/** Dodanie wybranej czynności dla konkretnego zęba/powierzchni */
+		this.addToothActivity = function(toothActivity) {
+			if (self.currentToothNumber != null) {
+				// dodanie czynności związanej z zębem
+				self.visitWrapper.addToothActivity(self.currentToothNumber, toothActivity);
+				// aktualizacja kolorów
+				self.updateToothMapColors();
+			} else {
+				errorMessage("Wybierz ząb", "Musisz wybrać ząb, aby dodać związaną z nim czynność!");
 				return;
 			}
 		};
@@ -147,11 +162,20 @@
 				for (var teethSide in TeethNumbers[teethType]) {
 					for (var toothNumberKey in TeethNumbers[teethType][teethSide]) {
 						var toothNumber = TeethNumbers[teethType][teethSide][toothNumberKey];
-						var hasToothState = self.visitWrapper.hasToothState(toothNumber); 
+						var hasToothState = self.visitWrapper.hasToothState(toothNumber);
+						var hasToothActivity = self.visitWrapper.hasToothActivity(toothNumber);
 						if (hasToothState) {
-							self.toothMapWidget.changeColor(toothNumber, Colors.RED);
+							if (hasToothActivity) {
+								self.toothMapWidget.changeColor(toothNumber, Colors.BLUE);
+							} else {
+								self.toothMapWidget.changeColor(toothNumber, Colors.RED);								
+							}
 						} else {
-							self.toothMapWidget.changeColor(toothNumber, Colors.WHITE);
+							if (hasToothActivity) {
+								self.toothMapWidget.changeColor(toothNumber, Colors.GREEN);
+							} else {
+								self.toothMapWidget.changeColor(toothNumber, Colors.WHITE);								
+							}
 						}
 					}
 				}
@@ -327,10 +351,10 @@
 				<ul class="selected-part-list" id="selected-part-list"></ul> 
 				
 				
-				<h3>Wybrany ząb:
-					<span id="selected-tooth-number">12</span>,
-					powierzchnia:
-					<span id="selected-tooth-surface">wszystkie</span>
+				<h3>Wybrany ząb: 
+					<span id="selected-tooth-number">(brak)</span>,
+					powierzchnia: 
+					<span id="selected-tooth-area">(brak)</span>
 				</h3>
 
 				Obecny stan:
@@ -338,17 +362,29 @@
 				<select name="selected-tooth-state" id="selected-tooth-state">
 					<option value="null" selected="selected">Zdrowy</option>
 				</select>
-					
+				
 
 			</div>
 			
 			<div id="modify-form-div">
+				<h3>Ustaw datę wizyty</h3>
+				<input type="text"/>
+				<h3>Komentarz lekarza</h3>
+				<textarea></textarea>
+			</div>
+			
+			<div id="add-activities-form">
 				<h3>Dodaj czynność związaną z wybranym zębem</h3>
 				
 				<select name="selected-tooth-activity" id="selected-tooth-activity">
 				</select>
+				<button id="add-tooth-activity-button">Dodaj</button>
 				
-				<button id="add-tooth-activity-button">&gt;&gt;</button>
+				<h3>Dodaj czynność związaną z wizytą</h3>
+				
+				<select name="select-visit-activity" id="select-visit-activity">
+				</select>
+				<button id="add-visit-activity-button">Dodaj</button>
 			</div>
 			
 			<div id="list-activities">

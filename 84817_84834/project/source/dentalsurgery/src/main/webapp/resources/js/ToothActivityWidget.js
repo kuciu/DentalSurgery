@@ -45,6 +45,21 @@ ToothActivityWidget = function(componentManager) {
 			width: '250' 
 		});
 		$('#add-tooth-activity-button').button();
+		$('#add-tooth-activity-button').click(function(){
+			var activityId = $('#selected-tooth-activity').selectmenu('value'); 
+			var toothActivity = self.activityMap[activityId];
+			self.componentManager.addToothActivity(toothActivity);
+		});
+	};
+	
+	/** wyłącza możliwość wybrania stanu dot. całego zęba */
+	this.disableWholeToothActivities = function() {
+		$('#selected-tooth-activity').selectmenu("disable",0,"optgroup");
+	};
+	
+	/** włącza możliwość wybrania stanu dot. całego zęba */
+	this.enableWholeToothActivities = function() {
+		$('#selected-tooth-activity').selectmenu("enable",0,"optgroup");
 	};
 	
 	

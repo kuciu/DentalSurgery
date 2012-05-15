@@ -42,8 +42,8 @@ ToothStateWidget = function(componentManager) {
 		});
 		$('#selected-tooth-state').selectmenu({
 			style: 'popup',
-			menuWidth: '370',
-			width: '370',
+			menuWidth: '340',
+			width: '320',
 			select: function(){
 				var value = $('#selected-tooth-state').selectmenu("value");
 				if (value == 'null') {

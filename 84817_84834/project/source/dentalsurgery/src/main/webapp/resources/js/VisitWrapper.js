@@ -111,7 +111,8 @@ VisitWrapper = function(patientId) {
 		self.teeth[number][areaEnumObject.stateField] = newState;
 	};
 
-	/** zwraca wartość prawdę/fałsz w zależności od tego,
+	/** 
+	 * zwraca wartość prawdę/fałsz w zależności od tego,
 	 * czy dany ząb ma jakikolwiek ustalony stan
 	 */
 	this.hasToothState = function(toothNumber) {
@@ -122,6 +123,15 @@ VisitWrapper = function(patientId) {
 			}
 		}
 		return false;
+	};
+	
+	/** 
+	 * zwraca wartość prawdę/fałsz w zależności od tego,
+	 * czy dany ząb ma jakąkolwiek przypisaną czynność
+	 */
+	this.hasToothActivity = function(toothNumber) {
+		return self.teeth[toothNumber].activities != null &&
+			self.teeth[toothNumber].activities.length > 0;
 	};
 	
 };

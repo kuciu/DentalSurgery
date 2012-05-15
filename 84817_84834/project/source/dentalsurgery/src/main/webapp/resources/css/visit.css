@@ -8,9 +8,9 @@
 
 #ui-teeth-map {
 	float: left;
-	padding: 10px;
+	
 	width: 350px;
-	height: 300px;
+	height: 310px;
 	border: solid;
 	border-width: 1px;
 	border-color: #80C2FF;
@@ -28,41 +28,57 @@
 }
 
 #selected-tooth-div {
-	float: right;
-	padding: 10px;
-	width: 400px;
-	height: 300px;
+	float: left;
+	margin-left: 30px;
+	width: 350px;
+	height: 310px;
 	border: solid;
 	border-width: 1px;
 	border-color: #80C2FF;
+	clear: right;
 }
 
 #selected-part-list {
-	width: 140px;
+	width: 320px;
 	height: 160px;
-	border: solid;
+	/*border: solid;*/
 	border-width: 1px;
 	border-color: #80C2FF;
-	margin: auto;
+	margin-left: 0px;
+	padding-left: 0px;
 	list-style-type: none;
+}
+
+#selected-part-list li {
+	padding-left: 90px;
 }
 
 #modify-form-div {
 	float: left;
-	padding: 10px;
+	
 	border: solid;
 	border-width: 1px;
 	border-color: #80C2FF;
 	width: 350px;
 }
 
-#list-activities {
-	float: right;
-	padding: 10px;
+#add-activities-form {
+	float: left;
+	margin-left: 30px;
 	border: solid;
 	border-width: 1px;
 	border-color: #80C2FF;
-	width: 400px;
+	width: 350px;
+	clear: right;
+}
+
+#list-activities {
+	float: left;
+	
+	border: solid;
+	border-width: 1px;
+	border-color: #80C2FF;
+	width: 732px;
 }
 
 #add-tooth-activity-button {

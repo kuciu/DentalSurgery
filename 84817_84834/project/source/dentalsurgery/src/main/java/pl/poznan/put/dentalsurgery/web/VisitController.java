@@ -114,7 +114,6 @@ public class VisitController {
 	Visit saveVisit(@RequestBody final Visit visit,
 			@ModelAttribute final Patient patient) {
 		visit.setPatient(patient);
-		visit.setActivities(null);
 		final Long visitId = visitService.saveDeserializedVisit(visit);
 		visitService.getVisidById(visitId);
 		return visit;

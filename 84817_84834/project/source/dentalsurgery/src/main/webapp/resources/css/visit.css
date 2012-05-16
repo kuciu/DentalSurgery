@@ -41,7 +41,7 @@
 #selected-part-list {
 	width: 320px;
 	height: 160px;
-	/*border: solid;*/
+	border: solid;
 	border-width: 1px;
 	border-color: #80C2FF;
 	margin-left: 0px;
@@ -73,6 +73,15 @@
 }
 
 #list-activities {
+	float: left;
+	
+	border: solid;
+	border-width: 1px;
+	border-color: #80C2FF;
+	width: 732px;
+}
+
+#send-visit-form {
 	float: left;
 	
 	border: solid;
@@ -255,4 +264,34 @@
 .ui-tooth-part.green.selected,.ui-tooth-part.green:hover {
 	background-color: #37A637;
 	color: #ABE2AB;
+}
+
+/* ********************* tabelka z wykonanymi czynnościami **** */
+
+
+#list-activities table {
+	
+	width: 710px;
+	text-align: left;
+	border: solid;
+	border-width: 1px;
+	border-color: #80C2FF;
+}
+
+#list-activities table tr.visit-row-activity  {
+	background-color: #F0F2FF;
+}
+
+#list-activities table tr.tooth-row-activity  {
+	background-color: #ABE2AB;
+}
+
+
+#list-activities table thead th:nth-child(4),
+#list-activities table tr td:nth-child(4) {
+	text-align: left;
+	
+	width: 110px;
+	
+	
 }

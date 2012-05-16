@@ -113,3 +113,7 @@ body {
 	color: red;
 }
  
+.icon-operation {
+	float: right;
+	margin: 0px;
+}

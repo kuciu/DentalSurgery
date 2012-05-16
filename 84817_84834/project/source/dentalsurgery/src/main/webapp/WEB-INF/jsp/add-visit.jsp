@@ -45,7 +45,10 @@
 	src="<c:url value="/resources/js/ToothStateWidget.js" />"></script>
 <script type="text/javascript"
 	src="<c:url value="/resources/js/ToothActivityWidget.js" />"></script>
-
+<script type="text/javascript"
+	src="<c:url value="/resources/js/VisitActivityWidget.js" />"></script>
+<script type="text/javascript"
+	src="<c:url value="/resources/js/ActivityTableWidget.js" />"></script>
 <script type="text/javascript">
 
 
@@ -70,6 +73,12 @@
 		
 		/** lista opcji z czynnościami zęba/powierzchni */
 		this.toothActivityWidget = new ToothActivityWidget(this);
+		
+		/** lista opcji z czynnościami wizyty */
+		this.visitActivityWidget = new VisitActivityWidget(this);
+		
+		/** tabelka z dodanymi czynnościami */
+		this.activityTableWidget = new ActivityTableWidget(this);
 		
 		/** wrapper na obiekt wizyty */
 		this.visitWrapper = new VisitWrapper(patientId);
@@ -143,157 +152,165 @@
 			}
 		};
 		
+		
+		/** 
+		 * usunięcie czynności (zęba lub wizyty) 
+		 * @params params parametry dotyczące usuwanej czynności
+		 * Np.:		
+		 * 		param = {
+		 * 			type: "tooth",
+		 *			[toothNumber: 23],
+		 * 			rowId: "tooth-12-23",
+		 * 			activity: toothActivity,
+		 * 			scope: "Ząb nr 23"
+		 * 		}		
+		 */
+		this.removeActivity = function(params) {
+			switch (params.type) {
+						
+				case "tooth":
+							self.visitWrapper.removeToothActivity(params.toothNumber, params.activity);
+							self.updateToothMapColors();
+							break;
+				case "visit": 
+							self.visitWrapper.removeVisitActivity(params.activity);
+							break;
+			}
+		};
+		
+
 		/** Dodanie wybranej czynności dla konkretnego zęba/powierzchni */
 		this.addToothActivity = function(toothActivity) {
 			if (self.currentToothNumber != null) {
+				if (self.visitWrapper.hasToothActivity(self.currentToothNumber, toothActivity))  {
+					errorMessage("Czynność już istnieje", "Nie możesz ponownie dodać tej samej czynności!");
+					return;
+				}
 				// dodanie czynności związanej z zębem
 				self.visitWrapper.addToothActivity(self.currentToothNumber, toothActivity);
 				// aktualizacja kolorów
 				self.updateToothMapColors();
+				// aktualizacja tabelki
+				self.activityTableWidget.addActivityRow({
+					type: "tooth",
+					toothNumber: self.currentToothNumber,
+					scope: (toothActivity.allTooth?"cały ":"")+"ząb "+self.currentToothNumber,
+					activity: toothActivity
+				});
 			} else {
 				errorMessage("Wybierz ząb", "Musisz wybrać ząb, aby dodać związaną z nim czynność!");
 				return;
 			}
 		};
 		
+		/** dodaje czynność związaną z wizytą */
+		this.addVisitActivity = function(visitActivity) {
+			if (self.visitWrapper.hasVisitActivity(visitActivity))  {
+				errorMessage("Czynność już istnieje", "Nie możesz ponownie dodać tej samej czynności!");
+				return;
+			}
+			// dodanie czynnosci do obiektu wizyty
+			self.visitWrapper.addVisitActivity(visitActivity);
+			// aktualizacja tabelki
+			self.activityTableWidget.addActivityRow({
+				type: "visit",
+				toothNumber: null,
+				scope: "nie dotyczy",
+				activity: visitActivity
+			});
+		};
+		
+		
+		
 		/** aktualizuje kolory zębów na mapie */
 		this.updateToothMapColors = function() {
-			for (var teethType in TeethNumbers) {
-				for (var teethSide in TeethNumbers[teethType]) {
-					for (var toothNumberKey in TeethNumbers[teethType][teethSide]) {
+			for ( var teethType in TeethNumbers) {
+				for ( var teethSide in TeethNumbers[teethType]) {
+					for ( var toothNumberKey in TeethNumbers[teethType][teethSide]) {
 						var toothNumber = TeethNumbers[teethType][teethSide][toothNumberKey];
-						var hasToothState = self.visitWrapper.hasToothState(toothNumber);
-						var hasToothActivity = self.visitWrapper.hasToothActivity(toothNumber);
-						if (hasToothState) {
-							if (hasToothActivity) {
-								self.toothMapWidget.changeColor(toothNumber, Colors.BLUE);
+						var hasAnyToothState = self.visitWrapper
+								.hasAnyToothState(toothNumber);
+						var hasAnyToothActivity = self.visitWrapper
+								.hasAnyToothActivity(toothNumber);
+						if (hasAnyToothState) {
+							if (hasAnyToothActivity) {
+								self.toothMapWidget.changeColor(toothNumber,
+										Colors.BLUE);
 							} else {
-								self.toothMapWidget.changeColor(toothNumber, Colors.RED);								
+								self.toothMapWidget.changeColor(toothNumber,
+										Colors.RED);
 							}
 						} else {
-							if (hasToothActivity) {
-								self.toothMapWidget.changeColor(toothNumber, Colors.GREEN);
+							if (hasAnyToothActivity) {
+								self.toothMapWidget.changeColor(toothNumber,
+										Colors.GREEN);
 							} else {
-								self.toothMapWidget.changeColor(toothNumber, Colors.WHITE);								
+								self.toothMapWidget.changeColor(toothNumber,
+										Colors.WHITE);
 							}
 						}
 					}
 				}
 			}
 		};
-		
+
 		/** aktualizuje kolory powierzchni zęba na liście */
 		this.updateToothPartsColors = function() {
 			if (self.currentToothNumber != null) {
-				for (var areaKey in ToothParts) {
-					var areaState = self.visitWrapper.getToothState(self.currentToothNumber, ToothParts[areaKey]);
+				for ( var areaKey in ToothParts) {
+					var areaState = self.visitWrapper.getToothState(
+							self.currentToothNumber, ToothParts[areaKey]);
 					if (areaState != null) {
-						self.toothPartWidget.changeColor(ToothParts[areaKey], Colors.RED);
+						self.toothPartWidget.changeColor(ToothParts[areaKey],
+								Colors.RED);
 					} else {
-						self.toothPartWidget.changeColor(ToothParts[areaKey], Colors.WHITE);
+						self.toothPartWidget.changeColor(ToothParts[areaKey],
+								Colors.WHITE);
 					}
 				}
 			}
 		};
-		
+
 		/** inicjalizacja */
 		this.initialize = function() {
 			self.toothMapWidget.createTeethMapUi();
 			self.toothMapWidget.registerEventHandlers();
 			self.toothPartWidget.createListOfPartsUi();
 			self.toothPartWidget.registerEventHandlers();
-			
-			
-			self.dictManager.loadDictionaries(function(){
-				self.toothStateWidget.createToothStateUi(
-						self.dictManager.toothStates);
-				self.toothActivityWidget.createToothActivityUi(
-						self.dictManager.toothActivities);
-				
-				
-				$('#destination').append(JSON.stringify(self.dictManager.visitActivities)).append("<br/><br/>");
-				$('#destination').append(JSON.stringify(self.dictManager.toothActivities)).append("<br/><br/>");
-				$('#destination').append(JSON.stringify(self.dictManager.toothStates)).append("<br/><br/>");
-				
-				self.visitWrapper.prepareNewVisit(function(){
-					
-					/* >>>>>>>>>>>>>>  TODO wywalić - PONIŻSZE INSTRUKCJE SŁUŻĄ DO TESTÓW */
-					self.updateToothMapColors();
-					self.updateToothPartsColors();
-					
-					
-					var someActivity = {"activityId": 1};
-					var someActivity2 = {"activityId": 2};
-					var someState = {"toothStateId": 1};
-					var someState2 = {"toothStateId": 2};
-					
-					
-					$('#destination').append(JSON.stringify(self.visitWrapper.teeth[11]));
-					$('#addToothActivity').click(function(){
-						self.visitWrapper.addToothActivity(11, someActivity);
-						self.visitWrapper.addToothActivity(11, someActivity2);
-						$('#destination').html(JSON.stringify(self.visitWrapper.teeth[11]));
+
+			self.dictManager
+					.loadDictionaries(function() {
+						self.toothStateWidget
+								.createToothStateUi(self.dictManager.toothStates);
+						self.toothActivityWidget
+								.createToothActivityUi(self.dictManager.toothActivities);
+						self.visitActivityWidget
+								.createVisitActivityUi(self.dictManager.visitActivities);
+
+						self.visitWrapper
+								.prepareNewVisit(function() {
+
+									self.updateToothMapColors();
+									self.updateToothPartsColors();
+
+
+								});
 					});
-					$('#removeToothActivity').click(function(){
-						self.visitWrapper.removeToothActivity(11, someActivity);
-						$('#destination').html(JSON.stringify(self.visitWrapper.teeth[11]));
-					});
-					$('#addToothState').click(function(){
-						self.visitWrapper.setToothState(11, ToothParts.AREA_5, someState);
-						self.visitWrapper.setToothState(11, ToothParts.AREA_5, someState2);
-						self.visitWrapper.setToothState(11, ToothParts.AREA_4, someState);
-						self.visitWrapper.setToothState(11, ToothParts.AREA_0, someState2);
-						$('#destination').html(JSON.stringify(self.visitWrapper.teeth[11]));
-					});
-					$('#clearToothState').click(function(){
-						self.visitWrapper.setToothState(11, ToothParts.AREA_5, null);
-						$('#destination').html(JSON.stringify(self.visitWrapper.teeth[11]));
-					});
-					
-					$('#postTest').click(function(){
-						self.visitWrapper.setComments("Komentarz do wizyty!");
-						self.visitWrapper.addVisitActivity({"activityId": 1});
-						$('#destination').html(JSON.stringify(self.visitWrapper.visitObj));
-						$('#destination').append("<br/><br/>");
-						self.visitWrapper.sendVisit(function(text){
-							$('#destination').append(text);	
-						});
-					});
-					
-					/* <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< */
-						
-				});
-			});
 		};
 	};
+
 	
-	
-	manager = new ComponentManager(2);
-	
+
 	$(document).ready(function() {
+		var patientId = $('#patientId').text();
+		manager = new ComponentManager(patientId);
 		manager.initialize();
 	});
-
 </script>
 	
 </head>
 <body>
-
-	<!--  >>>>>>>>>>>>>>  TODO wywalić - PONIŻSZE INSTRUKCJE SŁUŻĄ DO TESTÓW
-	 -->
-	
-	<div style="border: solid;">
-		<button id="postTest">send</button>
-		<button id="addToothActivity">add tooth activity</button>
-		<button id="removeToothActivity">remove tooth activity</button>
-		<button id="addToothState">add tooth state</button>
-		<button id="clearToothState">clear tooth state</button>
-		
-		<br />
-		
-		<span id="destination"></span>
-	</div>
-	<!-- <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< -->
+	<span id="patientId" style="display: none"><c:out value="${patientId}"/></span>
 
 	<!-- Okno dialogowe z pytaniem o potwierdzenie wykonania operacji -->
 	<div id="dialog-confirm" style="display: none">
@@ -367,8 +384,7 @@
 			</div>
 			
 			<div id="modify-form-div">
-				<h3>Ustaw datę wizyty</h3>
-				<input type="text"/>
+				
 				<h3>Komentarz lekarza</h3>
 				<textarea></textarea>
 			</div>
@@ -388,13 +404,42 @@
 			</div>
 			
 			<div id="list-activities">
-				<h3>Lista dodanych czynności</h3>
-				<ul>
-					<li> Ząb: 23, powierzchnia: żująca, czynność: plomba</li>
-					<li> Ząb: 33, powierzchnia: żująca, czynność: plomba</li>
-					<li> Ząb: 24, powierzchnia: żująca, czynność: plomba</li>
-					<li> Ząb: 53, powierzchnia: żująca, czynność: plomba</li>
-				</ul>
+				<h3>Lista wykonanych czynności</h3>
+				
+				<table id="list-activities-table" >
+					<thead>
+						<th>Zasięg</th><th>Czynność</th><th>Cena</th><th>Operacje</th>
+					</thead>
+					<!-- 
+					<tr >
+						<td>Ząb nr 23</td>
+						<td>Usunięcie zęba</td>
+						<td>80 zł
+						<td>
+							<a href="#" title="Usuń czynność"
+								onclick="alert('usunieto')"> <span
+									class="ui-icon ui-icon-trash icon-operation"></span>
+							Usuń
+							</a> 
+						</td> 
+					</tr>
+					 -->
+				
+				</table>
+			</div>
+			
+			<div id="send-visit-form">
+			
+				<script >
+					$(document).ready(function(){
+
+						$('#save-visit-button').button();
+					});
+				</script>
+				<h3>Ustaw datę wizyty</h3>
+				<input type="text"/>
+				<button id="save-visit-button" style="margin-left:300px;margin-bottom:50px">Zapisz wizytę</button>
+				
 			</div>
 			
 		</div>

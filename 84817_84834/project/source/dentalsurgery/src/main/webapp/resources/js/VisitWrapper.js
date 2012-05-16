@@ -115,7 +115,7 @@ VisitWrapper = function(patientId) {
 	 * zwraca wartość prawdę/fałsz w zależności od tego,
 	 * czy dany ząb ma jakikolwiek ustalony stan
 	 */
-	this.hasToothState = function(toothNumber) {
+	this.hasAnyToothState = function(toothNumber) {
 		for (var areaKey in ToothParts) {
 			var toothArea = ToothParts[areaKey];
 			if (self.getToothState(toothNumber, toothArea) != null) {
@@ -129,9 +129,35 @@ VisitWrapper = function(patientId) {
 	 * zwraca wartość prawdę/fałsz w zależności od tego,
 	 * czy dany ząb ma jakąkolwiek przypisaną czynność
 	 */
-	this.hasToothActivity = function(toothNumber) {
+	this.hasAnyToothActivity = function(toothNumber) {
 		return self.teeth[toothNumber].activities != null &&
 			self.teeth[toothNumber].activities.length > 0;
+	};
+	
+	/** 
+	 * Sprawdza, czy konkretna czynność związana z wizytą już istnieje
+	 */
+	this.hasVisitActivity = function(visitActivity) {
+		for (var visitKey in self.visitObj.activities) {
+			if (visitActivity.activityId == 
+				self.visitObj.activities[visitKey].activityId) {
+				return true;
+			}
+		}
+		return false;
+	};
+	
+	/**
+	 * Sprawdza, czy konkretna czynność związana z zębem już istnieje
+	 */
+	this.hasToothActivity = function(toothNumber, toothActivity) {
+		for (var toothKey in self.teeth[toothNumber].activities) {
+			if (toothActivity.activityId == 
+				self.teeth[toothNumber].activities[toothKey].activityId) {
+				return true;
+			}
+		}
+		return false;
 	};
 	
 };

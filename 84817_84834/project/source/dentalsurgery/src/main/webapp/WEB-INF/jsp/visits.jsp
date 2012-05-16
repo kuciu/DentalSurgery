@@ -65,12 +65,20 @@
 	}
 
 	function showAddAttachment(url) {
+		$('.attachmentsList').hide();
 		$('#addAttachmentForm').get(0).setAttribute('action', url);
 		$('#visit-add-attachment').show();
 	}
 
 	function afterLoad() {
 		$('#visit-add-attachment').hide();
+		$('.attachmentsList').hide();
+	}
+
+	function showAttachments(id) {
+		$('.attachmentsList').hide();
+		$('#visit-add-attachment').hide();
+		$(id).show();
 	}
 </script>
 
@@ -106,6 +114,14 @@
 #visit-list {
 	text-align: right;
 	width: 250px;
+}
+
+.attachmentsList {
+	float: right;
+	width: 430px;
+	/*border: solid;*/
+	border-width: 1px;
+	border-color: #80C2FF;
 }
 </style>
 
@@ -171,30 +187,26 @@
 							<th>Operacje</th>
 						</tr>
 					</thead>
-					<c:forEach items="${visits}" var="visit">
+					<c:forEach items="${patient.visits}" var="visit">
 						<s:url
 							value="/patients/${patient.patientId}/visits/${visit.visitId}/addAttachment"
 							var="addAttachmentUrl" />
+						<s:url
+							value="/patients/${patient.patientId}/visits/${visit.visitId}/show"
+							var="showVisitUrl" />
+
 						<tr>
-							<td><c:out value="${visit.date}" /></td>
+							<td><c:out value="${visit.visitDate}" /></td>
 							<td><a href="#" title="Dodaj załącznik"
 								onclick="showAddAttachment('${addAttachmentUrl}')"><span
 									class="ui-icon ui-icon-disk icon-operation"></span></a> <a href="#"
-								title="Pokaż załączniki"><span
-									class="ui-icon ui-icon-disk icon-operation"></span></a> <a href="#"
-								title="Pokaż wizytę"><span
-									class="ui-icon ui-icon-disk icon-operation"></span></a></td>
+								title="Pokaż załączniki"
+								onclick="showAttachments('#visit-attachments-${visit.visitId }')"><span
+									class="ui-icon ui-icon-folder-open icon-operation"></span></a> <a
+								href="${showVisitUrl }" title="Pokaż wizytę"><span
+									class="ui-icon ui-icon-info icon-operation"></span></a></td>
 						</tr>
 					</c:forEach>
-					<tr>
-						<td>to remove</td>
-						<td><a href="#" onclick="showAddAttachment('1')"><span
-								class="ui-icon ui-icon-disk icon-operation"></span></a> <a href="#"
-							title="Pokaż załączniki"><span
-								class="ui-icon ui-icon-disk icon-operation"></span></a> <a href="#"
-							title="Pokaż wizytę"><span
-								class="ui-icon ui-icon-disk icon-operation"></span></td>
-					</tr>
 				</table>
 			</div>
 			<div id="visit-add-attachment">
@@ -214,6 +226,22 @@
 				<input type="button" value="Ukryj" onclick="hideAddAttachment()" />
 			</div>
 
+			<c:forEach items="${patient.visits}" var="visit">
+				<div id="visit-attachments-${visit.visitId }"
+					class="attachmentsList">
+					Załączniki
+					<ul>
+						<c:forEach items="${visit.attachments }" var="attachment">
+							<s:url
+								value="/patients/${patient.patientId}/visits/${visit.visitId}/attachments/${attachment.attachmentId }"
+								var="getAttachmentUrl" />
+							<li><c:out value="${attachment.fileName}" /><br /> Opis: <c:out
+									value="${attachment.description }" /> <br /> <a
+								href="${getAttachmentUrl }" rel="nofollow">Pobierz</a></li>
+						</c:forEach>
+					</ul>
+				</div>
+			</c:forEach>
 		</div>
 	</div>
 

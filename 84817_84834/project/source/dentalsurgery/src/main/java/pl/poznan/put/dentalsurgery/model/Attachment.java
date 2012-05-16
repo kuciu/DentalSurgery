@@ -1,5 +1,7 @@
 package pl.poznan.put.dentalsurgery.model;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 public class Attachment {
 	private long attachmentId;
 	private Visit visit;
@@ -15,6 +17,7 @@ public class Attachment {
 		this.attachmentId = attachmentId;
 	}
 
+	@JsonIgnore
 	public Visit getVisit() {
 		return visit;
 	}
@@ -39,6 +42,7 @@ public class Attachment {
 		this.description = description;
 	}
 
+	@JsonIgnore
 	public byte[] getFile() {
 		return file;
 	}

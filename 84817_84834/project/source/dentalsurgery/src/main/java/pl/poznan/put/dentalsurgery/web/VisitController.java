@@ -1,5 +1,10 @@
 package pl.poznan.put.dentalsurgery.web;
 
+import java.io.IOException;
+import java.util.Collections;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +77,9 @@ public class VisitController {
 		if (patient == null) {
 			model.addAttribute("message", "Nie ma takiego pacjenta");
 			return "error";
+		}
+		if (patient.getVisits() != null) {
+			patient.getVisits().removeAll(Collections.singleton(null));
 		}
 		model.addAttribute("uploadItem", new UploadItem());
 		return "visits";
@@ -195,11 +203,34 @@ public class VisitController {
 		return "redirect:/patients/{patientId}/visits";
 	}
 
+	@RequestMapping(value = "/{visitId}/attachments/{attachmentId}", method = RequestMethod.GET)
+	public void getFile(@PathVariable("attachmentId") final Long attachmentId,
+			final HttpServletResponse response) {
+		try {
+			final Attachment attachment = attachmentService
+					.getById(attachmentId);
+			response.setHeader("Content-Disposition", "attachment; filename="
+					+ attachment.getFileName());
+			response.getOutputStream().write(attachment.getFile());
+			response.flushBuffer();
+		} catch (final IOException ex) {
+			throw new RuntimeException("IOError writing file to output stream");
+		}
+
+	}
+
+	@RequestMapping(value = "/{visitId}/show", method = RequestMethod.GET)
+	public String showVisit(@PathVariable("visitId") final Long visitId,
+			final HttpServletResponse response) {
+		return "visit";
+	}
+
 	private Attachment createAttachment(final UploadItem uploadItem,
 			final Visit visit) {
 		final Attachment attachment = new Attachment();
 		attachment.setDescription(uploadItem.getDescription());
-		attachment.setFileName(uploadItem.getFileData().getName());
+		attachment
+				.setFileName(uploadItem.getFileData().getFileItem().getName());
 		attachment.setFile(uploadItem.getFileData().getBytes());
 		attachment.setVisit(visit);
 		return attachment;

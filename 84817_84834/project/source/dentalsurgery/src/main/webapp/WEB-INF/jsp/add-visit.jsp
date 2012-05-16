@@ -298,9 +298,7 @@
 					});
 		};
 	};
-
 	
-
 	$(document).ready(function() {
 		var patientId = $('#patientId').text();
 		manager = new ComponentManager(patientId);

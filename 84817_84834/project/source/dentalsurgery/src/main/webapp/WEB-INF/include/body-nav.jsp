@@ -20,6 +20,9 @@
 			<a href="<c:url value="/patients/new" />">Nowy pacjent</a> <br /> 
 			<a href="<c:url value="/patients" />">Kartoteka</a> <br />
 			<hr />
+			<h4>Słowniki</h4>
+			<a href="<c:url value="/dict/visitActivities"/>">Czynności wizyt</a> <br />
+			<hr />
 			<a href="<c:url value="/about" />">O aplikacji</a> <br />
 			<a href="<c:url value="/help" />">Pomoc</a> <br />
 		</div>

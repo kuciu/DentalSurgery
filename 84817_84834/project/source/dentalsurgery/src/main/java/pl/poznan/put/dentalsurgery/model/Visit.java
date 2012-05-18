@@ -17,7 +17,7 @@ public class Visit {
 	private Long visitId;
 	private Patient patient;
 	@DateTimeFormat(pattern = "dd-MM-yyyy")
-	private Date visitDate;
+	private Date visitDate = new Date();
 	private Set<VisitActivity> activities = new HashSet<VisitActivity>();
 	private String comments;
 	private Set<Tooth> teeth = new HashSet<Tooth>();

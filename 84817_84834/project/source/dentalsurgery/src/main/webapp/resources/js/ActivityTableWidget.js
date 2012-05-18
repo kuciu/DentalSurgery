@@ -35,7 +35,8 @@ ActivityTableWidget = function(componentManager) {
 		}
 		
 		var rowRemoveButtonId = rowId+"-remove";
-		var $newRow = $("<tr class=\""+rowClass+"\" id=\""+rowId+"\"><td>"+
+		var $newRow = $("<tr class=\""+rowClass+
+				"\" style=\"display:none\" id=\""+rowId+"\"><td>"+
 					params.scope+"</td>"+
 				"<td>"+params.activity.description+"</td>"+
 				"<td>"+price+"</td>"+
@@ -51,10 +52,12 @@ ActivityTableWidget = function(componentManager) {
             text: false
 		});
 		
+		
 		$('#'+rowRemoveButtonId).click(function(){
-			$('#'+rowId).remove();
+			$('#'+rowId).fadeOut(300, function(){$(this).remove();});
 			self.componentManager.removeActivity(params);
 		});
+		$($newRow).fadeIn(300);
 	};
 	
 };

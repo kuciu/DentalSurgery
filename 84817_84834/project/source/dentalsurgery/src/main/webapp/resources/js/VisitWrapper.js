@@ -32,7 +32,7 @@ VisitWrapper = function(patientId) {
 	};
 
 	/** wysyla POSTem JSONa z utworzoną w interfejsie wizytą */
-	this.sendVisit = function(callback) {
+	this.sendVisit = function(callbackSuccess, callbackError) {
 		$.ajax({
 			type : "POST",
 			url : "/dentalsurgery/patients/" + self.patientId + "/visits/save",
@@ -40,11 +40,9 @@ VisitWrapper = function(patientId) {
 			contentType : "application/json",
 			dataType : "text",
 			success : function(text) {
-				if (callback != null) {
-					callback(text);
-				}
+				callbackSuccess(text);
 			}
-		});
+		}).error(callbackError);
 	};
 
 	/** zwraca obiekt zęba o konkretnym numerze FDI */
@@ -55,11 +53,6 @@ VisitWrapper = function(patientId) {
 				return tooth;
 			}
 		}
-	};
-
-	/** ustawia wartość komentarza do wizyty */
-	this.setComments = function(comments) {
-		self.visitObj.comments = new String(comments);
 	};
 
 	/** dodaje czynność do tablicy czynności */

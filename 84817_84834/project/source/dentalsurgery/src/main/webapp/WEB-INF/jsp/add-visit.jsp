@@ -270,6 +270,41 @@
 				}
 			}
 		};
+		
+		/** zapisuje wizytę */
+		this.saveVisit = function() {
+			$("#dialog-confirm-question")
+				.html(	"Czy na pewno chcesz dodać wizytę? "+
+						"Nie będziesz mógł już zmienić tych danych.");
+			$("#dialog-confirm").dialog( {
+				title : "Zapisać wizytę?",
+				resizable : false,
+				width : 500,
+				modal : true,
+				buttons : {
+					"Zapisz" : function() {
+						$(this).dialog("close");
+						self.visitWrapper.sendVisit(
+								function() {
+									successMessage(
+											"Wizyta zapisana",
+											"Udało się z powodzeniem zapisać wizytę.",
+											function() {
+												window.location = "/dentalsurgery/patients";
+											});
+								}, function() {
+									errorMessage(
+											"Błąd podczas dodawania wizyty",
+											"<strong>Wizyta nie została zapisana!</strong> Proszę spróbować później.");
+								}	
+						);
+					},
+					"Anuluj" : function() {
+						$(this).dialog("close");
+					}
+				}
+			});
+		};
 
 		/** inicjalizacja */
 		this.initialize = function() {
@@ -280,6 +315,8 @@
 
 			self.dictManager
 					.loadDictionaries(function() {
+						// słowniki załadowane
+						
 						self.toothStateWidget
 								.createToothStateUi(self.dictManager.toothStates);
 						self.toothActivityWidget
@@ -287,18 +324,32 @@
 						self.visitActivityWidget
 								.createVisitActivityUi(self.dictManager.visitActivities);
 
-						self.visitWrapper
-								.prepareNewVisit(function() {
+						self.visitWrapper.prepareNewVisit(function() {
+							// mamy wszystkie dane, możemy zaktualizować interfejs
+							
+							self.updateToothMapColors();
+							self.updateToothPartsColors();
+							
+							// podpięcie callbacku do guzika z zapisem wizyty
+							$('#save-visit-button').button();
+							$('#save-visit-button').click(self.saveVisit);
+							
+							$('#visit-date-input').val(self.visitWrapper.visitObj.visitDate);
+							$('#visit-date-input').change(function(){
+								self.visitWrapper.visitObj.visitDate = $(this).val();
+							});
+							$('#visit-comments-textarea').change(function(){
+								self.visitWrapper.visitObj.comments = $(this).val();
+							});
+							$('#visit-date-input').datepicker({
+								dateFormat : "dd-mm-yy"
+							});
 
-									self.updateToothMapColors();
-									self.updateToothPartsColors();
-
-
-								});
+						});
 					});
 		};
 	};
-	
+
 	$(document).ready(function() {
 		var patientId = $('#patientId').text();
 		manager = new ComponentManager(patientId);
@@ -384,7 +435,7 @@
 			<div id="modify-form-div">
 				
 				<h3>Komentarz lekarza</h3>
-				<textarea></textarea>
+				<textarea id="visit-comments-textarea"></textarea>
 			</div>
 			
 			<div id="add-activities-form">
@@ -427,16 +478,10 @@
 			</div>
 			
 			<div id="send-visit-form">
-			
-				<script >
-					$(document).ready(function(){
-
-						$('#save-visit-button').button();
-					});
-				</script>
+							
 				<h3>Ustaw datę wizyty</h3>
-				<input type="text"/>
-				<button id="save-visit-button" style="margin-left:300px;margin-bottom:50px">Zapisz wizytę</button>
+				<input id="visit-date-input" type="text"/>
+				<button id="save-visit-button">Zapisz wizytę</button>
 				
 			</div>
 			

@@ -31,6 +31,8 @@
 	
 <link href="<c:url value="/resources/css/visit.css" />" rel="stylesheet"
 	type="text/css" />
+<link href="<c:url value="/resources/css/teeth-map.css" />" rel="stylesheet"
+	type="text/css" />
 <script type="text/javascript"
 	src="<c:url value="/resources/js/visit-common.js" />"></script>
 <script type="text/javascript"

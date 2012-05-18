@@ -71,7 +71,7 @@ public class VisitServiceImpl implements VisitService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Visit getVisidById(Long visitId) {
+	public Visit getVisitById(Long visitId) {
 		return visitDao.getVisitById(visitId);
 	}
 	

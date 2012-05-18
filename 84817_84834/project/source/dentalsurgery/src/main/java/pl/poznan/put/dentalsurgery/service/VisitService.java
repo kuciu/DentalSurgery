@@ -5,7 +5,7 @@ import pl.poznan.put.dentalsurgery.model.Visit;
 
 public interface VisitService {
 
-	Visit getVisidById(Long visitId);
+	Visit getVisitById(Long visitId);
 
 	long saveDeserializedVisit(Visit visit);
 	

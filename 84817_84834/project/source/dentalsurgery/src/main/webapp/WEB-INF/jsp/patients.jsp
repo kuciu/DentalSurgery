@@ -293,6 +293,9 @@
 							var="addVisitUrl" />
 						<s:url value="/patients/${patient.patientId}/visits"
 							var="showVisitsUrl" />
+						<s:url value="/patients/${patient.patientId}/visits/teethHistory"
+							var="showTeethHistoryUrl" />	
+							
 						<tr>
 							<td class='name-surname'><a href="#"
 								title="Pokaż informacje o pacjencie"
@@ -302,6 +305,8 @@
 							<td><a href="#" title="Pokaż informacje o pacjencie"
 								onclick="loadPatientInfo('${patientInfoUrl}')"> <span
 									class="ui-icon ui-icon-info icon-operation"></span>
+							</a> <a href="${showTeethHistoryUrl}" title="Historia zębów (perspektywa szczęki)">
+									<span class="ui-icon ui-icon-comment icon-operation"></span>
 							</a> <a href="${showVisitsUrl}" title="Przeglądaj wizyty pacjenta">
 									<span class="ui-icon ui-icon-folder-collapsed icon-operation"></span>
 							</a> <a href="${addVisitUrl}" title="Dodaj nową wizytę"> <span

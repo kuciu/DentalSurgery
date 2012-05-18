@@ -115,7 +115,7 @@ public class VisitController {
 			@ModelAttribute final Patient patient) {
 		visit.setPatient(patient);
 		final Long visitId = visitService.saveDeserializedVisit(visit);
-		visitService.getVisidById(visitId);
+		visitService.getVisitById(visitId);
 		return visit;
 	}
 
@@ -129,7 +129,7 @@ public class VisitController {
 	public @ResponseBody
 	Visit getVisit(@PathVariable final Long visitId,
 			@ModelAttribute final Patient patient) {
-		final Visit visit = visitService.getVisidById(visitId);
+		final Visit visit = visitService.getVisitById(visitId);
 		// TODO sprawdzić, czy wizyta należy do pacjenta!
 		return visit;
 	}
@@ -157,7 +157,7 @@ public class VisitController {
 	@RequestMapping(value = "/{visitId}/delete", method = RequestMethod.GET)
 	public String deleteVisit(@PathVariable final Long visitId,
 			@ModelAttribute final Patient patient, final Model model) {
-		final Visit visit = visitService.getVisidById(visitId);
+		final Visit visit = visitService.getVisitById(visitId);
 		if (visit == null) {
 			model.addAttribute("message", "Nie ma takiej wizyty.");
 			return "error";
@@ -174,6 +174,17 @@ public class VisitController {
 		return "alert";
 	}
 
+	/**
+	 * Wyświetla stronę JSP z historią wizyt z perspektywy szczęki
+	 * @param patient
+	 * @return
+	 */
+	@RequestMapping(value="teethHistory")
+	public String showTeethHistory (@ModelAttribute Patient patient) {
+		return "teethHistory";
+	}
+	
+	
 	@RequestMapping(value = "/{visitId}/addAttachment", method = RequestMethod.POST)
 	public String addAttachment(@PathVariable final Long visitId,
 			final UploadItem uploadItem, final BindingResult result,
@@ -193,7 +204,7 @@ public class VisitController {
 		if (result.hasErrors()) {
 			return "visits";
 		}
-		final Visit visit = visitService.getVisidById(visitId);
+		final Visit visit = visitService.getVisitById(visitId);
 		if (visit == null) {
 			model.addAttribute("message", "Nie ma takiej wizyty.");
 			return "error";

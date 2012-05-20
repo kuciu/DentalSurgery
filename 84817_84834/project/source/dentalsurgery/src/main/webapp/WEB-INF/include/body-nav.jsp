@@ -22,6 +22,9 @@
 			<hr />
 			<h4>Słowniki</h4>
 			<a href="<c:url value="/dict/visitActivities"/>">Czynności wizyt</a> <br />
+			<a href="<c:url value="/dict/teethActivities"/>">Czynności zębów</a> <br />
+			<a href="<c:url value="/dict/teethStates"/>">Stany zębów</a> <br />
+			
 			<hr />
 			<a href="<c:url value="/about" />">O aplikacji</a> <br />
 			<a href="<c:url value="/help" />">Pomoc</a> <br />

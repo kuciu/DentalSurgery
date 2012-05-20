@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import pl.poznan.put.dentalsurgery.model.ToothActivity;
+import pl.poznan.put.dentalsurgery.model.ToothState;
 import pl.poznan.put.dentalsurgery.model.VisitActivity;
 import pl.poznan.put.dentalsurgery.service.DictTransferObject;
 import pl.poznan.put.dentalsurgery.service.DictionaryService;
@@ -77,6 +79,88 @@ public class DictionaryController {
 	String deleteVisitActivity(@PathVariable final Long activityId) {
 		dictionaryService.deleteVisitActivity(dictionaryService
 				.getVisitActivityById(activityId));
+		return "OK";
+	}
+
+	/**
+	 * Czynności zębów
+	 * 
+	 */
+
+	@RequestMapping(value = "/teethActivities", method = RequestMethod.GET)
+	public String getAllToothActivities(final Model model) {
+		final Collection<ToothActivity> toothActDict = dictionaryService
+				.getToothActivityDict();
+		model.addAttribute("toothActDict", toothActDict);
+		model.addAttribute("newActivity", new ToothActivity());
+
+		return "toothActDict";
+	}
+
+	@RequestMapping(value = "/teethActivities/new", method = RequestMethod.POST)
+	public String saveTootHActivity(final ToothActivity activity) {
+		dictionaryService.addToothActivity(activity);
+		return "redirect:/dict/teethActivities";
+	}
+
+	@RequestMapping(value = "/teethActivities/{activityId}/update", method = RequestMethod.POST)
+	public String updateToothActivity(final ToothActivity activity) {
+		dictionaryService.updateToothActivity(activity);
+		return "redirect:/dict/teethActivities";
+	}
+
+	@RequestMapping(value = "/teethActivities/{activityId}", method = RequestMethod.GET)
+	public @ResponseBody
+	ToothActivity getToothActivity(@PathVariable final Long activityId) {
+		return dictionaryService.getToothActivityById(activityId);
+	}
+
+	@RequestMapping(value = "/teethActivities/{activityId}/delete", method = RequestMethod.POST)
+	public @ResponseBody
+	String deleteTeethActivity(@PathVariable final Long activityId) {
+		dictionaryService.deleteToothActivity(dictionaryService
+				.getToothActivityById(activityId));
+		return "OK";
+	}
+
+	/**
+	 * Czynności zębów
+	 * 
+	 */
+
+	@RequestMapping(value = "/teethStates", method = RequestMethod.GET)
+	public String getAllToothStates(final Model model) {
+		final Collection<ToothState> toothStateDict = dictionaryService
+				.getToothStatesDict();
+		model.addAttribute("toothStateDict", toothStateDict);
+		model.addAttribute("newState", new ToothState());
+
+		return "toothStateDict";
+	}
+
+	@RequestMapping(value = "/teethStates/new", method = RequestMethod.POST)
+	public String saveToothState(final ToothState state) {
+		dictionaryService.addToothState(state);
+		return "redirect:/dict/teethStates";
+	}
+
+	@RequestMapping(value = "/teethStates/{toothStateId}/update", method = RequestMethod.POST)
+	public String updateToothState(final ToothState state) {
+		dictionaryService.updateToothState(state);
+		return "redirect:/dict/teethStates";
+	}
+
+	@RequestMapping(value = "/teethStates/{toothStateId}", method = RequestMethod.GET)
+	public @ResponseBody
+	ToothState getToothState(@PathVariable final Long toothStateId) {
+		return dictionaryService.getToothStateById(toothStateId);
+	}
+
+	@RequestMapping(value = "/teethStates/{toothStateId}/delete", method = RequestMethod.POST)
+	public @ResponseBody
+	String deleteTeethState(@PathVariable final Long toothStateId) {
+		dictionaryService.deleteToothState(dictionaryService
+				.getToothStateById(toothStateId));
 		return "OK";
 	}
 }

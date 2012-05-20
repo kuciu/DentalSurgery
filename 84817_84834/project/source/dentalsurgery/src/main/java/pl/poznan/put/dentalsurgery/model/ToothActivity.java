@@ -1,5 +1,6 @@
 package pl.poznan.put.dentalsurgery.model;
 
+
 public class ToothActivity {
 	private Long activityId;
 	private String description;
@@ -42,7 +43,7 @@ public class ToothActivity {
 		this.vat = vat;
 	}
 
-	public Boolean isAllTooth() {
+	public Boolean getAllTooth() {
 		return allTooth;
 	}
 

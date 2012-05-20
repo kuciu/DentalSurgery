@@ -7,6 +7,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -98,7 +99,8 @@ public class DictionaryController {
 	}
 
 	@RequestMapping(value = "/teethActivities/new", method = RequestMethod.POST)
-	public String saveTootHActivity(final ToothActivity activity) {
+	public String saveTootHActivity(final ToothActivity activity,
+			final BindingResult result) {
 		dictionaryService.addToothActivity(activity);
 		return "redirect:/dict/teethActivities";
 	}

@@ -62,7 +62,7 @@
 	function clearForm() {
 		$('#description').val('');
 		$("#allTooth").attr('checked', false);
-		
+
 		$('#submitBtn').text('Dodaj');
 	}
 
@@ -72,13 +72,13 @@
 	}
 
 	function showDetails(getUrl, editUrl) {
-		
+
 		$.getJSON(getUrl, function(data) {
 			$('#description').val(data['description']);
 			$("#allTooth").attr('checked', data['allTooth']);
-			
+
 			$('#submitBtn').text('Zapisz');
-			
+
 			$('#stateForm').get(0).setAttribute('action', editUrl);
 
 		});
@@ -137,20 +137,16 @@
 </script>
 
 <style type="text/css">
-#body-content { /*border: solid;*/
-	border-width: 1px;
-	border-color: #80C2FF;
-}
 
-.icon-operation {
-	float: right;
-	margin: 0px;
-}
-
-.label {
-	width: 50px;
-	display: block;
+#activityList {
 	float: left;
+	width: 300px;
+}
+
+#newEditForm {
+	float: left;
+	width: 300px;
+	margin-top: 50px;
 }
 </style>
 
@@ -196,21 +192,19 @@
 				<h2>Lista stanów zęba</h2>
 				<select size="5" style="width: 200px" id='statesList'>
 					<c:forEach items="${toothStateDict }" var="state">
-						<c:url
-							value="/dict/teethStates/${state.toothStateId }/update"
+						<c:url value="/dict/teethStates/${state.toothStateId }/update"
 							var="editUrl" />
-						<c:url
-							value="/dict/teethStates/${state.toothStateId }"
+						<c:url value="/dict/teethStates/${state.toothStateId }"
 							var="getUrl" />
 						<option value="${state.toothStateId }"
 							onclick="showDetails('${getUrl}', '${editUrl }')">
 							<c:out value="${state.description}" />
 						</option>
 					</c:forEach>
-				</select>
+				</select> <br />
 				<c:url value="/dict/teethStates/" var="deleteUrl" />
 
-				<button onclick="deleteSelected('${deleteUrl}')">Usuń</button>
+				<button onclick="deleteSelected('${deleteUrl}')" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">Usuń</button>
 			</div>
 			<div id="newEditForm">
 				<form:form id="stateForm" method="post" commandName="newState"
@@ -220,11 +214,13 @@
 					<form:errors path="description" />
 					<br />
 					<form:label path="allTooth" cssClass="label">Cały ząb</form:label>
-					<form:checkbox path="allTooth" id="allTooth"/>
-					<br/>
-					<form:button id="submitBtn">Dodaj</form:button>
+					<form:checkbox path="allTooth" id="allTooth" />
+					<br />
+					<form:button id="submitBtn"
+						class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">Dodaj</form:button>
 				</form:form>
-				<button onclick="newState('${newUrl}')">Nowa</button>
+				<button onclick="newState('${newUrl}')"
+					class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">Nowa</button>
 
 			</div>
 		</div>

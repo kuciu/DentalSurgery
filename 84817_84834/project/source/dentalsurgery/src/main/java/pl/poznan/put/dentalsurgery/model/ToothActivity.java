@@ -1,8 +1,12 @@
 package pl.poznan.put.dentalsurgery.model;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 
 public class ToothActivity {
 	private Long activityId;
+	@NotBlank
+	@Length(min = 1)
 	private String description;
 	private Double price;
 	private Double vat;

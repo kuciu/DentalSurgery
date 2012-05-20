@@ -109,6 +109,12 @@ body {
 	border-width: 1px;
 }
 
+.label {
+	width: 50px;
+	display: block;
+	float: left;
+}
+
 .error {
 	color: red;
 }
@@ -116,4 +122,15 @@ body {
 .icon-operation {
 	float: right;
 	margin: 0px;
+}
+
+#activityList {
+	float: left;
+	width: 300px;
+}
+
+#newEditForm {
+	float: left;
+	width: 300px;
+	margin-top: 50px;
 }

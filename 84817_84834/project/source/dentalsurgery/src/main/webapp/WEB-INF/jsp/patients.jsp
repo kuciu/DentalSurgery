@@ -323,7 +323,9 @@
 			</div>
 
 			<div id="patient-info-border">
-
+				<a href="#" title="Zamknij" onclick="hideDetails()"> <span
+									class="ui-icon ui-icon-close icon-operation"></span>
+							</a>
 				<table>
 					<thead>
 						<tr>
@@ -370,7 +372,6 @@
 						</td>
 					</tr>
 				</table>
-				<input type="button" value="Ukryj" onclick="hideDetails()" />
 			</div>
 
 		</div>

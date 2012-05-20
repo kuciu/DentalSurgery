@@ -17,6 +17,7 @@
 </style>
 	
 		<div id="body-nav">
+			<h4>Pacjenci</h4>
 			<a href="<c:url value="/patients/new" />">Nowy pacjent</a> <br /> 
 			<a href="<c:url value="/patients" />">Kartoteka</a> <br />
 			<hr />

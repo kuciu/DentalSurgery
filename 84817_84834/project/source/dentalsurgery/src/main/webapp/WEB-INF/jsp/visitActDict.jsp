@@ -136,21 +136,6 @@
 </script>
 
 <style type="text/css">
-#body-content { /*border: solid;*/
-	border-width: 1px;
-	border-color: #80C2FF;
-}
-
-.icon-operation {
-	float: right;
-	margin: 0px;
-}
-
-.label {
-	width: 50px;
-	display: block;
-	float: left;
-}
 </style>
 
 </head>
@@ -198,8 +183,7 @@
 						<c:url
 							value="/dict/visitActivities/${activity.activityId }/update"
 							var="editUrl" />
-						<c:url
-							value="/dict/visitActivities/${activity.activityId }"
+						<c:url value="/dict/visitActivities/${activity.activityId }"
 							var="getUrl" />
 						<option value="${activity.activityId }"
 							onclick="showDetails('${getUrl}', '${editUrl }')">
@@ -208,8 +192,9 @@
 					</c:forEach>
 				</select>
 				<c:url value="/dict/visitActivities/" var="deleteUrl" />
-
-				<button onclick="deleteSelected('${deleteUrl}')">Usuń</button>
+				<br />
+				<button onclick="deleteSelected('${deleteUrl}')"
+					class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">Usuń</button>
 			</div>
 			<div id="newEditForm">
 				<form:form id="activityForm" method="post" commandName="newActivity"
@@ -226,9 +211,11 @@
 					<form:input path="vat" id="vat" />
 					<form:errors path="vat" />
 					<br />
-					<form:button id="submitBtn">Dodaj</form:button>
+					<form:button id="submitBtn"
+						class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">Dodaj</form:button>
 				</form:form>
-				<button onclick="newActivity('${newUrl}')">Nowa</button>
+				<button onclick="newActivity('${newUrl}')"
+					class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">Nowa</button>
 
 			</div>
 		</div>

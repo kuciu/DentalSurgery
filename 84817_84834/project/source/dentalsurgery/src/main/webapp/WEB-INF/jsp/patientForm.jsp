@@ -124,13 +124,13 @@
 </head>
 <body>
 
-	
+
 	<%@ include file="/WEB-INF/include/body-top.jsp"%>
 	<div id="body-container">
-	
+
 		<%@ include file="/WEB-INF/include/body-nav.jsp"%>
 		<div id="body-content">
-		
+
 			<c:choose>
 				<c:when test="${editMode == true }">
 					<h2>
@@ -148,7 +148,7 @@
 
 				<table border="0px">
 					<tr>
-						<td>Imię:</td>
+						<td><form:label path="name">Imię:</form:label></td>
 						<td><form:input path="name" /></td>
 						<td><form:errors path="name" cssClass="error" /></td>
 					</tr>
@@ -160,7 +160,9 @@
 
 					<tr>
 						<td>Płeć:</td>
-						<td><form:select path="gender">
+						<td><form:select path="gender"
+								class="ui-selectmenu ui-widget ui-state-default ui-selectmenu-popup"
+								style="width: 150px">
 								<form:option value="M">Mężczyzna</form:option>
 								<form:option value="K">Kobieta</form:option>
 							</form:select></td>
@@ -194,7 +196,8 @@
 						<td>Numery kontaktowe:</td>
 						<td><input id="phone-input" maxlength="20" /></td>
 						<td><input type="button" id="phone-add" value="Dodaj"
-							onclick="addElementToList('#phone-input', '#phones-list', '#phone-add')" /></td>
+							onclick="addElementToList('#phone-input', '#phones-list', '#phone-add')"
+							class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" /></td>
 					</tr>
 					<tr>
 						<td></td>
@@ -204,13 +207,15 @@
 								itemLabel="number">
 							</form:select></td>
 						<td><input type="button" id="phone-remove" value="Usuń"
-							onClick="deleteListElements('#phones-list option:selected')" /></td>
+							onClick="deleteListElements('#phones-list option:selected')"
+							class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" /></td>
 					</tr>
 					<tr>
 						<td>Przebyte choroby</td>
 						<td><input id="illness-input" maxlength="20" /></td>
 						<td><input type="button" id="illness-add" value="Dodaj"
-							onclick="addElementToList('#illness-input', '#illness-list', '#illness-add')" /></td>
+							onclick="addElementToList('#illness-input', '#illness-list', '#illness-add')"
+							class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" /></td>
 					</tr>
 					<tr>
 						<td></td>
@@ -220,13 +225,15 @@
 								itemLabel="name">
 							</form:select></td>
 						<td><input type="button" id="illness-remove" value="Usuń"
-							onClick="deleteListElements('#illness-list option:selected')" /></td>
+							onClick="deleteListElements('#illness-list option:selected')"
+							class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" /></td>
 					</tr>
 					<tr>
 						<td>Przyjmowane leki</td>
 						<td><input id="medication-input" maxlength="20" /></td>
 						<td><input type="button" id="medication-add" value="Dodaj"
-							onclick="addElementToList('#medication-input', '#medications-list', '#medication-add')"></td>
+							onclick="addElementToList('#medication-input', '#medications-list', '#medication-add')"
+							class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" /></td>
 					</tr>
 					<tr>
 						<td></td>
@@ -235,7 +242,8 @@
 								itemLabel="name" style="width: 170px" multiple="true" size="5">
 							</form:select></td>
 						<td><input type="button" id="medication-remove" value="Usuń"
-							onClick="deleteListElements('#medications-list option:selected')" /></td>
+							onClick="deleteListElements('#medications-list option:selected')"
+							class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" /></td>
 					</tr>
 					<tr>
 						<td colspan="3"><form:button id="create-btn">

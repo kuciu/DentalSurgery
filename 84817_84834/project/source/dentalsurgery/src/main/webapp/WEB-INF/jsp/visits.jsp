@@ -80,32 +80,25 @@
 		$('#visit-add-attachment').hide();
 		$(id).show();
 	}
+
 </script>
 
 <style type="text/css">
-#body-content { /*border: solid;*/
-	border-width: 1px;
-	border-color: #80C2FF;
-}
-
-.icon-operation {
-	float: right;
-	margin: 0px;
-}
 
 #visit-list-border {
 	float: left;
 	width: 250px;
 	/*border: solid;*/
-	min-height: 80px;
+	min-height: 150px;
 	border-width: 1px;
 	border-color: #80C2FF;
 	border-width: 1px;
 }
 
-#visit-add-attachments {
+#visit-add-attachment {
 	float: right;
 	width: 430px;
+	margin-left: 30px;
 	/*border: solid;*/
 	border-width: 1px;
 	border-color: #80C2FF;
@@ -119,7 +112,6 @@
 .attachmentsList {
 	float: right;
 	width: 430px;
-	/*border: solid;*/
 	border-width: 1px;
 	border-color: #80C2FF;
 }
@@ -210,6 +202,11 @@
 				</table>
 			</div>
 			<div id="visit-add-attachment">
+			<a href="#" title="Zamknij" onclick="hideAddAttachment()"> <span
+									class="ui-icon ui-icon-close icon-operation"></span>
+							</a>
+							<h2>Dodaj załącznik</h2>
+				
 				<form:form modelAttribute="uploadItem" method="post"
 					enctype="multipart/form-data"
 					action="/patients/9/visits/13/addAttachment" id="addAttachmentForm">
@@ -219,16 +216,20 @@
 					<br />
 					<form:label for="fileData" path="fileData"
 						cssStyle="width: 50px; display: block; float: left;">Plik</form:label>
-					<form:input path="fileData" type="file" />
+					<form:input path="fileData" type="file" cssClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"/>
 					<br />
-					<input type="submit" value="Dodaj" />
+					<input type="submit" value="Dodaj" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"/>
 				</form:form>
-				<input type="button" value="Ukryj" onclick="hideAddAttachment()" />
 			</div>
+			
+		
 
 			<c:forEach items="${patient.visits}" var="visit">
 				<div id="visit-attachments-${visit.visitId }"
 					class="attachmentsList">
+								<a href="#" title="Zamknij" onclick="afterLoad()"> <span
+									class="ui-icon ui-icon-close icon-operation"></span>
+							</a>
 					Załączniki
 					<ul>
 						<c:forEach items="${visit.attachments }" var="attachment">

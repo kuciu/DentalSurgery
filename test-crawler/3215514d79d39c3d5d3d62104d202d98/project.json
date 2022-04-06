@@ -5,6 +5,7 @@
         "url": "https://www.onet.pl/",
         "browser": "chrome-puppeteer",
         "method": "spiderbot",
+        "autopin": true,
         "viewport": {
             "width": 1024,
             "height": 768

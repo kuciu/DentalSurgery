@@ -1,0 +1,5 @@
+{
+    "url": "https://www.onet.pl/#region_lubuskie",
+    "id": "4b44773d90eb8a734b3976ed38b5f327",
+    "error": "TimeoutError: timeout: Timed out receiving message from renderer: 10.000\n  (Session info: headless chrome=99.0.4844.83)"
+}

@@ -1,0 +1,19 @@
+{
+    "url": "https://www.onet.pl/",
+    "browser": "chrome-puppeteer",
+    "method": "spiderbot",
+    "autopin": false,
+    "viewport": {
+        "width": 1024,
+        "height": 768
+    },
+    "timestamp": "1649254856",
+    "id": "2824e05349dd48827c098565b3996110",
+    "diffZoneCount": 0,
+    "errorCount": 5,
+    "status": "review",
+    "inQueue": 189,
+    "urlsCount": 50,
+    "startAt": 1649254856273,
+    "lastUpdate": 1649255057455
+}

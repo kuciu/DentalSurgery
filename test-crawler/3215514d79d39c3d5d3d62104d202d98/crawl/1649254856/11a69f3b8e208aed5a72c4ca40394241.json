@@ -1,0 +1,5 @@
+{
+    "url": "https://www.onet.pl/#region_warszawa",
+    "id": "11a69f3b8e208aed5a72c4ca40394241",
+    "error": "TimeoutError: timeout: Timed out receiving message from renderer: 10.000\n  (Session info: headless chrome=99.0.4844.83)"
+}

@@ -1,0 +1,5 @@
+{
+    "url": "https://www.onet.pl/#",
+    "id": "4598a9530181338c4cd8065aaf57c842",
+    "error": "TimeoutError: timeout: Timed out receiving message from renderer: 10.000\n  (Session info: headless chrome=99.0.4844.83)"
+}

@@ -1,0 +1,5 @@
+{
+    "url": "https://www.onet.pl/#regionalne",
+    "id": "5bf254ef132a48db4c8488ca0eebc82f",
+    "error": "TimeoutError: timeout: Timed out receiving message from renderer: -0.013\n  (Session info: headless chrome=99.0.4844.83)"
+}

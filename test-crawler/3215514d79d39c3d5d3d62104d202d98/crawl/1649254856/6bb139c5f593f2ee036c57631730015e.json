@@ -1,0 +1,5 @@
+{
+    "url": "https://www.onet.pl/#region_lublin",
+    "id": "6bb139c5f593f2ee036c57631730015e",
+    "error": "TimeoutError: timeout: Timed out receiving message from renderer: 10.000\n  (Session info: headless chrome=99.0.4844.83)"
+}

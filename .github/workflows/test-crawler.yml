@@ -1,0 +1,37 @@
+
+name: Test-crawler CI
+
+on:
+  repository_dispatch:
+    types: [test-crawler]
+
+jobs:
+  test-crawler:
+    if: github.event.client_payload.os == 'default'
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Enable safari driver
+      run: |
+        sudo safaridriver --enable
+        safaridriver -p 0 &
+    - name: Run test-crawler ${{ github.event.client_payload.projectId }}
+      uses: apiel/test-crawler/actions/crawl@master
+    - name: Push changes
+      uses: apiel/test-crawler/actions/push@master
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+  test-crawler-windows:
+    if: github.event.client_payload.os == 'win'
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run test-crawler ${{ github.event.client_payload.projectId }}
+      uses: apiel/test-crawler/actions/crawl@master
+    - name: Push changes
+      uses: apiel/test-crawler/actions/push@master
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}

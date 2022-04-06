@@ -1,0 +1,14 @@
+{
+    "id": "0cc175b9c0f1b6a831c399e269772661",
+    "name": "a",
+    "crawlerInput": {
+        "url": "http://octopus.apps.okd4.ib24.consdata.local/#/environments/local",
+        "browser": "chrome-puppeteer",
+        "method": "urls",
+        "autopin": true,
+        "viewport": {
+            "width": 1024,
+            "height": 768
+        }
+    }
+}

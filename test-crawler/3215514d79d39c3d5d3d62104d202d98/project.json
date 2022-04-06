@@ -1,0 +1,13 @@
+{
+    "id": "3215514d79d39c3d5d3d62104d202d98",
+    "name": "onet",
+    "crawlerInput": {
+        "url": "https://www.onet.pl/",
+        "browser": "chrome-puppeteer",
+        "method": "spiderbot",
+        "viewport": {
+            "width": 1024,
+            "height": 768
+        }
+    }
+}

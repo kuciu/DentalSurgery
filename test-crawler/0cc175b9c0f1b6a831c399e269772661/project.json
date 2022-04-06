@@ -5,7 +5,7 @@
         "url": "http://octopus.apps.okd4.ib24.consdata.local/#/environments/local",
         "browser": "chrome-puppeteer",
         "method": "urls",
-        "autopin": true,
+        "autopin": false,
         "viewport": {
             "width": 1024,
             "height": 768
